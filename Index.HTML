@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Atlas Capital Index</title>
+<style>
+:root{
+  --bg:#05070b;
+  --bg2:#0b0f14;
+  --text:#f3f6fb;
+  --muted:#97a3b6;
+  --line:#222b36;
+  --orange:#ff9f1a;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:linear-gradient(180deg,var(--bg),var(--bg2));}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+.sidebar{background:#070a0e;border-right:1px solid var(--line);padding:18px 16px}
+.brand{font-size:28px;font-weight:900;line-height:0.98;color:#fff;margin-bottom:10px}
+.subtitle{font-size:12px;line-height:1.55;color:var(--muted);margin-bottom:18px}
+.nav{display:grid;gap:8px}
+.tab-btn{background:#0c1117;color:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;font-size:14px;cursor:pointer;text-align:left}
+.tab-btn.active{background:#151c25;border-color:#3a4656;box-shadow:inset 0 0 0 1px #4d5b70}
+.side-box{margin-top:18px;border:1px solid var(--line);background:#0b1016;padding:12px;border-radius:8px;color:var(--muted);font-size:12px;line-height:1.55}
+.main{padding:0 18px 18px;overflow:hidden}
+.topbar{position:sticky;top:0;z-index:20;margin:0 -18px 16px;background:#000;border-bottom:1px solid #202731}
+.topbar-inner{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 16px;flex-wrap:wrap}
+.terminal-tag{font-size:11px;letter-spacing:1.4px;color:var(--orange);text-transform:uppercase;font-weight:800}
+.terminal-status{font-size:12px;color:var(--muted)}
+.jump-strip{display:flex;gap:10px;flex-wrap:wrap}
+.jump-btn{font-size:11px;padding:6px 9px;border:1px solid var(--line);background:#0c1117;border-radius:4px;color:#d9e2ef;text-decoration:none;transition:.2s ease}
+.jump-btn:hover{background:#121922;border-color:#4b5d75}
+.jump-btn b{color:#fff}
+.ticker-shell{overflow:hidden;border-top:1px solid #11161d;background:#020406;min-height:46px}
+.tv-ticker-wrap{padding:4px 8px}
+.hero{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap;padding:8px 0 6px}
+.hero h1{margin:0;font-size:42px;letter-spacing:-0.5px}
+.hero p{margin:8px 0 0;color:var(--muted);max-width:860px;line-height:1.6}
+.tab-panel{display:none;margin-top:16px}
+.tab-panel.active{display:block}
+.section-header{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;margin:18px 0 14px;border-bottom:1px solid var(--line);padding-bottom:8px}
+.section-header h2{margin:0;font-size:28px;text-transform:uppercase;letter-spacing:0.6px}
+.section-header p{margin:0;color:var(--muted);font-size:13px;line-height:1.55;max-width:760px}
+.series-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start}
+.market-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:start}
+.series-item,.widget-card{min-width:0;background:linear-gradient(180deg,#0d1218,#0b1016);border:1px solid var(--line);border-radius:8px;padding:14px}
+.series-code{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--orange);font-weight:700}
+.series-item h4,.widget-card h3{margin:8px 0 8px;font-size:20px}
+.series-note,.widget-note{color:var(--muted);line-height:1.6;font-size:13px}
+.chart-img{display:block;width:100%;max-width:100%;height:auto;max-height:230px;object-fit:contain;border:1px solid var(--line);background:#fff;border-radius:4px;margin:12px 0}
+.widget-frame{width:100%;height:220px;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:#0c1117}
+.link-row{display:flex;gap:8px;flex-wrap:wrap}
+.link-btn{padding:7px 10px;font-size:12px;border:1px solid #2d3948;background:#111722;color:#d5e2f1;border-radius:4px;text-decoration:none}
+.link-btn:hover{border-color:#4b5d75}
+.mini-table{width:100%;border-collapse:collapse;font-size:13px}
+.mini-table th,.mini-table td{padding:10px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.mini-table th{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.term-divider{height:1px;background:var(--line);margin:10px 0 0}
+@media (max-width:1100px){.series-grid,.market-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:900px){.layout{grid-template-columns:1fr}.sidebar{border-right:none;border-bottom:1px solid var(--line)}.main{padding:0 14px 14px}.topbar{margin:0 -14px 16px}.hero h1{font-size:34px}.series-grid,.market-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand">Atlas Capital<br>Index</div>
+    <div class="subtitle">Dashboard macro y de mercados para seguir liquidez global, inflación, empleo y riesgo en tiempo casi real.</div>
+    <nav class="nav">
+      <button class="tab-btn active" data-tab="home">Inicio</button>
+      <button class="tab-btn" data-tab="liquidityindex">Atlas Liquidity Index</button>
+      <button class="tab-btn" data-tab="macrostats">Macro Stats</button>
+      <button class="tab-btn" data-tab="ecosystem">Atlas Ecosystem</button>
+    </nav>
+    <div class="side-box">Fuentes de datos: TradingView (mercados), FRED (macro) y DexScreener (QUIRA). Todos los módulos se actualizan automáticamente.</div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="topbar-inner">
+        <div>
+          <div class="terminal-tag">Atlas Capital Index</div>
+          <div class="terminal-status">Market Terminal · Live Prices · Macro Indicators</div>
+        </div>
+        <div class="jump-strip">
+          <a class="jump-btn" href="#inflation-section"><b>INFLATION</b></a>
+          <a class="jump-btn" href="#labor-section"><b>LABOR</b></a>
+          <a class="jump-btn" href="#liquidity-section"><b>LIQUIDITY</b></a>
+          <a class="jump-btn" href="#yield-section"><b>YIELD</b></a>
+          <a class="jump-btn" href="#markets-section"><b>MARKETS</b></a>
+          <a class="jump-btn" href="#risk-section"><b>RISK</b></a>
+          <a class="jump-btn" href="#ecosystem-top"><b>ATLAS</b></a>
+          <a class="jump-btn" href="#liquidity-index-top"><b>INDEX</b></a>
+        </div>
+      </div>
+      <div class="ticker-shell">
+        <div class="tv-ticker-wrap">
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+          {
+            "symbols": [
+              {"proName": "BITSTAMP:BTCUSD", "title": "BTC"},
+              {"proName": "BITSTAMP:ETHUSD", "title": "ETH"},
+              {"proName": "BINANCE:SOLUSDT", "title": "SOL"},
+              {"proName": "SP:SPX", "title": "SPX"},
+              {"proName": "NASDAQ:NDX", "title": "NDX"},
+              {"proName": "OANDA:XAUUSD", "title": "GOLD"},
+              {"proName": "OANDA:XAGUSD", "title": "SILVER"},
+              {"proName": "TVC:USOIL", "title": "WTI"},
+              {"proName": "TVC:DXY", "title": "DXY"},
+              {"proName": "NASDAQ:AAPL", "title": "AAPL"},
+              {"proName": "NASDAQ:NVDA", "title": "NVDA"},
+              {"proName": "NASDAQ:TSLA", "title": "TSLA"}
+            ],
+            "showSymbolLogo": false,
+            "isTransparent": false,
+            "displayMode": "adaptive",
+            "colorTheme": "dark",
+            "locale": "es"
+          }
+          </script>
+        </div>
+      </div>
+    </div>
+
+    <section class="hero" id="home-hero">
+      <div>
+        <h1>Atlas Capital Index</h1>
+        <p>Vista general de mercados y liquidez. Usa las pestañas para explorar macro, ecosistema Atlas y el Atlas Liquidity Index.</p>
+      </div>
+    </section>
+
+    <section class="tab-panel active" id="home">
+      <div class="section-header">
+        <h2>Market Overview</h2>
+        <p>Seguimiento rápido de los principales activos globales: crypto, índices, commodities y dólar.</p>
+      </div>
+      <div class="market-grid">
+        <div class="widget-card"><h3>Bitcoin</h3><div class="widget-frame" id="tv-btc-card"></div><div class="widget-note">BTCUSD</div></div>
+        <div class="widget-card"><h3>Ethereum</h3><div class="widget-frame" id="tv-eth-card"></div><div class="widget-note">ETHUSD</div></div>
+        <div class="widget-card"><h3>Solana</h3><div class="widget-frame" id="tv-sol-card"></div><div class="widget-note">SOLUSD</div></div>
+        <div class="widget-card"><h3>S&P 500</h3><div class="widget-frame" id="tv-spx-card"></div><div class="widget-note">SPX</div></div>
+        <div class="widget-card"><h3>Nasdaq</h3><div class="widget-frame" id="tv-ndx-card"></div><div class="widget-note">Nasdaq 100</div></div>
+        <div class="widget-card"><h3>Dólar</h3><div class="widget-frame" id="tv-dxy-card"></div><div class="widget-note">DXY</div></div>
+        <div class="widget-card"><h3>Oro</h3><div class="widget-frame" id="tv-gold-card"></div><div class="widget-note">XAUUSD</div></div>
+        <div class="widget-card"><h3>Plata</h3><div class="widget-frame" id="tv-silver-card"></div><div class="widget-note">XAGUSD</div></div>
+        <div class="widget-card"><h3>Petróleo WTI</h3><div class="widget-frame" id="tv-oil-card"></div><div class="widget-note">USOIL</div></div>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="ecosystem">
+      <div class="section-header" id="ecosystem-top">
+        <h2>Atlas Ecosystem</h2>
+        <p>Proyectos del ecosistema Atlas: token, juegos y herramientas del proyecto.</p>
+      </div>
+      <div class="market-grid">
+        <div class="widget-card">
+          <h3>QUIRA</h3>
+          <div class="widget-frame" style="height:320px;overflow:hidden;">
+            <iframe src="https://dexscreener.com/solana/3wmgnvepzkptlxldyej4epzib2xsvbq8twbpicgzkfxr?embed=1&theme=dark" width="100%" height="100%" style="border:0;display:block;" loading="lazy" title="QUIRA DexScreener"></iframe>
+          </div>
+          <div class="widget-note">QUIRA / SOL · Token del ecosistema Atlas</div>
+        </div>
+        <div class="widget-card">
+          <h3>Atlas Games</h3>
+          <div class="widget-frame" style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;">
+            <div style="font-size:22px;font-weight:800;color:#fff;">Próximamente</div>
+            <div class="widget-note" style="max-width:280px;text-align:center;">Los juegos crypto del ecosistema Atlas vivirán aquí.</div>
+          </div>
+          <div class="widget-note">Futuros juegos crypto del ecosistema</div>
+        </div>
+        <div class="widget-card">
+          <h3>Atlas Capital</h3>
+          <div class="widget-frame" style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;">
+            <div style="font-size:22px;font-weight:800;color:#fff;">Macro + Markets</div>
+            <div class="widget-note" style="max-width:280px;text-align:center;">Research macro y lectura de mercados para la comunidad Atlas Capital.</div>
+          </div>
+          <div class="widget-note">Panel macro y contexto de mercado</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="liquidityindex">
+      <div class="section-header" id="liquidity-index-top">
+        <h2>Atlas Liquidity Index</h2>
+        <p>Indicador propio del ecosistema Atlas para leer si la liquidez del sistema está apoyando o presionando a los activos de riesgo.</p>
+      </div>
+
+      <div class="series-grid">
+        <div class="widget-card">
+          <h3>Liquidity Score</h3>
+          <div class="widget-frame" style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;">
+            <div id="ali-score" style="font-size:58px;font-weight:900;color:#fff;line-height:1;">--</div>
+            <div id="ali-badge" style="padding:8px 14px;border-radius:999px;border:1px solid var(--line);font-size:12px;font-weight:800;color:#fff;">Calculando</div>
+            <div id="ali-summary" class="widget-note" style="max-width:320px;text-align:center;">Leyendo condiciones de liquidez...</div>
+          </div>
+          <div class="widget-note">Score automático basado en M2, balance de la Fed, Reverse Repo y TGA.</div>
+        </div>
+
+        <div class="widget-card">
+          <h3>Componentes del índice</h3>
+          <div class="widget-frame" style="height:auto;padding:14px;display:block;">
+            <table class="mini-table">
+              <thead><tr><th>Componente</th><th>Lectura</th><th>Efecto</th></tr></thead>
+              <tbody>
+                <tr><td>M2</td><td id="ali-m2-state">--</td><td>Más dinero en el sistema</td></tr>
+                <tr><td>Fed Balance</td><td id="ali-walcl-state">--</td><td>Expansión o contracción</td></tr>
+                <tr><td>Reverse Repo</td><td id="ali-rrp-state">--</td><td>Si cae, libera liquidez</td></tr>
+                <tr><td>TGA</td><td id="ali-tga-state">--</td><td>Si cae, suele apoyar liquidez</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="widget-note">El índice sube cuando la liquidez mejora y baja cuando el sistema drena dinero.</div>
+        </div>
+      </div>
+
+      <div class="section-header" style="margin-top:20px;">
+        <h2>Series del índice</h2>
+        <p>Las series se actualizan automáticamente cuando FRED publica nuevos datos macro.</p>
+      </div>
+      <div class="series-grid">
+        <div class="series-item"><div class="series-code">M2SL</div><h4>M2 Money Supply</h4><p class="series-note">Oferta monetaria amplia del sistema.</p><img class="chart-img" src="https://fred.stlouisfed.org/graph/fredgraph.png?id=M2SL" alt="M2"><div class="link-row"><a class="link-btn" href="https://fred.stlouisfed.org/series/M2SL" target="_blank">Abrir serie</a></div></div>
+        <div class="series-item"><div class="series-code">WALCL</div><h4>Fed Balance Sheet</h4><p class="series-note">Activos totales de la Reserva Federal.</p><img class="chart-img" src="https://fred.stlouisfed.org/graph/fredgraph.png?id=WALCL" alt="WALCL"><div class="link-row"><a class="link-btn" href="https://fred.stlouisfed.org/series/WALCL" target="_blank">Abrir serie</a></div></div>
+        <div class="series-item"><div class="series-code">RRPONTSYD</div><h4>Reverse Repo</h4><p class="series-note">Cuando baja, tiende a liberar liquidez.</p><img class="chart-img" src="https://fred.stlouisfed.org/graph/fredgraph.png?g=zR9T" alt="RRP"><div class="link-row"><a class="link-btn" href="https://fred.stlouisfed.org/series/RRPONTSYD" target="_blank">Abrir serie</a></div></div>
+        <div class="series-item"><div class="series-code">WTREGEN</div><h4>TGA</h4><p class="series-note">Cuando baja, el Treasury suele inyectar más liquidez al sistema.</p><img class="chart-img" src="https://fred.stlouisfed.org/graph/fredgraph.png?g=33N6" alt="TGA"><div class="link-row"><a class="link-btn" href="https://fred.stlouisfed.org/series/WTREGEN" target="_blank">Abrir serie</a></div></div>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="macrostats">
+      <div class="section-header" id="inflation-section">
+        <h2>Inflation</h2>
+        <p>Indicadores clave de inflación utilizados para evaluar la presión inflacionaria en EE\.UU\.</p>
+      </div>
+      <div class="series-grid">
+        <div class="series-item"><div class="series-code">PCEPI</div><h4>PCE</h4><p class="series-note">Personal Consumption Expenditures Price Index.</p><img class="chart-img" src="https://fred.stlouisfed.org/graph/fredgraph.png?g=QhRk" alt="PCE"><div class="link-row"><a class="link-btn" href="https://fred.stlouisfed.org/series/PCEPI" target="_blank">Abrir serie</a></div></div>
+        <div class="series-item"><div class="series-code">PCEPILFE</div><h4>Core PCE</h4><p class="series-note">Indicador preferido por la Fed para decisiones de tasas.</p><img class="chart-img" src="https://fred.stlouisfed.org/graph/fredgraph.png?g=QhRl" alt="Core PCE"><div class="link-row"><a class="link-btn" href="https://fred.stlouisfed.org/series/PCEPILFE" target="_blank">Abrir serie</a></div></div>
+        <div class="series-item"><div class="series-code">PCEPI YoY</div><h4>PCE YoY</h4><p class="series-note">Cambio anual del PCE.</p><img class="chart-img" src="https://fred.stlouisfed.org/graph/fredgraph.png?id=PCEPI&cosd=2015-01-01&transformation=pc1" alt="PCE YoY"></div>
+        <div class="series-item"><div class="series-code">PCEPILFE YoY</div><h4>Core PCE YoY</h4><p class="series-note">Cambio anual del Core PCE.</p><img class="chart-img" src="https://fred.stlouisfed.org/graph/fredgraph.png?id=PCEPILFE&cosd=2015-01-01&transformation=pc1" alt="Core PCE YoY"></div>
+      </div>
+
+      <div class="term-divider"></div>
+      <div class="section-header" id="labor-section">
+        <h2>Labor</h2>
+        <p>Mercado laboral, desempleo y salarios.</p>
+      </div>
+      <div class="series-grid">
+        <div class="series-item"><div class="series-code">PAYEMS</div><h4>Payrolls</h4><img class="chart-img" src="https://fred.stlouisfed.org/graph/fredgraph.png?g=EL6u" alt="Payrolls"><div class="link-row"><a class="link-btn" href="https://fred.stlouisfed.org/series/PAYEMS" target="_blank">Abrir serie</a></div></div>
+        <div class="series-item"><div class="series-code">UNRATE</div><h4>Unemployment Rate</h4><img class="chart-img" src="https://fred.stlouisfed.org/graph/fredgraph.png?g=ncBS" alt="Unemployment"><div class="link-row"><a class="link-btn" href="https://fred.stlouisfed.org/series/UNRATE" target="_blank">Abrir serie</a></div></div>
+        <div class="series-item"><div class="series-code">CES0500000003</div><h4>Average Hourly Earnings</h4><img class="chart-img" src="https://fred.stlouisfed.org/graph/fredgraph.png?g=1Qgv4" alt="Wages"><div class="link-row"><a class="link-btn" href="https://fred.stlouisfed.org/series/CES0500000003" target="_blank">Abrir serie</a></div></div>
+      </div>
+
+      <div class="term-divider"></div>
+      <div class="section-header" id="liquidity-section">
+        <h2>Liquidity</h2>
+        <p>M2, balance de la Fed, TGA y Reverse Repo.</p>
+      </div>
+      <div class="series-grid">
+        <div class="series-item"><div class="series-code">M2SL</div><h4>M2 Money Supply</h4><img class="chart-img" src="https://fred.stlouisfed.org/graph/fredgraph.png?id=M2SL" alt="M2"><div class="link-row"><a class="link-btn" href="https://fred.stlouisfed.org/series/M2SL" target="_blank">Abrir serie</a></div></div>
+        <div class="series-item"><div class="series-code">WALCL</div><h4>Fed Balance Sheet</h4><img class="chart-img" src="https://fred.stlouisfed.org/graph/fredgraph.png?id=WALCL" alt="WALCL"><div class="link-row"><a class="link-btn" href="https://fred.stlouisfed.org/series/WALCL" target="_blank">Abrir serie</a></div></div>
+        <div class="series-item"><div class="series-code">WTREGEN</div><h4>TGA</h4><img class="chart-img" src="https://fred.stlouisfed.org/graph/fredgraph.png?g=33N6" alt="TGA"><div class="link-row"><a class="link-btn" href="https://fred.stlouisfed.org/series/WTREGEN" target="_blank">Abrir serie</a></div></div>
+        <div class="series-item"><div class="series-code">RRPONTSYD</div><h4>Reverse Repo</h4><img class="chart-img" src="https://fred.stlouisfed.org/graph/fredgraph.png?g=zR9T" alt="RRP"><div class="link-row"><a class="link-btn" href="https://fred.stlouisfed.org/series/RRPONTSYD" target="_blank">Abrir serie</a></div></div>
+      </div>
+
+      <div class="term-divider"></div>
+      <div class="section-header" id="yield-section">
+        <h2>Yield Curve</h2>
+        <p>Curva de tasas y spread 10Y - 2Y.</p>
+      </div>
+      <div class="series-grid">
+        <div class="series-item"><div class="series-code">DGS2</div><h4>2Y Treasury Yield</h4><div class="widget-frame" id="tv-2y"></div><div class="link-row"><a class="link-btn" href="https://fred.stlouisfed.org/series/DGS2" target="_blank">Abrir serie</a></div></div>
+        <div class="series-item"><div class="series-code">DGS10</div><h4>10Y Treasury Yield</h4><div class="widget-frame" id="tv-10y"></div><div class="link-row"><a class="link-btn" href="https://fred.stlouisfed.org/series/DGS10" target="_blank">Abrir serie</a></div></div>
+        <div class="series-item"><div class="series-code">T10Y2Y</div><h4>10Y - 2Y Spread</h4><img class="chart-img" src="https://fred.stlouisfed.org/graph/fredgraph.png?id=T10Y2Y" alt="Spread"><div class="link-row"><a class="link-btn" href="https://fred.stlouisfed.org/series/T10Y2Y" target="_blank">Abrir serie</a></div></div>
+      </div>
+
+      <div class="term-divider"></div>
+      <div class="section-header" id="markets-section">
+        <h2>Markets</h2>
+        <p>Activos clave de riesgo, refugio e inflación.</p>
+      </div>
+      <div class="series-grid">
+        <div class="series-item"><div class="series-code">SP500</div><h4>S&P 500</h4><div class="widget-frame" id="tv-spx-macro"></div></div>
+        <div class="series-item"><div class="series-code">CBBTCUSD</div><h4>Bitcoin</h4><div class="widget-frame" id="tv-btc-macro"></div></div>
+        <div class="series-item"><div class="series-code">GOLDAMGBD228NLBM</div><h4>Oro</h4><div class="widget-frame" id="tv-gold-macro"></div></div>
+        <div class="series-item"><div class="series-code">SLVPRUSD</div><h4>Plata</h4><div class="widget-frame" id="tv-silver-macro"></div></div>
+        <div class="series-item"><div class="series-code">DCOILWTICO</div><h4>Petróleo WTI</h4><div class="widget-frame" id="tv-oil-macro"></div></div>
+        <div class="series-item"><div class="series-code">DTWEXBGS</div><h4>Dólar</h4><img class="chart-img" src="https://fred.stlouisfed.org/graph/fredgraph.png?id=DTWEXBGS" alt="Dólar"></div>
+      </div>
+
+      <div class="term-divider"></div>
+      <div class="section-header" id="risk-section">
+        <h2>Risk</h2>
+        <p>Volatilidad y presión de riesgo.</p>
+      </div>
+      <div class="series-grid">
+        <div class="series-item"><div class="series-code">VIXCLS</div><h4>VIX</h4><img class="chart-img" src="https://fred.stlouisfed.org/graph/fredgraph.png?id=VIXCLS" alt="VIX"><div class="link-row"><a class="link-btn" href="https://fred.stlouisfed.org/series/VIXCLS" target="_blank">Abrir serie</a></div></div>
+        <div class="series-item"><div class="series-code">DCOILWTICO</div><h4>Petróleo WTI</h4><img class="chart-img" src="https://fred.stlouisfed.org/graph/fredgraph.png?id=DCOILWTICO" alt="WTI"><div class="link-row"><a class="link-btn" href="https://fred.stlouisfed.org/series/DCOILWTICO" target="_blank">Abrir serie</a></div></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="https://s3.tradingview.com/tv.js"></script>
+<script src="https://s3.tradingview.com/tv.js"></script>
+<script>
+const tabButtons = document.querySelectorAll('.tab-btn');
+const tabPanels = document.querySelectorAll('.tab-panel');
+const jumpButtons = document.querySelectorAll('.jump-btn');
+const homeHero = document.getElementById('home-hero');
+
+function activateTab(tabId) {
+  tabButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tabId));
+  tabPanels.forEach(panel => panel.classList.toggle('active', panel.id === tabId));
+  if (homeHero) homeHero.style.display = tabId === 'home' ? 'flex' : 'none';
+}
+
+tabButtons.forEach(btn => {
+  btn.addEventListener('click', () => activateTab(btn.dataset.tab));
+});
+
+jumpButtons.forEach(link => {
+  link.addEventListener('click', event => {
+    event.preventDefault();
+    const href = link.getAttribute('href');
+    const targetTab = href === '#ecosystem-top' ? 'ecosystem' : href === '#liquidity-index-top' ? 'liquidityindex' : 'macrostats';
+    activateTab(targetTab);
+    const target = document.querySelector(href);
+    if (target) {
+      requestAnimationFrame(() => {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+  });
+});
+
+function makeWidget(containerId, symbol) {
+  const container = document.getElementById(containerId);
+  if (!window.TradingView || !container) return;
+  new TradingView.widget({
+    autosize: true,
+    symbol,
+    interval: 'D',
+    timezone: 'Etc/UTC',
+    theme: 'dark',
+    style: '1',
+    locale: 'es',
+    hide_top_toolbar: true,
+    hide_legend: true,
+    allow_symbol_change: false,
+    save_image: false,
+    container_id: containerId
+  });
+}
+
+async function fetchFredObservation(seriesId) {
+  const url = `https://api.stlouisfed.org/fred/series/observations?series_id=${seriesId}&file_type=json&sort_order=desc&limit=8`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`FRED ${seriesId}`);
+  const data = await res.json();
+  return (data.observations || [])
+    .map(o => ({ date: o.date, value: Number(o.value) }))
+    .filter(o => Number.isFinite(o.value));
+}
+
+function scoreDirection(current, previous, invert = false) {
+  if (!Number.isFinite(current) || !Number.isFinite(previous)) return { score: 50, label: 'Neutral' };
+  const improving = invert ? current < previous : current > previous;
+  const worsening = invert ? current > previous : current < previous;
+  if (improving) return { score: 80, label: 'Positive' };
+  if (worsening) return { score: 20, label: 'Negative' };
+  return { score: 50, label: 'Neutral' };
+}
+
+async function updateAtlasLiquidityIndex() {
+  try {
+    const [m2Series, walclSeries, rrpSeries, tgaSeries] = await Promise.all([
+      fetchFredObservation('M2SL'),
+      fetchFredObservation('WALCL'),
+      fetchFredObservation('RRPONTSYD'),
+      fetchFredObservation('WTREGEN')
+    ]);
+
+    const m2 = scoreDirection(m2Series[0]?.value, m2Series[1]?.value, false);
+    const walcl = scoreDirection(walclSeries[0]?.value, walclSeries[1]?.value, false);
+    const rrp = scoreDirection(rrpSeries[0]?.value, rrpSeries[1]?.value, true);
+    const tga = scoreDirection(tgaSeries[0]?.value, tgaSeries[1]?.value, true);
+
+    const finalScore = Math.round((m2.score + walcl.score + rrp.score + tga.score) / 4);
+    let regimeText = 'Neutral';
+    let regimeColor = '#ffd24d';
+    let regimeBg = 'rgba(255,210,77,0.08)';
+    let regimeBorder = 'rgba(255,210,77,0.25)';
+    let summary = 'Las condiciones de liquidez son mixtas o neutrales para los activos de riesgo.';
+
+    if (finalScore >= 67) {
+      regimeText = 'Positive Liquidity';
+      regimeColor = '#39d98a';
+      regimeBg = 'rgba(57,217,138,0.08)';
+      regimeBorder = 'rgba(57,217,138,0.25)';
+      summary = 'La liquidez del sistema luce favorable para activos de riesgo como acciones y crypto.';
+    } else if (finalScore <= 33) {
+      regimeText = 'Tight Liquidity';
+      regimeColor = '#ff5c5c';
+      regimeBg = 'rgba(255,92,92,0.08)';
+      regimeBorder = 'rgba(255,92,92,0.25)';
+      summary = 'La liquidez del sistema luce restrictiva y podría presionar a los activos de riesgo.';
+    }
+
+    const scoreEl = document.getElementById('ali-score');
+    const badgeEl = document.getElementById('ali-badge');
+    const summaryEl = document.getElementById('ali-summary');
+    if (scoreEl) scoreEl.textContent = String(finalScore);
+    if (badgeEl) {
+      badgeEl.textContent = regimeText;
+      badgeEl.style.color = regimeColor;
+      badgeEl.style.background = regimeBg;
+      badgeEl.style.borderColor = regimeBorder;
+    }
+    if (summaryEl) summaryEl.textContent = summary;
+
+    const setState = (id, state) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = state;
+    };
+    setState('ali-m2-state', m2.label);
+    setState('ali-walcl-state', walcl.label);
+    setState('ali-rrp-state', rrp.label);
+    setState('ali-tga-state', tga.label);
+  } catch (err) {
+    const summaryEl = document.getElementById('ali-summary');
+    const badgeEl = document.getElementById('ali-badge');
+    if (badgeEl) badgeEl.textContent = 'Unavailable';
+    if (summaryEl) summaryEl.textContent = 'No fue posible leer FRED automáticamente en este entorno. En deploy normal puede funcionar mejor con API o JSON preprocesado.';
+  }
+}
+
+window.addEventListener('load', () => {
+  updateAtlasLiquidityIndex();
+
+  const widgets = [
+    ['tv-2y', 'TVC:US02Y'],
+    ['tv-10y', 'TVC:US10Y'],
+    ['tv-spx-macro', 'SP:SPX'],
+    ['tv-btc-macro', 'BITSTAMP:BTCUSD'],
+    ['tv-gold-macro', 'OANDA:XAUUSD'],
+    ['tv-silver-macro', 'OANDA:XAGUSD'],
+    ['tv-oil-macro', 'TVC:USOIL'],
+    ['tv-btc-card', 'BITSTAMP:BTCUSD'],
+    ['tv-eth-card', 'BITSTAMP:ETHUSD'],
+    ['tv-sol-card', 'BINANCE:SOLUSDT'],
+    ['tv-spx-card', 'SP:SPX'],
+    ['tv-ndx-card', 'NASDAQ:NDX'],
+    ['tv-dxy-card', 'TVC:DXY'],
+    ['tv-gold-card', 'OANDA:XAUUSD'],
+    ['tv-silver-card', 'OANDA:XAGUSD'],
+    ['tv-oil-card', 'TVC:USOIL']
+  ];
+
+  widgets.forEach(([id, symbol]) => makeWidget(id, symbol));
+});
+</script>
+</body>
+</html>
