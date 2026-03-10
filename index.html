@@ -25,7 +25,7 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
 .tab-btn.active{background:#151c25;border-color:#3a4656;box-shadow:inset 0 0 0 1px #4d5b70}
 .side-box{margin-top:18px;border:1px solid var(--line);background:#0b1016;padding:12px;border-radius:8px;color:var(--muted);font-size:12px;line-height:1.55}
 .main{padding:0 18px 18px;overflow:hidden}
-.topbar{position:sticky;top:0;z-index:20;margin:0 -18px 16px;background:#000;border-bottom:1px solid #202731}
+.topbar{position:sticky;top:0;z-index:20;margin:0 -18px 16px;background:#000;border-bottom:1px solid #202731;box-shadow:0 8px 18px rgba(0,0,0,0.18)}
 .topbar-inner{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 16px;flex-wrap:wrap}
 .terminal-tag{font-size:11px;letter-spacing:1.4px;color:var(--orange);text-transform:uppercase;font-weight:800}
 .terminal-status{font-size:12px;color:var(--muted)}
@@ -33,8 +33,8 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
 .jump-btn{font-size:11px;padding:6px 9px;border:1px solid var(--line);background:#0c1117;border-radius:4px;color:#d9e2ef;text-decoration:none;transition:.2s ease}
 .jump-btn:hover{background:#121922;border-color:#4b5d75}
 .jump-btn b{color:#fff}
-.ticker-shell{overflow:hidden;border-top:1px solid #11161d;background:#020406;min-height:46px}
-.tv-ticker-wrap{padding:4px 8px}
+.ticker-shell{overflow:hidden;border-top:1px solid #5a0000;border-bottom:1px solid #5a0000;background:linear-gradient(180deg,#9f1111 0%, #7d0000 100%);min-height:50px;box-shadow:inset 0 1px 0 rgba(255,255,255,0.08), inset 0 -1px 0 rgba(0,0,0,0.35)}
+.tv-ticker-wrap{padding:2px 8px}
 .hero{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap;padding:8px 0 6px}
 .hero h1{margin:0;font-size:42px;letter-spacing:-0.5px}
 .hero p{margin:8px 0 0;color:var(--muted);max-width:860px;line-height:1.6}
@@ -51,6 +51,19 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
 .series-note,.widget-note{color:var(--muted);line-height:1.6;font-size:13px}
 .chart-img{display:block;width:100%;max-width:100%;height:auto;max-height:230px;object-fit:contain;border:1px solid var(--line);background:#fff;border-radius:4px;margin:12px 0}
 .widget-frame{width:100%;height:220px;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:#0c1117}
+.widget-card.clickable{cursor:pointer;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
+.widget-card.clickable:hover{transform:translateY(-2px);border-color:#48586d;box-shadow:0 10px 24px rgba(0,0,0,0.22)}
+.widget-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+.widget-price{font-size:28px;font-weight:900;line-height:1;color:#fff}
+.chart-modal{position:fixed;inset:0;background:rgba(0,0,0,.72);display:none;align-items:center;justify-content:center;padding:24px;z-index:80}
+.chart-modal.open{display:flex}
+.chart-modal-panel{width:min(1180px,96vw);height:min(84vh,900px);background:#0b1016;border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.45);display:flex;flex-direction:column}
+.chart-modal-top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line);background:#0a0f15}
+.chart-modal-title{font-size:18px;font-weight:800}
+.chart-modal-note{font-size:12px;color:var(--muted)}
+.chart-modal-close{border:1px solid var(--line);background:#111722;color:#fff;border-radius:8px;padding:8px 12px;cursor:pointer}
+.chart-modal-body{flex:1;min-height:0}
+.chart-modal-widget{width:100%;height:100%}
 .link-row{display:flex;gap:8px;flex-wrap:wrap}
 .link-btn{padding:7px 10px;font-size:12px;border:1px solid #2d3948;background:#111722;color:#d5e2f1;border-radius:4px;text-decoration:none}
 .link-btn:hover{border-color:#4b5d75}
@@ -82,6 +95,7 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
         <div>
           <div class="terminal-tag">Atlas Capital Index</div>
           <div class="terminal-status">Market Terminal · Live Prices · Macro Indicators</div>
+          <div style="font-size:10px;color:#ffb3b3;letter-spacing:0.8px;text-transform:uppercase;">Live market tape</div>
         </div>
         <div class="jump-strip">
           <a class="jump-btn" href="#inflation-section"><b>INFLATION</b></a>
@@ -113,7 +127,7 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
               {"proName": "NASDAQ:TSLA", "title": "TSLA"}
             ],
             "showSymbolLogo": false,
-            "isTransparent": false,
+            "isTransparent": true,
             "displayMode": "adaptive",
             "colorTheme": "dark",
             "locale": "es"
@@ -136,15 +150,51 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
         <p>Seguimiento rápido de los principales activos globales: crypto, índices, commodities y dólar.</p>
       </div>
       <div class="market-grid">
-        <div class="widget-card"><h3>Bitcoin</h3><div class="widget-frame" id="tv-btc-card"></div><div class="widget-note">BTCUSD</div></div>
-        <div class="widget-card"><h3>Ethereum</h3><div class="widget-frame" id="tv-eth-card"></div><div class="widget-note">ETHUSD</div></div>
-        <div class="widget-card"><h3>Solana</h3><div class="widget-frame" id="tv-sol-card"></div><div class="widget-note">SOLUSD</div></div>
-        <div class="widget-card"><h3>S&P 500</h3><div class="widget-frame" id="tv-spx-card"></div><div class="widget-note">SPX</div></div>
-        <div class="widget-card"><h3>Nasdaq</h3><div class="widget-frame" id="tv-ndx-card"></div><div class="widget-note">Nasdaq 100</div></div>
-        <div class="widget-card"><h3>Dólar</h3><div class="widget-frame" id="tv-dxy-card"></div><div class="widget-note">DXY</div></div>
-        <div class="widget-card"><h3>Oro</h3><div class="widget-frame" id="tv-gold-card"></div><div class="widget-note">XAUUSD</div></div>
-        <div class="widget-card"><h3>Plata</h3><div class="widget-frame" id="tv-silver-card"></div><div class="widget-note">XAGUSD</div></div>
-        <div class="widget-card"><h3>Petróleo WTI</h3><div class="widget-frame" id="tv-oil-card"></div><div class="widget-note">USOIL</div></div>
+        <div class="widget-card clickable" data-symbol="BITSTAMP:BTCUSD" data-title="Bitcoin">
+          <div class="widget-head"><h3>Bitcoin</h3><div class="widget-price">BTC</div></div>
+          <div class="widget-frame" id="tv-btc-card"></div>
+          <div class="widget-note">Click para expandir el gráfico</div>
+        </div>
+        <div class="widget-card clickable" data-symbol="BITSTAMP:ETHUSD" data-title="Ethereum">
+          <div class="widget-head"><h3>Ethereum</h3><div class="widget-price">ETH</div></div>
+          <div class="widget-frame" id="tv-eth-card"></div>
+          <div class="widget-note">Click para expandir el gráfico</div>
+        </div>
+        <div class="widget-card clickable" data-symbol="BINANCE:SOLUSDT" data-title="Solana">
+          <div class="widget-head"><h3>Solana</h3><div class="widget-price">SOL</div></div>
+          <div class="widget-frame" id="tv-sol-card"></div>
+          <div class="widget-note">Click para expandir el gráfico</div>
+        </div>
+        <div class="widget-card clickable" data-symbol="SP:SPX" data-title="S&P 500">
+          <div class="widget-head"><h3>S&amp;P 500</h3><div class="widget-price">SPX</div></div>
+          <div class="widget-frame" id="tv-spx-card"></div>
+          <div class="widget-note">Click para expandir el gráfico</div>
+        </div>
+        <div class="widget-card clickable" data-symbol="NASDAQ:NDX" data-title="Nasdaq 100">
+          <div class="widget-head"><h3>Nasdaq</h3><div class="widget-price">NDX</div></div>
+          <div class="widget-frame" id="tv-ndx-card"></div>
+          <div class="widget-note">Click para expandir el gráfico</div>
+        </div>
+        <div class="widget-card clickable" data-symbol="TVC:DXY" data-title="Dólar">
+          <div class="widget-head"><h3>Dólar</h3><div class="widget-price">DXY</div></div>
+          <div class="widget-frame" id="tv-dxy-card"></div>
+          <div class="widget-note">Click para expandir el gráfico</div>
+        </div>
+        <div class="widget-card clickable" data-symbol="OANDA:XAUUSD" data-title="Oro">
+          <div class="widget-head"><h3>Oro</h3><div class="widget-price">XAU</div></div>
+          <div class="widget-frame" id="tv-gold-card"></div>
+          <div class="widget-note">Click para expandir el gráfico</div>
+        </div>
+        <div class="widget-card clickable" data-symbol="OANDA:XAGUSD" data-title="Plata">
+          <div class="widget-head"><h3>Plata</h3><div class="widget-price">XAG</div></div>
+          <div class="widget-frame" id="tv-silver-card"></div>
+          <div class="widget-note">Click para expandir el gráfico</div>
+        </div>
+        <div class="widget-card clickable" data-symbol="TVC:USOIL" data-title="Petróleo WTI">
+          <div class="widget-head"><h3>Petróleo WTI</h3><div class="widget-price">WTI</div></div>
+          <div class="widget-frame" id="tv-oil-card"></div>
+          <div class="widget-note">Click para expandir el gráfico</div>
+        </div>
       </div>
     </section>
 
@@ -229,7 +279,7 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
     <section class="tab-panel" id="macrostats">
       <div class="section-header" id="inflation-section">
         <h2>Inflation</h2>
-        <p>Indicadores clave de inflación utilizados para evaluar la presión inflacionaria en EE\.UU\.</p>
+        <p>Indicadores clave de inflación utilizados para evaluar la presión inflacionaria en EE.UU.</p>
       </div>
       <div class="series-grid">
         <div class="series-item"><div class="series-code">PCEPI</div><h4>PCE</h4><p class="series-note">Personal Consumption Expenditures Price Index.</p><img class="chart-img" src="https://fred.stlouisfed.org/graph/fredgraph.png?g=QhRk" alt="PCE"><div class="link-row"><a class="link-btn" href="https://fred.stlouisfed.org/series/PCEPI" target="_blank">Abrir serie</a></div></div>
@@ -278,7 +328,7 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
         <p>Activos clave de riesgo, refugio e inflación.</p>
       </div>
       <div class="series-grid">
-        <div class="series-item"><div class="series-code">SP500</div><h4>S&P 500</h4><div class="widget-frame" id="tv-spx-macro"></div></div>
+        <div class="series-item"><div class="series-code">SP500</div><h4>S&amp;P 500</h4><div class="widget-frame" id="tv-spx-macro"></div></div>
         <div class="series-item"><div class="series-code">CBBTCUSD</div><h4>Bitcoin</h4><div class="widget-frame" id="tv-btc-macro"></div></div>
         <div class="series-item"><div class="series-code">GOLDAMGBD228NLBM</div><h4>Oro</h4><div class="widget-frame" id="tv-gold-macro"></div></div>
         <div class="series-item"><div class="series-code">SLVPRUSD</div><h4>Plata</h4><div class="widget-frame" id="tv-silver-macro"></div></div>
@@ -299,13 +349,31 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
   </main>
 </div>
 
-<script src="https://s3.tradingview.com/tv.js"></script>
+<div class="chart-modal" id="chart-modal">
+  <div class="chart-modal-panel">
+    <div class="chart-modal-top">
+      <div>
+        <div class="chart-modal-title" id="chart-modal-title">Activo</div>
+        <div class="chart-modal-note">Vista ampliada para análisis</div>
+      </div>
+      <button class="chart-modal-close" id="chart-modal-close" type="button">Cerrar</button>
+    </div>
+    <div class="chart-modal-body">
+      <div class="chart-modal-widget" id="chart-modal-widget"></div>
+    </div>
+  </div>
+</div>
+
 <script src="https://s3.tradingview.com/tv.js"></script>
 <script>
 const tabButtons = document.querySelectorAll('.tab-btn');
 const tabPanels = document.querySelectorAll('.tab-panel');
 const jumpButtons = document.querySelectorAll('.jump-btn');
 const homeHero = document.getElementById('home-hero');
+const chartModal = document.getElementById('chart-modal');
+const chartModalTitle = document.getElementById('chart-modal-title');
+const chartModalClose = document.getElementById('chart-modal-close');
+const chartModalWidget = document.getElementById('chart-modal-widget');
 
 function activateTab(tabId) {
   tabButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tabId));
@@ -332,27 +400,33 @@ jumpButtons.forEach(link => {
   });
 });
 
-function makeWidget(containerId, symbol) {
+function makeWidget(containerId, symbol, options = {}) {
   const container = document.getElementById(containerId);
   if (!window.TradingView || !container) return;
+  container.innerHTML = '';
   new TradingView.widget({
     autosize: true,
     symbol,
-    interval: 'D',
+    interval: options.interval || 'D',
     timezone: 'Etc/UTC',
     theme: 'dark',
     style: '1',
     locale: 'es',
-    hide_top_toolbar: true,
-    hide_legend: true,
+    hide_top_toolbar: options.hideTopToolbar ?? true,
+    hide_legend: options.hideLegend ?? true,
     allow_symbol_change: false,
     save_image: false,
+    withdateranges: options.withDateRanges ?? false,
+    details: options.details ?? false,
+    studies: options.studies || [],
     container_id: containerId
   });
 }
 
+const FRED_API_KEY = '0b8976e2587a5fbcfa6561ad387943f5';
+
 async function fetchFredObservation(seriesId) {
-  const url = `https://api.stlouisfed.org/fred/series/observations?series_id=${seriesId}&file_type=json&sort_order=desc&limit=8`;
+  const url = `https://api.stlouisfed.org/fred/series/observations?series_id=${seriesId}&api_key=${FRED_API_KEY}&file_type=json&sort_order=desc&limit=8`;
   const res = await fetch(url);
   if (!res.ok) throw new Error(`FRED ${seriesId}`);
   const data = await res.json();
@@ -408,6 +482,7 @@ async function updateAtlasLiquidityIndex() {
     const scoreEl = document.getElementById('ali-score');
     const badgeEl = document.getElementById('ali-badge');
     const summaryEl = document.getElementById('ali-summary');
+
     if (scoreEl) scoreEl.textContent = String(finalScore);
     if (badgeEl) {
       badgeEl.textContent = regimeText;
@@ -421,6 +496,7 @@ async function updateAtlasLiquidityIndex() {
       const el = document.getElementById(id);
       if (el) el.textContent = state;
     };
+
     setState('ali-m2-state', m2.label);
     setState('ali-walcl-state', walcl.label);
     setState('ali-rrp-state', rrp.label);
@@ -433,8 +509,54 @@ async function updateAtlasLiquidityIndex() {
   }
 }
 
+function openChartModal(title, symbol) {
+  if (!chartModal || !chartModalTitle || !chartModalWidget) return;
+  chartModalTitle.textContent = title;
+  chartModal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  makeWidget('chart-modal-widget', symbol, {
+    interval: '60',
+    hideTopToolbar: false,
+    hideLegend: false,
+    withDateRanges: true,
+    details: true
+  });
+}
+
+function closeChartModal() {
+  if (!chartModal || !chartModalWidget) return;
+  chartModal.classList.remove('open');
+  document.body.style.overflow = '';
+  chartModalWidget.innerHTML = '';
+}
+
+function runSanityChecks() {
+  console.assert(scoreDirection(10, 9, false).label === 'Positive', 'scoreDirection should mark higher non-inverted values as Positive');
+  console.assert(scoreDirection(8, 9, true).label === 'Positive', 'scoreDirection should mark lower inverted values as Positive');
+  console.assert(scoreDirection(8, 8, false).label === 'Neutral', 'scoreDirection should mark equal values as Neutral');
+  console.assert(scoreDirection(Number.NaN, 8, false).label === 'Neutral', 'scoreDirection should handle invalid values');
+}
+
+document.querySelectorAll('.widget-card.clickable').forEach(card => {
+  card.addEventListener('click', () => {
+    openChartModal(card.dataset.title || 'Activo', card.dataset.symbol || 'BITSTAMP:BTCUSD');
+  });
+});
+
+if (chartModalClose) chartModalClose.addEventListener('click', closeChartModal);
+if (chartModal) {
+  chartModal.addEventListener('click', event => {
+    if (event.target === chartModal) closeChartModal();
+  });
+}
+
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape') closeChartModal();
+});
+
 window.addEventListener('load', () => {
   updateAtlasLiquidityIndex();
+  runSanityChecks();
 
   const widgets = [
     ['tv-2y', 'TVC:US02Y'],
