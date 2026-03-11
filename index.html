@@ -199,54 +199,7 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
           </div>
         </aside>
       </div>
-      <div class="market-grid">
-        <div class="widget-card clickable" data-symbol="BITSTAMP:BTCUSD" data-title="Bitcoin">
-          <div class="widget-head"><h3>Bitcoin</h3><div class="widget-price">BTC</div></div>
-          <div class="widget-frame" id="tv-btc-card"></div>
-          <div class="widget-note">Click para expandir el gráfico</div>
-        </div>
-        <div class="widget-card clickable" data-symbol="BITSTAMP:ETHUSD" data-title="Ethereum">
-          <div class="widget-head"><h3>Ethereum</h3><div class="widget-price">ETH</div></div>
-          <div class="widget-frame" id="tv-eth-card"></div>
-          <div class="widget-note">Click para expandir el gráfico</div>
-        </div>
-        <div class="widget-card clickable" data-symbol="BINANCE:SOLUSDT" data-title="Solana">
-          <div class="widget-head"><h3>Solana</h3><div class="widget-price">SOL</div></div>
-          <div class="widget-frame" id="tv-sol-card"></div>
-          <div class="widget-note">Click para expandir el gráfico</div>
-        </div>
-        <div class="widget-card clickable" data-symbol="SP:SPX" data-title="S&P 500">
-          <div class="widget-head"><h3>S&amp;P 500</h3><div class="widget-price">SPX</div></div>
-          <div class="widget-frame" id="tv-spx-card"></div>
-          <div class="widget-note">Click para expandir el gráfico</div>
-        </div>
-        <div class="widget-card clickable" data-symbol="NASDAQ:NDX" data-title="Nasdaq 100">
-          <div class="widget-head"><h3>Nasdaq</h3><div class="widget-price">NDX</div></div>
-          <div class="widget-frame" id="tv-ndx-card"></div>
-          <div class="widget-note">Click para expandir el gráfico</div>
-        </div>
-        <div class="widget-card clickable" data-symbol="TVC:DXY" data-title="Dólar">
-          <div class="widget-head"><h3>Dólar</h3><div class="widget-price">DXY</div></div>
-          <div class="widget-frame" id="tv-dxy-card"></div>
-          <div class="widget-note">Click para expandir el gráfico</div>
-        </div>
-        <div class="widget-card clickable" data-symbol="OANDA:XAUUSD" data-title="Oro">
-          <div class="widget-head"><h3>Oro</h3><div class="widget-price">XAU</div></div>
-          <div class="widget-frame" id="tv-gold-card"></div>
-          <div class="widget-note">Click para expandir el gráfico</div>
-        </div>
-        <div class="widget-card clickable" data-symbol="OANDA:XAGUSD" data-title="Plata">
-          <div class="widget-head"><h3>Plata</h3><div class="widget-price">XAG</div></div>
-          <div class="widget-frame" id="tv-silver-card"></div>
-          <div class="widget-note">Click para expandir el gráfico</div>
-        </div>
-        <div class="widget-card clickable" data-symbol="TVC:USOIL" data-title="Petróleo WTI">
-          <div class="widget-head"><h3>Petróleo WTI</h3><div class="widget-price">WTI</div></div>
-          <div class="widget-frame" id="tv-oil-card"></div>
-          <div class="widget-note">Click para expandir el gráfico</div>
-        </div>
-      </div>
-    </section>
+      </section>
 
     <section class="tab-panel" id="ecosystem">
       <div class="section-header" id="ecosystem-top">
@@ -583,7 +536,13 @@ function makeWidget(containerId, symbol, options = {}) {
     hide_top_toolbar: options.hideTopToolbar !== undefined ? options.hideTopToolbar : true,
     hide_legend: options.hideLegend !== undefined ? options.hideLegend : true,
     hide_side_toolbar: options.hideSideToolbar !== undefined ? options.hideSideToolbar : true,
-    allow_symbol_change: options.allowSymbolChange !== undefined ? optio
+    allow_symbol_change: options.allowSymbolChange !== undefined ? options.allowSymbolChange : false,
+    withdateranges: options.withDateRanges !== undefined ? options.withDateRanges : false,
+    details: options.details !== undefined ? options.details : false,
+    studies: options.studies || [],
+    container_id: containerId
+  });
+}
 
 async function fetchFredObservation(seriesId) {
   const url = `https://api.stlouisfed.org/fred/series/observations?series_id=${seriesId}&api_key=${FRED_API_KEY}&file_type=json&sort_order=desc&limit=8`;
@@ -678,6 +637,7 @@ function openChartModal(title, symbol) {
       interval: '60',
       hideTopToolbar: false,
       hideLegend: false,
+      hideSideToolbar: false,
       allowSymbolChange: true,
       withDateRanges: true,
       details: true
