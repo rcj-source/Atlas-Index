@@ -582,13 +582,8 @@ function makeWidget(containerId, symbol, options = {}) {
     enable_publishing: false,
     hide_top_toolbar: options.hideTopToolbar !== undefined ? options.hideTopToolbar : true,
     hide_legend: options.hideLegend !== undefined ? options.hideLegend : true,
-    allow_symbol_change: options.allowSymbolChange !== undefined ? options.allowSymbolChange : false,
-    withdateranges: options.withDateRanges !== undefined ? options.withDateRanges : false,
-    details: options.details !== undefined ? options.details : false,
-    studies: options.studies || [],
-    container_id: containerId
-  });
-}
+    hide_side_toolbar: options.hideSideToolbar !== undefined ? options.hideSideToolbar : true,
+    allow_symbol_change: options.allowSymbolChange !== undefined ? optio
 
 async function fetchFredObservation(seriesId) {
   const url = `https://api.stlouisfed.org/fred/series/observations?series_id=${seriesId}&api_key=${FRED_API_KEY}&file_type=json&sort_order=desc&limit=8`;
