@@ -45,6 +45,14 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
 .section-header p{margin:0;color:var(--muted);font-size:13px;line-height:1.55;max-width:760px}
 .series-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start}
 .market-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:start}
+.home-top-layout{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:16px;align-items:start;margin-bottom:16px}
+.home-overview-header{grid-column:1 / -1}
+.home-main-col{min-width:0}
+.home-side-col{min-width:0}
+.timeline-widget-shell{background:linear-gradient(180deg,#0d1218,#0b1016);border:1px solid var(--line);border-radius:8px;padding:10px;overflow:hidden}
+.home-main-col .timeline-widget-shell{margin-top:0}
+.timeline-widget-shell .tradingview-widget-copyright{display:none}
+@media (max-width:1200px){.home-top-layout{grid-template-columns:1fr}}
 .series-item,.widget-card{min-width:0;background:linear-gradient(180deg,#0d1218,#0b1016);border:1px solid var(--line);border-radius:8px;padding:14px}
 .series-code{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--orange);font-weight:700}
 .series-item h4,.widget-card h3{margin:8px 0;font-size:20px}
@@ -82,7 +90,8 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
     <div class="subtitle">Dashboard macro y de mercados para seguir liquidez global, inflación, empleo y riesgo en tiempo casi real.</div>
     <nav class="nav">
       <button class="tab-btn active" data-tab="home">Inicio</button>
-      <button class="tab-btn" data-tab="liquidityindex">Atlas Liquidity Index</button>
+      <button class="tab-btn" data-tab="stockindex">Atlas Stock Index</button>
+      <button class="tab-btn" data-tab="commoditiesindex">Atlas Commodities Index</button>
       <button class="tab-btn" data-tab="macrostats">Macro Stats</button>
       <button class="tab-btn" data-tab="ecosystem">Atlas Ecosystem</button>
     </nav>
@@ -105,7 +114,7 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
           <a class="jump-btn" href="#markets-section"><b>MARKETS</b></a>
           <a class="jump-btn" href="#risk-section"><b>RISK</b></a>
           <a class="jump-btn" href="#ecosystem-top"><b>ATLAS</b></a>
-          <a class="jump-btn" href="#liquidity-index-top"><b>INDEX</b></a>
+          <a class="jump-btn" href="#stock-index-top"><b>INDEX</b></a>
         </div>
       </div>
       <div class="ticker-shell">
@@ -145,9 +154,50 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
     </section>
 
     <section class="tab-panel active" id="home">
-      <div class="section-header">
-        <h2>Market Overview</h2>
-        <p>Seguimiento rápido de los principales activos globales: crypto, índices, commodities y dólar.</p>
+      <div class="home-top-layout">
+        <div class="section-header home-overview-header">
+            <h2>Market Overview</h2>
+            <p>Seguimiento rápido de los principales activos globales: crypto, índices, commodities y dólar.</p>
+        </div>
+
+        <div class="home-main-col">
+          <div class="timeline-widget-shell" style="margin-bottom:16px;">
+            <div class="tradingview-widget-container">
+              <div class="tradingview-widget-container__widget"></div>
+              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js" async>
+              {
+                "defaultColumn": "overview",
+                "screener_type": "crypto_mkt",
+                "displayCurrency": "USD",
+                "colorTheme": "dark",
+                "isTransparent": false,
+                "locale": "es",
+                "width": "100%",
+                "height": 550
+              }
+              </script>
+            </div>
+          </div>
+        </div>
+
+        <aside class="home-side-col">
+          <div class="timeline-widget-shell">
+            <div class="tradingview-widget-container">
+              <div class="tradingview-widget-container__widget" id="tv-timeline-widget"></div>
+              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
+              {
+                "displayMode": "regular",
+                "feedMode": "all_symbols",
+                "colorTheme": "dark",
+                "isTransparent": false,
+                "locale": "es",
+                "width": 400,
+                "height": 550
+              }
+              </script>
+            </div>
+          </div>
+        </aside>
       </div>
       <div class="market-grid">
         <div class="widget-card clickable" data-symbol="BITSTAMP:BTCUSD" data-title="Bitcoin">
@@ -232,53 +282,166 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
       </div>
     </section>
 
-    <section class="tab-panel" id="liquidityindex">
-      <div class="section-header" id="liquidity-index-top">
-        <h2>Atlas Liquidity Index</h2>
-        <p>Indicador propio del ecosistema Atlas para leer si la liquidez del sistema está apoyando o presionando a los activos de riesgo.</p>
+    <section class="tab-panel" id="stockindex">
+      <div class="section-header" id="stock-index-top">
+        <h2>Atlas Stock Index</h2>
+        <p>Mapa de calor del S&amp;P 500 para visualizar qué sectores están impulsando o frenando el mercado.</p>
       </div>
 
-      <div class="series-grid">
-        <div class="widget-card">
-          <h3>Liquidity Score</h3>
-          <div class="widget-frame" style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;">
-            <div id="ali-score" style="font-size:58px;font-weight:900;color:#fff;line-height:1;">--</div>
-            <div id="ali-badge" style="padding:8px 14px;border-radius:999px;border:1px solid var(--line);font-size:12px;font-weight:800;color:#fff;">Calculando</div>
-            <div id="ali-summary" class="widget-note" style="max-width:320px;text-align:center;">Leyendo condiciones de liquidez...</div>
-          </div>
-          <div class="widget-note">Score automático basado en M2, balance de la Fed, Reverse Repo y TGA.</div>
-        </div>
-
-        <div class="widget-card">
-          <h3>Componentes del índice</h3>
-          <div class="widget-frame" style="height:auto;padding:14px;display:block;">
-            <table class="mini-table">
-              <thead><tr><th>Componente</th><th>Lectura</th><th>Efecto</th></tr></thead>
-              <tbody>
-                <tr><td>M2</td><td id="ali-m2-state">--</td><td>Más dinero en el sistema</td></tr>
-                <tr><td>Fed Balance</td><td id="ali-walcl-state">--</td><td>Expansión o contracción</td></tr>
-                <tr><td>Reverse Repo</td><td id="ali-rrp-state">--</td><td>Si cae, libera liquidez</td></tr>
-                <tr><td>TGA</td><td id="ali-tga-state">--</td><td>Si cae, suele apoyar liquidez</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="widget-note">El índice sube cuando la liquidez mejora y baja cuando el sistema drena dinero.</div>
+      <div style="background:linear-gradient(180deg,#0d1218,#0b1016);border:1px solid var(--line);border-radius:8px;padding:14px;height:650px;margin-bottom:16px;">
+        <div class="tradingview-widget-container" style="height:100%;width:100%;">
+          <div class="tradingview-widget-container__widget"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js" async>
+          {
+            "dataSource": "SPX500",
+            "blockSize": "market_cap_basic",
+            "blockColor": "change",
+            "grouping": "sector",
+            "locale": "en",
+            "symbolUrl": "",
+            "colorTheme": "dark",
+            "exchanges": [],
+            "hasTopBar": false,
+            "isDataSetEnabled": false,
+            "isZoomEnabled": true,
+            "hasSymbolTooltip": true,
+            "isMonoSize": false,
+            "width": "100%",
+            "height": "100%"
+          }
+          </script>
         </div>
       </div>
 
-      <div class="section-header" style="margin-top:20px;">
-        <h2>Series del índice</h2>
-        <p>Las series se actualizan automáticamente cuando FRED publica nuevos datos macro.</p>
-      </div>
-      <div class="series-grid">
-        <div class="series-item"><div class="series-code">M2SL</div><h4>M2 Money Supply</h4><p class="series-note">Oferta monetaria amplia del sistema.</p><img class="chart-img" src="https://fred.stlouisfed.org/graph/fredgraph.png?id=M2SL" alt="M2"><div class="link-row"><a class="link-btn" href="https://fred.stlouisfed.org/series/M2SL" target="_blank">Abrir serie</a></div></div>
-        <div class="series-item"><div class="series-code">WALCL</div><h4>Fed Balance Sheet</h4><p class="series-note">Activos totales de la Reserva Federal.</p><img class="chart-img" src="https://fred.stlouisfed.org/graph/fredgraph.png?id=WALCL" alt="WALCL"><div class="link-row"><a class="link-btn" href="https://fred.stlouisfed.org/series/WALCL" target="_blank">Abrir serie</a></div></div>
-        <div class="series-item"><div class="series-code">RRPONTSYD</div><h4>Reverse Repo</h4><p class="series-note">Cuando baja, tiende a liberar liquidez.</p><img class="chart-img" src="https://fred.stlouisfed.org/graph/fredgraph.png?g=zR9T" alt="RRP"><div class="link-row"><a class="link-btn" href="https://fred.stlouisfed.org/series/RRPONTSYD" target="_blank">Abrir serie</a></div></div>
-        <div class="series-item"><div class="series-code">WTREGEN</div><h4>TGA</h4><p class="series-note">Cuando baja, el Treasury suele inyectar más liquidez al sistema.</p><img class="chart-img" src="https://fred.stlouisfed.org/graph/fredgraph.png?g=33N6" alt="TGA"><div class="link-row"><a class="link-btn" href="https://fred.stlouisfed.org/series/WTREGEN" target="_blank">Abrir serie</a></div></div>
+      <div style="background:linear-gradient(180deg,#0d1218,#0b1016);border:1px solid var(--line);border-radius:8px;padding:14px;min-height:580px;">
+        <div class="tradingview-widget-container" style="height:100%;width:100%;">
+          <div class="tradingview-widget-container__widget"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>
+          {
+            "colorTheme": "dark",
+            "locale": "es",
+            "largeChartUrl": "",
+            "isTransparent": false,
+            "showSymbolLogo": true,
+            "backgroundColor": "#131722",
+            "support_host": "https://www.tradingview.com",
+            "width": "100%",
+            "height": 550,
+            "symbolsGroups": [
+              {
+                "name": "Indices",
+                "symbols": [
+                  {"name": "FOREXCOM:SPXUSD", "displayName": "S&P 500 Index"},
+                  {"name": "FOREXCOM:NSXUSD", "displayName": "US 100 Cash CFD"},
+                  {"name": "FOREXCOM:DJI", "displayName": "Dow Jones Industrial Average Index"},
+                  {"name": "INDEX:NKY", "displayName": "Japan 225"},
+                  {"name": "INDEX:DEU40", "displayName": "DAX Index"},
+                  {"name": "FOREXCOM:UKXGBP", "displayName": "FTSE 100 Index"}
+                ]
+              },
+              {
+                "name": "Futures",
+                "symbols": [
+                  {"name": "BMFBOVESPA:ISP1!", "displayName": "S&P 500"},
+                  {"name": "BMFBOVESPA:EUR1!", "displayName": "Euro"},
+                  {"name": "CMCMARKETS:GOLD", "displayName": "Gold"},
+                  {"name": "PYTH:WTI3!", "displayName": "WTI Crude Oil"},
+                  {"name": "BMFBOVESPA:CCM1!", "displayName": "Corn"}
+                ]
+              }
+            ]
+          }
+          </script>
+        </div>
       </div>
     </section>
 
-    <section class="tab-panel" id="macrostats">
+    <section class="tab-panel" id="commoditiesindex">
+
+<div class="section-header">
+<h2>Atlas Commodities Index</h2>
+<p>Panel de commodities con seguimiento de Oro y Plata.</p>
+</div>
+
+<div class="series-grid">
+
+<div class="widget-card">
+
+<div class="tradingview-widget-container">
+<div class="tradingview-widget-container__widget"></div>
+<script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-financials.js" async>
+{
+"symbol": "PEPPERSTONE:XAUUSD",
+"colorTheme": "dark",
+"displayMode": "regular",
+"isTransparent": false,
+"locale": "es",
+"width": 400,
+"height": 550
+}
+</script>
+</div>
+
+</div>
+
+<div class="widget-card">
+
+<div class="tradingview-widget-container">
+<div class="tradingview-widget-container__widget"></div>
+<script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-info.js" async>
+{
+"symbol": "PEPPERSTONE:XAUUSD",
+"colorTheme": "dark",
+"isTransparent": false,
+"locale": "en",
+"width": "100%"
+}
+</script>
+</div>
+
+</div>
+
+<div class="widget-card">
+
+<div class="tradingview-widget-container">
+<div class="tradingview-widget-container__widget"></div>
+<script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-financials.js" async>
+{
+"symbol": "TVC:SILVER",
+"colorTheme": "dark",
+"displayMode": "regular",
+"isTransparent": false,
+"locale": "es",
+"width": 400,
+"height": 550
+}
+</script>
+</div>
+
+</div>
+
+<div class="widget-card">
+
+<div class="tradingview-widget-container">
+<div class="tradingview-widget-container__widget"></div>
+<script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-info.js" async>
+{
+"symbol": "TVC:SILVER",
+"colorTheme": "dark",
+"isTransparent": false,
+"locale": "en",
+"width": "100%"
+}
+</script>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="tab-panel" id="macrostats">
       <div class="section-header" id="inflation-section">
         <h2>Inflation</h2>
         <p>Indicadores clave de inflación utilizados para evaluar la presión inflacionaria en EE.UU.</p>
@@ -395,7 +558,7 @@ jumpButtons.forEach(link => {
   link.addEventListener('click', event => {
     event.preventDefault();
     const href = link.getAttribute('href');
-    const targetTab = href === '#ecosystem-top' ? 'ecosystem' : href === '#liquidity-index-top' ? 'liquidityindex' : 'macrostats';
+    const targetTab = href === '#ecosystem-top' ? 'ecosystem' : href === '#stock-index-top' ? 'stockindex' : 'macrostats';
     activateTab(targetTab);
     const target = document.querySelector(href);
     if (target) requestAnimationFrame(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }));
