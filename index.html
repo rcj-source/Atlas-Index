@@ -214,17 +214,9 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
 <div class="widget-note">Índice de sentimiento del mercado crypto.</div>
 </div>
 
-<div class="widget-card">
-<h3>VIX Volatility Index</h3>
-<div class="widget-frame" id="tv-vix-card"></div>
-<div class="widget-note">Mide el miedo en el mercado de acciones.</div>
-</div>
 
-<div class="widget-card">
-<h3>S&P 500 Put/Call Proxy</h3>
-<div class="widget-frame" id="tv-putcall-card"></div>
-<div class="widget-note">Proxy visual del sentimiento de opciones.</div>
-</div>
+
+
 
 </div>
 
@@ -755,9 +747,7 @@ window.addEventListener('load', () => {
     ['tv-dxy-card', 'TVC:DXY'],
     ['tv-gold-card', 'OANDA:XAUUSD'],
     ['tv-silver-card', 'OANDA:XAGUSD'],
-    ['tv-oil-card', 'TVC:USOIL'],
-    ['tv-vix-card','TVC:VIX'],
-    ['tv-putcall-card','CBOE:SPX']
+    ['tv-oil-card', 'TVC:USOIL']
   ].forEach(([id, symbol]) => makeWidget(id, symbol));
 });
 </script>
