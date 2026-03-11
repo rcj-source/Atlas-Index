@@ -199,28 +199,7 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
           </div>
         </aside>
       </div>
-      <div class="section-header" style="margin-top:10px;">
-<h2>Market Sentiment</h2>
-<p>Indicadores de sentimiento del mercado: Fear & Greed, volatilidad (VIX) y presión de opciones.</p>
-</div>
-
-<div class="series-grid" style="margin-bottom:18px;">
-
-<div class="widget-card">
-<h3>Crypto Fear & Greed</h3>
-<div class="widget-frame" style="height:320px;display:flex;align-items:center;justify-content:center;background:#0c1117;">
-<img src="https://alternative.me/crypto/fear-and-greed-index.png" alt="Crypto Fear and Greed Index" style="max-width:100%;max-height:100%;object-fit:contain;border-radius:6px;display:block;" />
-</div>
-<div class="widget-note">Índice de sentimiento del mercado crypto.</div>
-</div>
-
-
-
-
-
-</div>
-
-<div class="market-grid">
+      <div class="market-grid">
         <div class="widget-card clickable" data-symbol="BITSTAMP:BTCUSD" data-title="Bitcoin">
           <div class="widget-head"><h3>Bitcoin</h3><div class="widget-price">BTC</div></div>
           <div class="widget-frame" id="tv-btc-card"></div>
@@ -600,14 +579,13 @@ function makeWidget(containerId, symbol, options = {}) {
     locale: 'es',
     hide_top_toolbar: options.hideTopToolbar ?? true,
     hide_legend: options.hideLegend ?? true,
-    allow_symbol_change: false,
+    hide_side_toolbar: options.hideSideToolbar ?? true,
+    allow_symbol_change: options.allowSymbolChange ?? false,
     save_image: false,
     withdateranges: options.withDateRanges ?? false,
     details: options.details ?? false,
     studies: options.studies || [],
-    container_id: containerId
-  });
-}
+    container_id: c
 
 async function fetchFredObservation(seriesId) {
   const url = `https://api.stlouisfed.org/fred/series/observations?series_id=${seriesId}&api_key=${FRED_API_KEY}&file_type=json&sort_order=desc&limit=8`;
