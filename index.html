@@ -91,18 +91,19 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
       <button class="tab-btn" data-tab="stockindex">Atlas Stock Index</button>
       <button class="tab-btn" data-tab="commoditiesindex">Atlas Commodities Index</button>
       <button class="tab-btn" data-tab="macrostats">Macro Stats</button>
+      <button class="tab-btn" data-tab="liquidityengine">Atlas Liquidity Engine</button>
       <button class="tab-btn" data-tab="ecosystem">Atlas Ecosystem</button>
     </nav>
     <div class="wallet-gate-box">
       <h4>QRA Holder Access</h4>
       <button class="wallet-btn" id="connect-wallet-btn" type="button" onclick="window.handlePhantomConnect && window.handlePhantomConnect()">Conectar Phantom</button>
-      <div class="wallet-status" id="wallet-status">Necesitas <strong>1,000,000 QRA</strong> para desbloquear Altas Crypto Index, Atlas Stock Index, Atlas Commodities Index y Macro Stats.</div>
+      <div class="wallet-status" id="wallet-status">Necesitas <strong>1,000,000 QRA</strong> para desbloquear Altas Crypto Index, Atlas Stock Index, Atlas Commodities Index, Macro Stats y Atlas Liquidity Engine.</div>
     </div>
     <script>
     window.handlePhantomConnect = async function () {
       const btn = document.getElementById('connect-wallet-btn');
       const status = document.getElementById('wallet-status');
-      const gatedTabs = ['altascrypto','stockindex','commoditiesindex','macrostats'];
+      const gatedTabs = ['altascrypto','stockindex','commoditiesindex','macrostats','liquidityengine'];
       const qraMint = 'DsMWZg6mkheTV2XTkbUtWcsXaajTzEkk1TC7o6Fmpump';
       const requiredQra = 1000000;
       const provider = window.phantom?.solana || window.solana;
@@ -177,6 +178,7 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
           <a class="jump-btn" href="#liquidity-section"><b>LIQUIDITY</b></a>
           <a class="jump-btn" href="#yield-section"><b>YIELD</b></a>
           <a class="jump-btn" href="#markets-section"><b>MARKETS</b></a>
+          <a class="jump-btn" href="#liquidity-engine-top"><b>ENGINE</b></a>
           <a class="jump-btn" href="#ecosystem-top"><b>ATLAS</b></a>
         </div>
       </div>
@@ -517,6 +519,90 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
           </div>
     </section>
 
+    <section class="tab-panel" id="liquidityengine">
+      <div class="gate-locked" data-gate-panel="liquidityengine">
+        <div class="gate-card">
+          <div class="gate-eyebrow">QRA Holder Access</div>
+          <h3 class="gate-title">Atlas Liquidity Engine bloqueado</h3>
+          <p class="gate-copy">Esta sección premium requiere una wallet Phantom con al menos <strong>1,000,000 QRA</strong>. Conecta tu wallet en la barra lateral para desbloquear el motor de lectura macro del ecosistema Atlas.</p>
+          <ul class="gate-list">
+            <li>Atlas Liquidity Score</li>
+            <li>Dollar Pressure</li>
+            <li>Risk Regime</li>
+            <li>Bitcoin Liquidity State</li>
+          </ul>
+          <div class="gate-pill">Requisito: 1,000,000 QRA</div>
+        </div>
+      </div>
+      <div class="gated-content" data-gated-content="liquidityengine">
+        <div class="section-header" id="liquidity-engine-top">
+          <h2>Atlas Liquidity Engine</h2>
+          <p>Motor premium del ecosistema Atlas para resumir liquidez global, presión del dólar, régimen de riesgo y lectura de Bitcoin.</p>
+        </div>
+
+        <div class="series-grid" style="margin-bottom:16px;">
+          <div class="widget-card">
+            <div class="series-code">ALI SCORE</div>
+            <h3>Atlas Liquidity Score</h3>
+            <div class="embed-frame" style="height:220px;display:flex;align-items:center;justify-content:center;">
+              <iframe srcdoc="<body style='margin:0;background:#0c1117;color:white;font-family:Arial,Helvetica,sans-serif;display:flex;align-items:center;justify-content:center;height:100%'><div style='text-align:center'><div style='font-size:58px;font-weight:800;color:#39d98a'>72</div><div style='font-size:16px;margin-top:10px'>LIQUIDITY EXPANSION</div><div style='font-size:13px;color:#97a3b6;margin-top:10px'>Estado premium del motor Atlas</div></div></body>" title="Atlas Liquidity Score"></iframe>
+            </div>
+            <div class="widget-note">Lectura compuesta del motor Atlas para medir expansión o contracción de liquidez.</div>
+          </div>
+
+          <div class="widget-card">
+            <div class="series-code">USD PRESSURE</div>
+            <h3>Dollar Pressure</h3>
+            <div class="embed-frame" style="height:220px;display:flex;align-items:center;justify-content:center;">
+              <iframe srcdoc="<body style='margin:0;background:#0c1117;color:white;font-family:Arial,Helvetica,sans-serif;display:flex;align-items:center;justify-content:center;height:100%'><div style='text-align:center'><div style='font-size:42px;font-weight:800;color:#ffb84d'>WEAKENING</div><div style='font-size:13px;color:#97a3b6;margin-top:12px'>Menor presión del dólar suele favorecer riesgo</div></div></body>" title="Dollar Pressure"></iframe>
+            </div>
+            <div class="widget-note">Lectura cualitativa del dólar para evaluar presión o alivio sobre activos de riesgo.</div>
+          </div>
+
+          <div class="widget-card">
+            <div class="series-code">RISK REGIME</div>
+            <h3>Risk Assets State</h3>
+            <div class="embed-frame" style="height:220px;display:flex;align-items:center;justify-content:center;">
+              <iframe srcdoc="<body style='margin:0;background:#0c1117;color:white;font-family:Arial,Helvetica,sans-serif;display:flex;align-items:center;justify-content:center;height:100%'><div style='text-align:center'><div style='font-size:42px;font-weight:800;color:#39d98a'>FAVORABLE</div><div style='font-size:13px;color:#97a3b6;margin-top:12px'>Contexto premium para acciones y crypto</div></div></body>" title="Risk Regime"></iframe>
+            </div>
+            <div class="widget-note">Estado agregado del entorno para activos de riesgo basado en liquidez, dólar y momentum.</div>
+          </div>
+
+          <div class="widget-card">
+            <div class="series-code">BTC LIQUIDITY</div>
+            <h3>Bitcoin Liquidity State</h3>
+            <div class="embed-frame" style="height:220px;display:flex;align-items:center;justify-content:center;">
+              <iframe srcdoc="<body style='margin:0;background:#0c1117;color:white;font-family:Arial,Helvetica,sans-serif;display:flex;align-items:center;justify-content:center;height:100%'><div style='text-align:center'><div style='font-size:42px;font-weight:800;color:#39d98a'>RISING</div><div style='font-size:13px;color:#97a3b6;margin-top:12px'>Mayor soporte relativo para BTC</div></div></body>" title="Bitcoin Liquidity State"></iframe>
+            </div>
+            <div class="widget-note">Lectura premium del estado de Bitcoin frente a liquidez, dólar y entorno de riesgo.</div>
+          </div>
+        </div>
+
+        <div class="widget-card full-span">
+          <div class="series-code">ENGINE FRAMEWORK</div>
+          <h3>Cómo interpreta el mercado</h3>
+          <div class="series-grid">
+            <div>
+              <ul class="gate-list">
+                <li>Liquidez global: expansión o contracción</li>
+                <li>Dólar: debilitándose o fortaleciéndose</li>
+                <li>Bonos: alivio o presión en yields</li>
+                <li>Riesgo: contexto favorable o defensivo</li>
+              </ul>
+            </div>
+            <div>
+              <ul class="gate-list">
+                <li>Bitcoin: mejorando o perdiendo soporte</li>
+                <li>Señal final: Risk-On, Neutral o Risk-Off</li>
+                <li>Uso esperado: lectura premium para holders QRA</li>
+                <li>Objetivo: condensar el contexto macro en segundos</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="tab-panel" id="ecosystem">
       <div class="section-header" id="ecosystem-top">
         <h2>Atlas Ecosystem</h2>
@@ -592,7 +678,7 @@ jumpButtons.forEach(link => {
   link.addEventListener('click', event => {
     event.preventDefault();
     const href = link.getAttribute('href');
-    const targetTab = href === '#ecosystem-top' ? 'ecosystem' : href === '#stock-index-top' ? 'stockindex' : href === '#commodities-index-top' ? 'commoditiesindex' : 'macrostats';
+    const targetTab = href === '#ecosystem-top' ? 'ecosystem' : href === '#stock-index-top' ? 'stockindex' : href === '#commodities-index-top' ? 'commoditiesindex' : href === '#liquidity-engine-top' ? 'liquidityengine' : 'macrostats';
     activateTab(targetTab);
     const target = document.querySelector(href);
     if (target) requestAnimationFrame(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }));
@@ -696,11 +782,11 @@ window.addEventListener('load', async () => {
 });
 
 function runSanityChecks() {
-  console.assert(tabButtons.length === 6, 'Expected 6 primary tabs');
-  console.assert(tabPanels.length === 6, 'Expected 6 panels');
+  console.assert(tabButtons.length === 7, 'Expected 7 primary tabs');
+  console.assert(tabPanels.length === 7, 'Expected 7 panels');
   console.assert(document.getElementById('macrostats'), 'Macro Stats panel must exist');
   console.assert(document.getElementById('ecosystem'), 'Ecosystem panel must exist');
-  console.assert(gatedTabs.length === 4, 'Expected 4 gated tabs');
+  console.assert(gatedTabs.length === 5, 'Expected 5 gated tabs');
   console.assert(requiredQra === 1000000, 'Expected QRA threshold of 1,000,000');
   console.assert(typeof qraMint === 'string' && qraMint.length > 20, 'Mint address must be defined');
 }
