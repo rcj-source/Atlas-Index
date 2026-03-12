@@ -98,6 +98,66 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
       <button class="wallet-btn" id="connect-wallet-btn" type="button" onclick="window.handlePhantomConnect && window.handlePhantomConnect()">Conectar Phantom</button>
       <div class="wallet-status" id="wallet-status">Necesitas <strong>1,000,000 QRA</strong> para desbloquear Atlas Stock Index, Atlas Commodities Index y Macro Stats.</div>
     </div>
+    <script>
+    window.handlePhantomConnect = async function () {
+      const btn = document.getElementById('connect-wallet-btn');
+      const status = document.getElementById('wallet-status');
+      const gatedTabs = ['stockindex','commoditiesindex','macrostats'];
+      const qraMint = 'DsMWZg6mkheTV2XTkbUtWcsXaajTzEkk1TC7o6Fmpump';
+      const requiredQra = 1000000;
+      const provider = window.phantom?.solana || window.solana;
+
+      function render(access) {
+        gatedTabs.forEach(tabId => {
+          const locked = document.querySelector(`[data-gate-panel="${tabId}"]`);
+          const content = document.querySelector(`[data-gated-content="${tabId}"]`);
+          if (locked) locked.classList.toggle('visible', !access);
+          if (content) content.classList.toggle('unlocked', access);
+        });
+      }
+
+      if (!provider || !provider.isPhantom) {
+        if (status) status.innerHTML = 'Phantom no está disponible en esta página.';
+        return;
+      }
+
+      try {
+        if (btn) { btn.disabled = true; btn.textContent = 'Abriendo Phantom...'; }
+        if (status) status.innerHTML = 'Esperando aprobación en Phantom...';
+
+        const resp = await provider.connect();
+        const walletAddress = resp.publicKey.toString();
+
+        const payload = {
+          jsonrpc: '2.0',
+          id: 1,
+          method: 'getParsedTokenAccountsByOwner',
+          params: [walletAddress, { mint: qraMint }, { encoding: 'jsonParsed', commitment: 'confirmed' }]
+        };
+
+        const response = await fetch('https://api.mainnet-beta.solana.com', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const result = await response.json();
+        const account = result?.result?.value?.[0];
+        const uiAmount = Number(account?.account?.data?.parsed?.info?.tokenAmount?.uiAmount || 0);
+        const hasAccess = uiAmount >= requiredQra;
+        render(hasAccess);
+
+        if (status) {
+          status.innerHTML = `Wallet: <strong>${walletAddress.slice(0,4)}...${walletAddress.slice(-4)}</strong><br>Balance QRA: <strong>${uiAmount.toLocaleString('en-US',{maximumFractionDigits:2})}</strong><br>${hasAccess ? '✅ Acceso desbloqueado' : '🔒 No alcanzas 1,000,000 QRA'}`;
+          status.style.color = hasAccess ? '#7fe3a1' : 'var(--muted)';
+        }
+      } catch (error) {
+        console.error('PHANTOM_CONNECT_ERROR', error);
+        if (status) status.innerHTML = `Conexión fallida: ${error?.message || 'error desconocido'}`;
+      } finally {
+        if (btn) { btn.disabled = false; btn.textContent = 'Conectar Phantom'; }
+      }
+    };
+    </script>
     <div class="side-box">Fuentes: TradingView, FRED, CoinGlass y DexScreener. Se eliminaron los widgets JS directos que estaban causando errores de configuración.</div>
   </aside>
 
