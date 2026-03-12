@@ -480,6 +480,7 @@ const tabPanels = document.querySelectorAll('.tab-panel');
 const jumpButtons = document.querySelectorAll('.jump-btn');
 const connectWalletBtn = document.getElementById('connect-wallet-btn');
 const walletStatus = document.getElementById('wallet-status');
+const phantomProvider = window.phantom?.solana || window.solana;
 const gatedTabs = ['stockindex','commoditiesindex','macrostats'];
 const qraMint = 'DsMWZg6mkheTV2XTkbUtWcsXaajTzEkk1TC7o6Fmpump';
 const requiredQra = 1000000;
@@ -567,27 +568,50 @@ async function verifyHolderAccess(publicKey) {
 }
 
 async function connectWallet() {
-  if (!window.solana || !window.solana.isPhantom) {
-    updateWalletStatus('Phantom no está instalado. Instálalo y vuelve a intentar.');
+  const provider = window.phantom?.solana || window.solana;
+  if (!provider || !provider.isPhantom) {
+    updateWalletStatus('Phantom no está disponible en esta página. Revisa que la extensión esté activa para este sitio.');
     return;
   }
+
   try {
-    const resp = await window.solana.connect();
+    if (connectWalletBtn) {
+      connectWalletBtn.disabled = true;
+      connectWalletBtn.textContent = 'Abriendo Phantom...';
+    }
+    updateWalletStatus('Esperando aprobación en Phantom...');
+
+    const resp = await provider.connect();
     walletAddress = resp.publicKey.toString();
+
+    updateWalletStatus(`Wallet conectada: <strong>${walletAddress.slice(0,4)}...${walletAddress.slice(-4)}</strong><br>Verificando balance QRA...`, true);
     await verifyHolderAccess(resp.publicKey);
   } catch (error) {
-    updateWalletStatus('Conexión cancelada o fallida.');
+    const message = error?.message || 'Conexión cancelada o fallida.';
+    updateWalletStatus(`Conexión fallida: ${message}`);
+    console.error('PHANTOM_CONNECT_ERROR', error);
+  } finally {
+    if (connectWalletBtn) {
+      connectWalletBtn.disabled = false;
+      connectWalletBtn.textContent = 'Conectar Phantom';
+    }
   }
 }
 
 if (connectWalletBtn) {
-  connectWalletBtn.addEventListener('click', connectWallet);
+  connectWalletBtn.addEventListener('click', async () => {
+    console.log('CONNECT_BUTTON_CLICK');
+    console.log('PHANTOM_PROVIDER', window.phantom?.solana || window.solana);
+    await connectWallet();
+  });
 }
 
 window.addEventListener('load', async () => {
-  if (window.solana && window.solana.isPhantom) {
+  console.log('PHANTOM_ON_LOAD', window.phantom?.solana || window.solana);
+  if ((window.phantom?.solana || window.solana)?.isPhantom) {
     try {
-      const resp = await window.solana.connect({ onlyIfTrusted: true });
+      const provider = window.phantom?.solana || window.solana;
+      const resp = await provider.connect({ onlyIfTrusted: true });
       walletAddress = resp.publicKey.toString();
       await verifyHolderAccess(resp.publicKey);
     } catch (error) {
