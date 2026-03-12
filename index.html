@@ -142,8 +142,14 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
           body: JSON.stringify(payload)
         });
         const result = await response.json();
-        const account = result?.result?.value?.[0];
-        const uiAmount = Number(account?.account?.data?.parsed?.info?.tokenAmount?.uiAmount || 0);
+        const accounts = result?.result?.value || [];
+        let uiAmount = 0;
+        for (const acc of accounts) {
+          const amount = acc?.account?.data?.parsed?.info?.tokenAmount?.uiAmount || 0;
+          uiAmount += Number(amount) || 0;
+        }
+        console.log('QRA_ACCOUNTS', accounts);
+        console.log('QRA_TOTAL_BALANCE', uiAmount);
         const hasAccess = uiAmount >= requiredQra;
         render(hasAccess);
 
