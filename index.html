@@ -96,13 +96,13 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
     <div class="wallet-gate-box">
       <h4>QRA Holder Access</h4>
       <button class="wallet-btn" id="connect-wallet-btn" type="button" onclick="window.handlePhantomConnect && window.handlePhantomConnect()">Conectar Phantom</button>
-      <div class="wallet-status" id="wallet-status">Necesitas <strong>1,000,000 QRA</strong> para desbloquear Atlas Stock Index, Atlas Commodities Index y Macro Stats.</div>
+      <div class="wallet-status" id="wallet-status">Necesitas <strong>1,000,000 QRA</strong> para desbloquear Altas Crypto Index, Atlas Stock Index, Atlas Commodities Index y Macro Stats.</div>
     </div>
     <script>
     window.handlePhantomConnect = async function () {
       const btn = document.getElementById('connect-wallet-btn');
       const status = document.getElementById('wallet-status');
-      const gatedTabs = ['stockindex','commoditiesindex','macrostats'];
+      const gatedTabs = ['altascrypto','stockindex','commoditiesindex','macrostats'];
       const qraMint = 'DsMWZg6mkheTV2XTkbUtWcsXaajTzEkk1TC7o6Fmpump';
       const requiredQra = 1000000;
       const provider = window.phantom?.solana || window.solana;
@@ -254,6 +254,15 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
     </section>
 
     <section class="tab-panel" id="altascrypto">
+      <div class="gate-locked" data-gate-panel="altascrypto">
+        <div class="gate-card">
+          <div class="gate-eyebrow">QRA Holder Access</div>
+          <h3 class="gate-title">Altas Crypto Index bloqueado</h3>
+          <p class="gate-copy">Esta sección premium requiere una wallet Phantom con al menos <strong>1,000,000 QRA</strong>. Conecta tu wallet en la barra lateral para verificar tu balance y desbloquear el panel.</p>
+          <div class="gate-pill">Requisito: 1,000,000 QRA</div>
+        </div>
+      </div>
+      <div class="gated-content" data-gated-content="altascrypto">
       <div class="section-header">
         <h2>Altas Crypto Index</h2>
         <p>Mapa de liquidez y liquidaciones de Bitcoin para identificar zonas donde el mercado podría buscar liquidez.</p>
@@ -263,6 +272,7 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
         <div class="embed-frame"><iframe src="https://www.coinglass.com/BitcoinLiquidationHeatmap" height="750" loading="lazy" title="BTC Liquidation Heatmap"></iframe></div>
         <div class="widget-note">Zonas donde existen acumulaciones de liquidaciones de longs y shorts en Bitcoin.</div>
       </div>
+          </div>
     </section>
 
     <section class="tab-panel" id="stockindex">
@@ -690,7 +700,7 @@ function runSanityChecks() {
   console.assert(tabPanels.length === 6, 'Expected 6 panels');
   console.assert(document.getElementById('macrostats'), 'Macro Stats panel must exist');
   console.assert(document.getElementById('ecosystem'), 'Ecosystem panel must exist');
-  console.assert(gatedTabs.length === 3, 'Expected 3 gated tabs');
+  console.assert(gatedTabs.length === 4, 'Expected 4 gated tabs');
   console.assert(requiredQra === 1000000, 'Expected QRA threshold of 1,000,000');
   console.assert(typeof qraMint === 'string' && qraMint.length > 20, 'Mint address must be defined');
 }
