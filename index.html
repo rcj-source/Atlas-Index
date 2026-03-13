@@ -624,7 +624,7 @@ async function fetchQraBalance(owner) {
       ]
     };
 
-    const response = await fetch('https://api.mainnet-beta.solana.com', {
+    const response = await fetch('https://rpc.helius.xyz/?api-key=free', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
