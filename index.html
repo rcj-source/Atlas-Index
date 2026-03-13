@@ -607,71 +607,61 @@ function activateTab(tabId) {
 }
 
 async function fetchQraBalance(owner) {
-  const tokenPrograms = [
-    'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA',
-    'TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb'
+  const endpoints = [
+    'https://api.mainnet-beta.solana.com',
+    'https://mainnet.helius-rpc.com/?api-key=free'
   ];
 
-  async function fetchAllProgramAccounts(programId) {
-    let allAccounts = [];
-    let paginationKey = null;
+  async function tryStandardRpc(endpoint) {
+    const payload = {
+      jsonrpc: '2.0',
+      id: 1,
+      method: 'getTokenAccountsByOwner',
+      params: [
+        owner,
+        { mint: qraMint },
+        { encoding: 'jsonParsed', commitment: 'confirmed' }
+      ]
+    };
 
-    do {
-      const payload = {
-        jsonrpc: '2.0',
-        id: 1,
-        method: 'getTokenAccountsByOwnerV2',
-        params: [
-          owner,
-          { programId },
-          {
-            encoding: 'jsonParsed',
-            limit: 1000,
-            ...(paginationKey ? { paginationKey } : {})
-          }
-        ]
-      };
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
 
-      const response = await fetch('https://mainnet.helius-rpc.com/?api-key=free', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
+    const data = await response.json();
+    if (data?.error) throw new Error(data.error.message || 'RPC error');
 
-      const data = await response.json();
-      const pageAccounts = data?.result?.value || [];
-      allAccounts.push(...pageAccounts);
-      paginationKey = data?.result?.paginationKey || null;
-    } while (paginationKey);
+    const accounts = data?.result?.value || [];
+    let totalRaw = 0;
+    for (const acc of accounts) {
+      const raw = acc?.account?.data?.parsed?.info?.tokenAmount?.amount || '0';
+      totalRaw += Number(raw) || 0;
+    }
 
-    return allAccounts;
+    return {
+      source: endpoint,
+      accounts,
+      total: totalRaw / 1000000
+    };
   }
 
-  const accountGroups = await Promise.all(tokenPrograms.map(fetchAllProgramAccounts));
-  const accounts = accountGroups.flat();
-
-  let totalRaw = 0;
-  const matchingAccounts = [];
-
-  for (const acc of accounts) {
-    const info = acc?.account?.data?.parsed?.info;
-    if (!info) continue;
-    if (info.mint !== qraMint) continue;
-
-    matchingAccounts.push(acc);
-    const raw = Number(info?.tokenAmount?.amount || 0);
-    totalRaw += Number.isFinite(raw) ? raw : 0;
+  let lastError = null;
+  for (const endpoint of endpoints) {
+    try {
+      const result = await tryStandardRpc(endpoint);
+      console.log('QRA_BALANCE_SOURCE', result.source);
+      console.log('QRA_TOKEN_ACCOUNTS', result.accounts);
+      console.log('QRA_TOTAL_BALANCE', result.total);
+      return result.total;
+    } catch (error) {
+      lastError = error;
+      console.error('QRA_BALANCE_FETCH_FAILED', endpoint, error);
+    }
   }
 
-  const decimals = 6;
-  const total = totalRaw / (10 ** decimals);
-
-  console.log('QRA_ALL_TOKEN_ACCOUNTS', accounts);
-  console.log('QRA_MATCHING_ACCOUNTS', matchingAccounts);
-  console.log('QRA_TOTAL_RAW', totalRaw);
-  console.log('QRA_TOTAL_BALANCE', total);
-
-  return total;
+  throw lastError || new Error('No se pudo leer el balance de QRA');
 }
 
 async function verifyHolderAccess(publicKey) {
