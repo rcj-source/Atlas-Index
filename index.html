@@ -607,60 +607,16 @@ function activateTab(tabId) {
 }
 
 async function fetchQraBalance(owner) {
-  const endpoints = [
-    'https://api.mainnet-beta.solana.com'
-  ];
+  const workerUrl = 'https://yellow-tooth-e55d.ramirezricardocontacto.workers.dev/?wallet=' + encodeURIComponent(owner);
+  const response = await fetch(workerUrl);
+  const data = await response.json();
 
-  async function tryStandardRpc(endpoint) {
-    const payload = {
-      jsonrpc: '2.0',
-      id: 1,
-      method: 'getTokenAccountsByOwner',
-      params: [
-        owner,
-        { mint: qraMint },
-        { encoding: 'jsonParsed', commitment: 'confirmed' }
-      ]
-    };
-
-    const response = await fetch(endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-
-    const data = await response.json();
-    if (data?.error) throw new Error(data.error.message || 'RPC error');
-
-    const accounts = data?.result?.value || [];
-    let totalRaw = 0;
-    for (const acc of accounts) {
-      const raw = acc?.account?.data?.parsed?.info?.tokenAmount?.amount || '0';
-      totalRaw += Number(raw) || 0;
-    }
-
-    return {
-      source: endpoint,
-      accounts,
-      total: totalRaw / 1000000
-    };
+  if (data && data.error) {
+    throw new Error(data.error);
   }
 
-  let lastError = null;
-  for (const endpoint of endpoints) {
-    try {
-      const result = await tryStandardRpc(endpoint);
-      console.log('QRA_BALANCE_SOURCE', result.source);
-      console.log('QRA_TOKEN_ACCOUNTS', result.accounts);
-      console.log('QRA_TOTAL_BALANCE', result.total);
-      return result.total;
-    } catch (error) {
-      lastError = error;
-      console.error('QRA_BALANCE_FETCH_FAILED', endpoint, error);
-    }
-  }
-
-  throw lastError || new Error('No se pudo leer el balance de QRA');
+  console.log('QRA_WORKER_RESPONSE', data);
+  return Number((data && data.balance) || 0);
 }
 
 async function verifyHolderAccess(publicKey) {
