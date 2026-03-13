@@ -96,7 +96,7 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
     </nav>
     <div class="wallet-gate-box">
       <h4>QRA Holder Access</h4>
-      <button class="wallet-btn" id="connect-wallet-btn" type="button" onclick="window.handlePhantomConnect && window.handlePhantomConnect()">Conectar Phantom</button>
+      <button class="wallet-btn" id="connect-wallet-btn" type="button" onclick="window.handlePhantomConnect && window.handlePhantomConnect()" onmousedown="window.handlePhantomConnect && window.handlePhantomConnect()">Conectar Phantom</button>
       <div class="wallet-status" id="wallet-status">Necesitas <strong>1,000,000 QRA</strong> para desbloquear Altas Crypto Index, Atlas Stock Index, Atlas Commodities Index, Macro Stats y Atlas Liquidity Engine.</div>
     </div>
     
@@ -702,11 +702,45 @@ jumpButtons.forEach((link) => {
 
 window.handlePhantomConnect = async function () {
   console.log('CONNECT_BUTTON_CLICK');
-  await connectWallet();
+  const provider = window.phantom?.solana || window.solana;
+  console.log('PHANTOM_PROVIDER_DIRECT', provider);
+
+  if (!provider || !provider.isPhantom) {
+    updateWalletStatus('Phantom no está disponible en esta página.');
+    return;
+  }
+
+  try {
+    if (connectWalletBtn) {
+      connectWalletBtn.disabled = true;
+      connectWalletBtn.textContent = 'Abriendo Phantom...';
+    }
+    updateWalletStatus('Esperando aprobación en Phantom...');
+
+    const resp = provider.request
+      ? await provider.request({ method: 'connect' })
+      : await provider.connect({ onlyIfTrusted: false });
+
+    const publicKey = resp?.publicKey || provider.publicKey;
+    if (!publicKey) throw new Error('Phantom no devolvió publicKey');
+
+    walletAddress = publicKey.toString();
+    await verifyHolderAccess(publicKey);
+  } catch (error) {
+    console.error('PHANTOM_CONNECT_ERROR', error);
+    updateWalletStatus(`Conexión fallida: ${error?.message || 'error desconocido'}`);
+  } finally {
+    if (connectWalletBtn) {
+      connectWalletBtn.disabled = false;
+      connectWalletBtn.textContent = 'Conectar Phantom';
+    }
+  }
 };
 
 if (connectWalletBtn) {
+  connectWalletBtn.onclick = window.handlePhantomConnect;
   connectWalletBtn.addEventListener('click', window.handlePhantomConnect);
+  connectWalletBtn.addEventListener('mousedown', window.handlePhantomConnect);
 }
 
 function runSanityChecks() {
