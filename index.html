@@ -96,75 +96,10 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
     </nav>
     <div class="wallet-gate-box">
       <h4>QRA Holder Access</h4>
-      <button class="wallet-btn" id="connect-wallet-btn" type="button" onclick="window.handlePhantomConnect && window.handlePhantomConnect()">Conectar Phantom</button>
+      <button class="wallet-btn" id="connect-wallet-btn" type="button">Conectar Phantom</button>
       <div class="wallet-status" id="wallet-status">Necesitas <strong>1,000,000 QRA</strong> para desbloquear Altas Crypto Index, Atlas Stock Index, Atlas Commodities Index, Macro Stats y Atlas Liquidity Engine.</div>
     </div>
-    <script>
-    window.handlePhantomConnect = async function () {
-      const btn = document.getElementById('connect-wallet-btn');
-      const status = document.getElementById('wallet-status');
-      const gatedTabs = ['altascrypto','stockindex','commoditiesindex','macrostats','liquidityengine'];
-      const qraMint = 'DsMWZg6mkheTV2XTkbUtWcsXaajTzEkk1TC7o6Fmpump';
-      const requiredQra = 1000000;
-      const provider = window.phantom?.solana || window.solana;
-
-      function render(access) {
-        gatedTabs.forEach(tabId => {
-          const locked = document.querySelector(`[data-gate-panel="${tabId}"]`);
-          const content = document.querySelector(`[data-gated-content="${tabId}"]`);
-          if (locked) locked.classList.toggle('visible', !access);
-          if (content) content.classList.toggle('unlocked', access);
-        });
-      }
-
-      if (!provider || !provider.isPhantom) {
-        if (status) status.innerHTML = 'Phantom no está disponible en esta página.';
-        return;
-      }
-
-      try {
-        if (btn) { btn.disabled = true; btn.textContent = 'Abriendo Phantom...'; }
-        if (status) status.innerHTML = 'Esperando aprobación en Phantom...';
-
-        const resp = await provider.connect();
-        const walletAddress = resp.publicKey.toString();
-
-        const payload = {
-          jsonrpc: '2.0',
-          id: 1,
-          method: 'getParsedTokenAccountsByOwner',
-          params: [walletAddress, { mint: qraMint }, { encoding: 'jsonParsed', commitment: 'confirmed' }]
-        };
-
-        const response = await fetch('https://api.mainnet-beta.solana.com', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        const result = await response.json();
-        const accounts = result?.result?.value || [];
-        let uiAmount = 0;
-        for (const acc of accounts) {
-          const amount = acc?.account?.data?.parsed?.info?.tokenAmount?.uiAmount || 0;
-          uiAmount += Number(amount) || 0;
-        }
-        console.log('QRA_ACCOUNTS', accounts);
-        console.log('QRA_TOTAL_BALANCE', uiAmount);
-        const hasAccess = uiAmount >= requiredQra;
-        render(hasAccess);
-
-        if (status) {
-          status.innerHTML = `Wallet: <strong>${walletAddress.slice(0,4)}...${walletAddress.slice(-4)}</strong><br>Balance QRA: <strong>${uiAmount.toLocaleString('en-US',{maximumFractionDigits:2})}</strong><br>${hasAccess ? '✅ Acceso desbloqueado' : '🔒 No alcanzas 1,000,000 QRA'}`;
-          status.style.color = hasAccess ? '#7fe3a1' : 'var(--muted)';
-        }
-      } catch (error) {
-        console.error('PHANTOM_CONNECT_ERROR', error);
-        if (status) status.innerHTML = `Conexión fallida: ${error?.message || 'error desconocido'}`;
-      } finally {
-        if (btn) { btn.disabled = false; btn.textContent = 'Conectar Phantom'; }
-      }
-    };
-    </script>
+    
     <div class="side-box">Fuentes: TradingView, FRED, CoinGlass y DexScreener. Se eliminaron los widgets JS directos que estaban causando errores de configuración.</div>
   </aside>
 
@@ -635,31 +570,20 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
   </main>
 </div>
 
-<script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
 <script>
-const tabButtons = document.querySelectorAll('.tab-btn');
-const tabPanels = document.querySelectorAll('.tab-panel');
-const jumpButtons = document.querySelectorAll('.jump-btn');
+const tabButtons = Array.from(document.querySelectorAll('.tab-btn'));
+const tabPanels = Array.from(document.querySelectorAll('.tab-panel'));
+const jumpButtons = Array.from(document.querySelectorAll('.jump-btn'));
 const connectWalletBtn = document.getElementById('connect-wallet-btn');
 const walletStatus = document.getElementById('wallet-status');
-const phantomProvider = window.phantom?.solana || window.solana;
-const gatedTabs = ['stockindex','commoditiesindex','macrostats'];
+
+const gatedTabs = ['altascrypto','stockindex','commoditiesindex','macrostats','liquidityengine'];
 const qraMint = 'DsMWZg6mkheTV2XTkbUtWcsXaajTzEkk1TC7o6Fmpump';
 const requiredQra = 1000000;
-const tokenProgram = 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA';
+
 let walletAddress = '';
 let qraBalance = 0;
 let hasGateAccess = false;
-
-function renderGateState() {
-  gatedTabs.forEach(tabId => {
-    const locked = document.querySelector(`[data-gate-panel="${tabId}"]`);
-    const content = document.querySelector(`[data-gated-content="${tabId}"]`);
-    if (!locked || !content) return;
-    locked.classList.toggle('visible', !hasGateAccess);
-    content.classList.toggle('unlocked', hasGateAccess);
-  });
-}
 
 function updateWalletStatus(message, ok = false) {
   if (!walletStatus) return;
@@ -667,40 +591,27 @@ function updateWalletStatus(message, ok = false) {
   walletStatus.style.color = ok ? '#7fe3a1' : 'var(--muted)';
 }
 
-function activateTab(tabId) {
-  tabButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tabId));
-  tabPanels.forEach(panel => panel.classList.toggle('active', panel.id === tabId));
-  renderGateState();
+function renderGateState() {
+  gatedTabs.forEach((tabId) => {
+    const locked = document.querySelector(`[data-gate-panel="${tabId}"]`);
+    const content = document.querySelector(`[data-gated-content="${tabId}"]`);
+    if (locked) locked.classList.toggle('visible', !hasGateAccess);
+    if (content) content.classList.toggle('unlocked', hasGateAccess);
+  });
 }
 
-tabButtons.forEach(btn => {
-  btn.addEventListener('click', () => {
-    activateTab(btn.dataset.tab);
-    window.scrollTo({ top: 0, behavior: 'auto' });
-  });
-});
-
-jumpButtons.forEach(link => {
-  link.addEventListener('click', event => {
-    event.preventDefault();
-    const href = link.getAttribute('href');
-    const targetTab = href === '#ecosystem-top' ? 'ecosystem' : href === '#stock-index-top' ? 'stockindex' : href === '#commodities-index-top' ? 'commoditiesindex' : href === '#liquidity-engine-top' ? 'liquidityengine' : 'macrostats';
-    activateTab(targetTab);
-    const target = document.querySelector(href);
-    if (target) requestAnimationFrame(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }));
-  });
-});
+function activateTab(tabId) {
+  tabButtons.forEach((btn) => btn.classList.toggle('active', btn.dataset.tab === tabId));
+  tabPanels.forEach((panel) => panel.classList.toggle('active', panel.id === tabId));
+  renderGateState();
+}
 
 async function fetchQraBalance(owner) {
   const payload = {
     jsonrpc: '2.0',
     id: 1,
     method: 'getParsedTokenAccountsByOwner',
-    params: [
-      owner,
-      { mint: qraMint },
-      { encoding: 'jsonParsed', commitment: 'confirmed' }
-    ]
+    params: [owner, { mint: qraMint }, { encoding: 'jsonParsed', commitment: 'confirmed' }]
   };
 
   const response = await fetch('https://api.mainnet-beta.solana.com', {
@@ -710,29 +621,32 @@ async function fetchQraBalance(owner) {
   });
 
   const result = await response.json();
-  const account = result?.result?.value?.[0];
-  const uiAmount = account?.account?.data?.parsed?.info?.tokenAmount?.uiAmount || 0;
-  return Number(uiAmount) || 0;
+  const accounts = result?.result?.value || [];
+  let total = 0;
+  for (const acc of accounts) {
+    const amount = acc?.account?.data?.parsed?.info?.tokenAmount?.uiAmount || 0;
+    total += Number(amount) || 0;
+  }
+  console.log('QRA_ACCOUNTS', accounts);
+  console.log('QRA_TOTAL_BALANCE', total);
+  return total;
 }
 
 async function verifyHolderAccess(publicKey) {
-  try {
-    qraBalance = await fetchQraBalance(publicKey.toString());
-    hasGateAccess = qraBalance >= requiredQra;
-    const formatted = qraBalance.toLocaleString('en-US', { maximumFractionDigits: 2 });
-    updateWalletStatus(`Wallet: <strong>${walletAddress.slice(0,4)}...${walletAddress.slice(-4)}</strong><br>Balance QRA: <strong>${formatted}</strong><br>${hasGateAccess ? '✅ Acceso desbloqueado' : '🔒 No alcanzas 1,000,000 QRA'}`, hasGateAccess);
-    renderGateState();
-  } catch (error) {
-    hasGateAccess = false;
-    updateWalletStatus('No se pudo verificar el balance de QRA. Intenta de nuevo.');
-    renderGateState();
-  }
+  qraBalance = await fetchQraBalance(publicKey.toString());
+  hasGateAccess = qraBalance >= requiredQra;
+  const formatted = qraBalance.toLocaleString('en-US', { maximumFractionDigits: 2 });
+  updateWalletStatus(
+    `Wallet: <strong>${walletAddress.slice(0,4)}...${walletAddress.slice(-4)}</strong><br>Balance QRA: <strong>${formatted}</strong><br>${hasGateAccess ? '✅ Acceso desbloqueado' : '🔒 No alcanzas 1,000,000 QRA'}`,
+    hasGateAccess
+  );
+  renderGateState();
 }
 
 async function connectWallet() {
   const provider = window.phantom?.solana || window.solana;
   if (!provider || !provider.isPhantom) {
-    updateWalletStatus('Phantom no está disponible en esta página. Revisa que la extensión esté activa para este sitio.');
+    updateWalletStatus('Phantom no está disponible en esta página.');
     return;
   }
 
@@ -742,16 +656,12 @@ async function connectWallet() {
       connectWalletBtn.textContent = 'Abriendo Phantom...';
     }
     updateWalletStatus('Esperando aprobación en Phantom...');
-
     const resp = await provider.connect();
     walletAddress = resp.publicKey.toString();
-
-    updateWalletStatus(`Wallet conectada: <strong>${walletAddress.slice(0,4)}...${walletAddress.slice(-4)}</strong><br>Verificando balance QRA...`, true);
     await verifyHolderAccess(resp.publicKey);
   } catch (error) {
-    const message = error?.message || 'Conexión cancelada o fallida.';
-    updateWalletStatus(`Conexión fallida: ${message}`);
     console.error('PHANTOM_CONNECT_ERROR', error);
+    updateWalletStatus(`Conexión fallida: ${error?.message || 'error desconocido'}`);
   } finally {
     if (connectWalletBtn) {
       connectWalletBtn.disabled = false;
@@ -760,44 +670,57 @@ async function connectWallet() {
   }
 }
 
-window.handlePhantomConnect = async function handlePhantomConnect() {
-  console.log('CONNECT_BUTTON_CLICK');
-  console.log('PHANTOM_PROVIDER', window.phantom?.solana || window.solana);
-  await connectWallet();
-};
+tabButtons.forEach((btn) => {
+  btn.addEventListener('click', () => {
+    activateTab(btn.dataset.tab);
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  });
+});
+
+jumpButtons.forEach((link) => {
+  link.addEventListener('click', (event) => {
+    event.preventDefault();
+    const href = link.getAttribute('href');
+    const targetTab = href === '#ecosystem-top'
+      ? 'ecosystem'
+      : href === '#stock-index-top'
+      ? 'stockindex'
+      : href === '#commodities-index-top'
+      ? 'commoditiesindex'
+      : href === '#liquidity-engine-top'
+      ? 'liquidityengine'
+      : 'macrostats';
+    activateTab(targetTab);
+    const target = document.querySelector(href);
+    if (target) requestAnimationFrame(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+  });
+});
 
 if (connectWalletBtn) {
-  connectWalletBtn.addEventListener('click', window.handlePhantomConnect);
+  connectWalletBtn.addEventListener('click', connectWallet);
 }
-
-window.addEventListener('load', async () => {
-  console.log('PHANTOM_ON_LOAD', window.phantom?.solana || window.solana);
-  if ((window.phantom?.solana || window.solana)?.isPhantom) {
-    try {
-      const provider = window.phantom?.solana || window.solana;
-      const resp = await provider.connect({ onlyIfTrusted: true });
-      walletAddress = resp.publicKey.toString();
-      await verifyHolderAccess(resp.publicKey);
-    } catch (error) {
-      renderGateState();
-    }
-  } else {
-    renderGateState();
-  }
-});
-});
 
 function runSanityChecks() {
   console.assert(tabButtons.length === 7, 'Expected 7 primary tabs');
   console.assert(tabPanels.length === 7, 'Expected 7 panels');
-  console.assert(document.getElementById('macrostats'), 'Macro Stats panel must exist');
-  console.assert(document.getElementById('ecosystem'), 'Ecosystem panel must exist');
   console.assert(gatedTabs.length === 5, 'Expected 5 gated tabs');
-  console.assert(requiredQra === 1000000, 'Expected QRA threshold of 1,000,000');
   console.assert(typeof qraMint === 'string' && qraMint.length > 20, 'Mint address must be defined');
 }
 
-window.addEventListener('load', runSanityChecks);
+window.addEventListener('load', async () => {
+  runSanityChecks();
+  renderGateState();
+  const provider = window.phantom?.solana || window.solana;
+  if (provider?.isPhantom) {
+    try {
+      const resp = await provider.connect({ onlyIfTrusted: true });
+      walletAddress = resp.publicKey.toString();
+      await verifyHolderAccess(resp.publicKey);
+    } catch (error) {
+      // no trusted session yet
+    }
+  }
+});
 </script>
 </body>
 </html>
