@@ -653,14 +653,51 @@ async function connectWallet() {
   }
 
   try {
-    document.addEventListener('click', (event) => {
-  const target = event.target;
-  if (target && target.id === 'connect-wallet-btn') {
-    event.preventDefault();
-    event.stopPropagation();
-    window.handlePhantomConnect();
-  }
-});
+    function bindWalletButton() {
+  if (!connectWalletBtn) return;
+
+  const directConnect = () => {
+    const provider = window.phantom?.solana || window.solana;
+    console.log('CONNECT_BUTTON_CLICK');
+    console.log('PHANTOM_PROVIDER_DIRECT', provider);
+
+    if (!provider || !provider.isPhantom) {
+      updateWalletStatus('Phantom no está disponible en esta página.');
+      return;
+    }
+
+    if (connectWalletBtn.disabled) return;
+    connectWalletBtn.disabled = true;
+    connectWalletBtn.textContent = 'Abriendo Phantom...';
+    updateWalletStatus('Esperando aprobación en Phantom...');
+
+    const connectPromise = typeof provider.request === 'function'
+      ? provider.request({ method: 'connect' })
+      : provider.connect({ onlyIfTrusted: false });
+
+    connectPromise
+      .then(async (resp) => {
+        const publicKey = resp?.publicKey || provider.publicKey;
+        if (!publicKey) throw new Error('Phantom no devolvió publicKey');
+        walletAddress = publicKey.toString();
+        await verifyHolderAccess(publicKey);
+      })
+      .catch((error) => {
+        console.error('PHANTOM_CONNECT_ERROR', error);
+        updateWalletStatus(`Conexión fallida: ${error?.message || 'error desconocido'}`);
+      })
+      .finally(() => {
+        connectWalletBtn.disabled = false;
+        connectWalletBtn.textContent = 'Conectar Phantom';
+      });
+  };
+
+  connectWalletBtn.onclick = directConnect;
+  connectWalletBtn.addEventListener('pointerup', directConnect);
+  connectWalletBtn.addEventListener('click', directConnect);
+}
+
+bindWalletButton();
 
     updateWalletStatus('Esperando aprobación en Phantom...');
 
@@ -704,46 +741,10 @@ jumpButtons.forEach((link) => {
   });
 });
 
-window.handlePhantomConnect = async function () {
+window.handlePhantomConnect = function () {
   const provider = window.phantom?.solana || window.solana;
-  console.log('CONNECT_BUTTON_CLICK');
-  console.log('PHANTOM_PROVIDER_DIRECT', provider);
-
-  if (!provider || !provider.isPhantom) {
-    updateWalletStatus('Phantom no está disponible en esta página.');
-    return;
-  }
-
-  try {
-    if (connectWalletBtn) {
-      connectWalletBtn.disabled = true;
-      connectWalletBtn.textContent = 'Abriendo Phantom...';
-    }
-    updateWalletStatus('Esperando aprobación en Phantom...');
-
-    let resp;
-    if (typeof provider.connect === 'function') {
-      resp = await provider.connect({ onlyIfTrusted: false });
-    } else if (typeof provider.request === 'function') {
-      resp = await provider.request({ method: 'connect' });
-    } else {
-      throw new Error('Proveedor Phantom sin método de conexión');
-    }
-
-    const publicKey = resp?.publicKey || provider.publicKey;
-    if (!publicKey) throw new Error('Phantom no devolvió publicKey');
-
-    walletAddress = publicKey.toString();
-    await verifyHolderAccess(publicKey);
-  } catch (error) {
-    console.error('PHANTOM_CONNECT_ERROR', error);
-    updateWalletStatus(`Conexión fallida: ${error?.message || 'error desconocido'}`);
-  } finally {
-    if (connectWalletBtn) {
-      connectWalletBtn.disabled = false;
-      connectWalletBtn.textContent = 'Conectar Phantom';
-    }
-  }
+  console.log('HANDLE_PHANTOM_CONNECT', provider);
+  if (connectWalletBtn) connectWalletBtn.click();
 };
 
 if (connectWalletBtn) {
