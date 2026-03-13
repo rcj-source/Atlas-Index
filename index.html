@@ -28,7 +28,7 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
 .side-box{margin-top:18px;border:1px solid var(--line);background:#0b1016;padding:12px;border-radius:8px;color:var(--muted);font-size:12px;line-height:1.55}
 .wallet-gate-box{margin-top:18px;border:1px solid var(--line);background:#0b1016;padding:12px;border-radius:8px}
 .wallet-gate-box h4{margin:0 0 10px;font-size:14px;color:#fff}
-.wallet-btn{position:relative;z-index:50;pointer-events:auto;width:50%;display:inline-block;vertical-align:top;padding:11px 12px;border-radius:8px;border:1px solid #35507a;background:#121c2a;color:#fff;font-size:14px;font-weight:700;cursor:pointer}.wallet-btn:disabled{opacity:.7;cursor:wait}
+.wallet-btn{position:relative;z-index:50;pointer-events:auto;width:100%;padding:11px 12px;border-radius:8px;border:1px solid #35507a;background:#121c2a;color:#fff;font-size:14px;font-weight:700;cursor:pointer}.wallet-btn:disabled{opacity:.7;cursor:wait}
 .wallet-btn:hover{background:#172234}
 .wallet-status{margin-top:10px;font-size:12px;line-height:1.5;color:var(--muted);word-break:break-word}
 .wallet-status strong{color:#fff}
@@ -60,7 +60,7 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
 .section-header p{margin:0;color:var(--muted);font-size:13px;line-height:1.55;max-width:820px}
 .home-top-layout{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:16px;align-items:start;margin-bottom:16px}
 .home-overview-header{grid-column:1 / -1}
-.series-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:22px;align-items:start}
+.series-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;align-items:start}
 .market-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:start}
 .widget-card,.series-item{min-width:0;background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:8px;padding:14px}
 .widget-card h3,.series-item h4{margin:8px 0;font-size:20px}
