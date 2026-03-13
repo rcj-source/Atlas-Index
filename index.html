@@ -60,13 +60,13 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
 .section-header p{margin:0;color:var(--muted);font-size:13px;line-height:1.55;max-width:820px}
 .home-top-layout{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:16px;align-items:start;margin-bottom:16px}
 .home-overview-header{grid-column:1 / -1}
-.series-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start}
+.series-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:22px;align-items:start}
 .market-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:start}
 .widget-card,.series-item{min-width:0;background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:8px;padding:14px}
 .widget-card h3,.series-item h4{margin:8px 0;font-size:20px}
 .series-code{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--orange);font-weight:700}
 .series-note,.widget-note{color:var(--muted);line-height:1.6;font-size:13px}
-.widget-shell{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:8px;padding:10px;overflow:hidden}
+.widget-shell{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:8px;padding:10px;overflow:hidden;width:100%}
 .widget-shell .tradingview-widget-copyright{display:none}
 .embed-frame{width:100%;border:1px solid var(--line);border-radius:6px;background:#0c1117;overflow:hidden}
 .embed-frame iframe{display:block;width:100%;border:0;background:#0c1117}
@@ -76,7 +76,7 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
 .term-divider{height:1px;background:var(--line);margin:10px 0 0}
 .full-span{grid-column:1 / -1}
 @media (max-width:1200px){.home-top-layout{grid-template-columns:1fr}}
-@media (max-width:1100px){.series-grid,.market-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:1100px){.market-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:900px){.layout{grid-template-columns:1fr}.sidebar{position:relative;top:auto;height:auto;overflow:visible;border-right:none;border-bottom:1px solid var(--line)}.main{padding:0 14px 14px}.topbar{margin:0 -14px 16px}.series-grid,.market-grid{grid-template-columns:1fr}}
 </style>
 </head>
@@ -874,7 +874,7 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
           <p>Motor premium del ecosistema Atlas para resumir liquidez global, presión del dólar, régimen de riesgo y lectura de Bitcoin.</p>
         </div>
 
-        <div class="series-grid" style="margin-bottom:16px;">
+        <div class="series-grid" style="margin-bottom:16px;grid-template-columns:repeat(2,minmax(0,1fr));">
           <div class="widget-card">
             <div class="series-code">ALI SCORE</div>
             <h3>Atlas Liquidity Score</h3>
