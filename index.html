@@ -28,7 +28,7 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
 .side-box{margin-top:18px;border:1px solid var(--line);background:#0b1016;padding:12px;border-radius:8px;color:var(--muted);font-size:12px;line-height:1.55}
 .wallet-gate-box{margin-top:18px;border:1px solid var(--line);background:#0b1016;padding:12px;border-radius:8px}
 .wallet-gate-box h4{margin:0 0 10px;font-size:14px;color:#fff}
-.wallet-btn{position:relative;z-index:3;width:100%;padding:11px 12px;border-radius:8px;border:1px solid #35507a;background:#121c2a;color:#fff;font-size:14px;font-weight:700;cursor:pointer}.wallet-btn:disabled{opacity:.7;cursor:wait}
+.wallet-btn{position:relative;z-index:50;pointer-events:auto;width:100%;padding:11px 12px;border-radius:8px;border:1px solid #35507a;background:#121c2a;color:#fff;font-size:14px;font-weight:700;cursor:pointer}.wallet-btn:disabled{opacity:.7;cursor:wait}
 .wallet-btn:hover{background:#172234}
 .wallet-status{margin-top:10px;font-size:12px;line-height:1.5;color:var(--muted);word-break:break-word}
 .wallet-status strong{color:#fff}
@@ -96,7 +96,7 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
     </nav>
     <div class="wallet-gate-box">
       <h4>QRA Holder Access</h4>
-      <button class="wallet-btn" id="connect-wallet-btn" type="button" onclick="window.handlePhantomConnect && window.handlePhantomConnect()" onmousedown="window.handlePhantomConnect && window.handlePhantomConnect()">Conectar Phantom</button>
+      <button class="wallet-btn" id="connect-wallet-btn" type="button">Conectar Phantom</button>
       <div class="wallet-status" id="wallet-status">Necesitas <strong>1,000,000 QRA</strong> para desbloquear Altas Crypto Index, Atlas Stock Index, Atlas Commodities Index, Macro Stats y Atlas Liquidity Engine.</div>
     </div>
     
@@ -653,10 +653,14 @@ async function connectWallet() {
   }
 
   try {
-    if (connectWalletBtn) {
-      connectWalletBtn.disabled = true;
-      connectWalletBtn.textContent = 'Abriendo Phantom...';
-    }
+    document.addEventListener('click', (event) => {
+  const target = event.target;
+  if (target && target.id === 'connect-wallet-btn') {
+    event.preventDefault();
+    event.stopPropagation();
+    window.handlePhantomConnect();
+  }
+});
 
     updateWalletStatus('Esperando aprobación en Phantom...');
 
@@ -701,8 +705,8 @@ jumpButtons.forEach((link) => {
 });
 
 window.handlePhantomConnect = async function () {
-  console.log('CONNECT_BUTTON_CLICK');
   const provider = window.phantom?.solana || window.solana;
+  console.log('CONNECT_BUTTON_CLICK');
   console.log('PHANTOM_PROVIDER_DIRECT', provider);
 
   if (!provider || !provider.isPhantom) {
@@ -717,9 +721,14 @@ window.handlePhantomConnect = async function () {
     }
     updateWalletStatus('Esperando aprobación en Phantom...');
 
-    const resp = provider.request
-      ? await provider.request({ method: 'connect' })
-      : await provider.connect({ onlyIfTrusted: false });
+    let resp;
+    if (typeof provider.connect === 'function') {
+      resp = await provider.connect({ onlyIfTrusted: false });
+    } else if (typeof provider.request === 'function') {
+      resp = await provider.request({ method: 'connect' });
+    } else {
+      throw new Error('Proveedor Phantom sin método de conexión');
+    }
 
     const publicKey = resp?.publicKey || provider.publicKey;
     if (!publicKey) throw new Error('Phantom no devolvió publicKey');
