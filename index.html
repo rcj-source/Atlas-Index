@@ -96,7 +96,7 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
     </nav>
     <div class="wallet-gate-box">
       <h4>QRA Holder Access</h4>
-      <button class="wallet-btn" id="connect-wallet-btn" type="button">Conectar Phantom</button>
+      <button class="wallet-btn" id="connect-wallet-btn" type="button" onclick="window.handlePhantomConnect && window.handlePhantomConnect()">Conectar Phantom</button>
       <div class="wallet-status" id="wallet-status">Necesitas <strong>1,000,000 QRA</strong> para desbloquear Altas Crypto Index, Atlas Stock Index, Atlas Commodities Index, Macro Stats y Atlas Liquidity Engine.</div>
     </div>
     
@@ -645,6 +645,8 @@ async function verifyHolderAccess(publicKey) {
 
 async function connectWallet() {
   const provider = window.phantom?.solana || window.solana;
+  console.log('PHANTOM_PROVIDER_ON_CLICK', provider);
+
   if (!provider || !provider.isPhantom) {
     updateWalletStatus('Phantom no está disponible en esta página.');
     return;
@@ -655,8 +657,10 @@ async function connectWallet() {
       connectWalletBtn.disabled = true;
       connectWalletBtn.textContent = 'Abriendo Phantom...';
     }
+
     updateWalletStatus('Esperando aprobación en Phantom...');
-    const resp = await provider.connect();
+
+    const resp = await provider.connect({ onlyIfTrusted: false });
     walletAddress = resp.publicKey.toString();
     await verifyHolderAccess(resp.publicKey);
   } catch (error) {
@@ -696,8 +700,13 @@ jumpButtons.forEach((link) => {
   });
 });
 
+window.handlePhantomConnect = async function () {
+  console.log('CONNECT_BUTTON_CLICK');
+  await connectWallet();
+};
+
 if (connectWalletBtn) {
-  connectWalletBtn.addEventListener('click', connectWallet);
+  connectWalletBtn.addEventListener('click', window.handlePhantomConnect);
 }
 
 function runSanityChecks() {
