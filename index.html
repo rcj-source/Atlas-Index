@@ -607,25 +607,35 @@ function activateTab(tabId) {
 }
 
 async function fetchQraBalance(owner) {
-  const payload = {
-    jsonrpc: '2.0',
-    id: 1,
-    method: 'getParsedTokenAccountsByOwner',
-    params: [
-      owner,
-      { programId: 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA' },
-      { encoding: 'jsonParsed', commitment: 'confirmed' }
-    ]
+  const tokenPrograms = [
+    'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA',
+    'TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb'
+  ];
+
+  const fetchProgramAccounts = async (programId) => {
+    const payload = {
+      jsonrpc: '2.0',
+      id: 1,
+      method: 'getParsedTokenAccountsByOwner',
+      params: [
+        owner,
+        { programId },
+        { encoding: 'jsonParsed', commitment: 'confirmed' }
+      ]
+    };
+
+    const response = await fetch('https://api.mainnet-beta.solana.com', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    const result = await response.json();
+    return result?.result?.value || [];
   };
 
-  const response = await fetch('https://api.mainnet-beta.solana.com', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  });
-
-  const result = await response.json();
-  const accounts = result?.result?.value || [];
+  const accountGroups = await Promise.all(tokenPrograms.map(fetchProgramAccounts));
+  const accounts = accountGroups.flat();
   const matchingAccounts = accounts.filter((acc) => {
     const mint = acc?.account?.data?.parsed?.info?.mint;
     return mint === qraMint;
@@ -638,6 +648,7 @@ async function fetchQraBalance(owner) {
     total += Number.isFinite(amount) ? amount : 0;
   }
 
+  console.log('QRA_ALL_TOKEN_ACCOUNTS', accounts);
   console.log('QRA_MATCHING_ACCOUNTS', matchingAccounts);
   console.log('QRA_TOTAL_BALANCE', total);
   return total;
