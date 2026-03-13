@@ -208,14 +208,28 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
       <div class="gated-content" data-gated-content="altascrypto">
       <div class="section-header">
         <h2>Altas Crypto Index</h2>
-        <p>Mapa de liquidez y liquidaciones de Bitcoin para identificar zonas donde el mercado podría buscar liquidez.</p>
+        <p>Vista crypto premium con gráfico interactivo de Bitcoin para análisis de estructura, momentum y contexto de mercado.</p>
       </div>
-      <div class="widget-card full-span">
-        <h3>Bitcoin Liquidation Heatmap</h3>
-        <div class="embed-frame"><iframe src="https://www.coinglass.com/BitcoinLiquidationHeatmap" height="750" loading="lazy" title="BTC Liquidation Heatmap"></iframe></div>
-        <div class="widget-note">Zonas donde existen acumulaciones de liquidaciones de longs y shorts en Bitcoin.</div>
+      <div class="widget-shell full-span">
+        <div class="tradingview-widget-container" style="height:760px;width:100%;">
+          <div class="tradingview-widget-container__widget"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+          {
+            "autosize": true,
+            "symbol": "BITSTAMP:BTCUSD",
+            "interval": "240",
+            "timezone": "America/Mexico_City",
+            "theme": "dark",
+            "style": "1",
+            "locale": "es",
+            "allow_symbol_change": true,
+            "calendar": false,
+            "support_host": "https://www.tradingview.com"
+          }
+          </script>
+        </div>
       </div>
-          </div>
+      </div>
     </section>
 
     <section class="tab-panel" id="stockindex">
@@ -391,13 +405,53 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
       <div class="gated-content" data-gated-content="macrostats">
       <div class="section-header" id="inflation-section">
         <h2>Inflation</h2>
-        <p>Embeds interactivos de FRED para seguir inflación y su contexto.</p>
+        <p>Gráficos interactivos para seguir inflación y contexto macro en tiempo real.</p>
       </div>
       <div class="series-grid">
-        <div class="series-item"><div class="series-code">PCEPI</div><h4>PCE</h4><p class="series-note">Personal Consumption Expenditures Price Index.</p><div class="embed-frame"><iframe src="https://fred.stlouisfed.org/graph/graph-landing.php?g=QhRk" height="430" title="PCE"></iframe></div><div class="link-row"><a class="link-btn" href="https://fred.stlouisfed.org/series/PCEPI" target="_blank">Abrir serie</a></div></div>
-        <div class="series-item"><div class="series-code">PCEPILFE</div><h4>Core PCE</h4><p class="series-note">Indicador preferido por la Fed para decisiones de tasas.</p><div class="embed-frame"><iframe src="https://fred.stlouisfed.org/graph/graph-landing.php?g=QhRl" height="430" title="Core PCE"></iframe></div><div class="link-row"><a class="link-btn" href="https://fred.stlouisfed.org/series/PCEPILFE" target="_blank">Abrir serie</a></div></div>
-        <div class="series-item"><div class="series-code">PCEPI YoY</div><h4>PCE YoY</h4><p class="series-note">Cambio anual del PCE.</p><div class="embed-frame"><iframe src="https://fred.stlouisfed.org/series/PCEPI" height="430" title="PCE YoY"></iframe></div></div>
-        <div class="series-item"><div class="series-code">PCEPILFE YoY</div><h4>Core PCE YoY</h4><p class="series-note">Cambio anual del Core PCE.</p><div class="embed-frame"><iframe src="https://fred.stlouisfed.org/series/PCEPILFE" height="430" title="Core PCE YoY"></iframe></div></div>
+        <div class="widget-shell">
+          <div class="series-code">PCEPI</div>
+          <h4>PCE</h4>
+          <p class="series-note">Personal Consumption Expenditures Price Index.</p>
+          <div class="tradingview-widget-container" style="height:430px;width:100%;">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            {
+              "autosize": true,
+              "symbol": "FRED:PCEPI",
+              "interval": "M",
+              "timezone": "America/Mexico_City",
+              "theme": "dark",
+              "style": "1",
+              "locale": "es",
+              "allow_symbol_change": false,
+              "calendar": false,
+              "support_host": "https://www.tradingview.com"
+            }
+            </script>
+          </div>
+        </div>
+        <div class="widget-shell">
+          <div class="series-code">PCEPILFE</div>
+          <h4>Core PCE</h4>
+          <p class="series-note">Indicador preferido por la Fed para decisiones de tasas.</p>
+          <div class="tradingview-widget-container" style="height:430px;width:100%;">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            {
+              "autosize": true,
+              "symbol": "FRED:PCEPILFE",
+              "interval": "M",
+              "timezone": "America/Mexico_City",
+              "theme": "dark",
+              "style": "1",
+              "locale": "es",
+              "allow_symbol_change": false,
+              "calendar": false,
+              "support_host": "https://www.tradingview.com"
+            }
+            </script>
+          </div>
+        </div>
       </div>
 
       <div class="term-divider"></div>
@@ -406,9 +460,48 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
         <p>Mercado laboral, desempleo y salarios.</p>
       </div>
       <div class="series-grid">
-        <div class="series-item"><div class="series-code">PAYEMS</div><h4>Payrolls</h4><div class="embed-frame"><iframe src="https://fred.stlouisfed.org/series/PAYEMS" height="430" title="PAYEMS"></iframe></div><div class="link-row"><a class="link-btn" href="https://fred.stlouisfed.org/series/PAYEMS" target="_blank">Abrir serie</a></div></div>
-        <div class="series-item"><div class="series-code">UNRATE</div><h4>Unemployment Rate</h4><div class="embed-frame"><iframe src="https://fred.stlouisfed.org/series/UNRATE" height="430" title="UNRATE"></iframe></div><div class="link-row"><a class="link-btn" href="https://fred.stlouisfed.org/series/UNRATE" target="_blank">Abrir serie</a></div></div>
-        <div class="series-item"><div class="series-code">CES0500000003</div><h4>Average Hourly Earnings</h4><div class="embed-frame"><iframe src="https://fred.stlouisfed.org/series/CES0500000003" height="430" title="Average Hourly Earnings"></iframe></div><div class="link-row"><a class="link-btn" href="https://fred.stlouisfed.org/series/CES0500000003" target="_blank">Abrir serie</a></div></div>
+        <div class="widget-shell">
+          <div class="series-code">PAYEMS</div>
+          <h4>Payrolls</h4>
+          <div class="tradingview-widget-container" style="height:430px;width:100%;">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            {
+              "autosize": true,
+              "symbol": "FRED:PAYEMS",
+              "interval": "M",
+              "timezone": "America/Mexico_City",
+              "theme": "dark",
+              "style": "1",
+              "locale": "es",
+              "allow_symbol_change": false,
+              "calendar": false,
+              "support_host": "https://www.tradingview.com"
+            }
+            </script>
+          </div>
+        </div>
+        <div class="widget-shell">
+          <div class="series-code">UNRATE</div>
+          <h4>Unemployment Rate</h4>
+          <div class="tradingview-widget-container" style="height:430px;width:100%;">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            {
+              "autosize": true,
+              "symbol": "FRED:UNRATE",
+              "interval": "M",
+              "timezone": "America/Mexico_City",
+              "theme": "dark",
+              "style": "1",
+              "locale": "es",
+              "allow_symbol_change": false,
+              "calendar": false,
+              "support_host": "https://www.tradingview.com"
+            }
+            </script>
+          </div>
+        </div>
       </div>
 
       <div class="term-divider"></div>
@@ -417,10 +510,90 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
         <p>M2, balance de la Fed, TGA y Reverse Repo.</p>
       </div>
       <div class="series-grid">
-        <div class="series-item"><div class="series-code">M2SL</div><h4>M2 Money Supply</h4><div class="embed-frame"><iframe src="https://fred.stlouisfed.org/series/M2SL" height="430" title="M2"></iframe></div><div class="link-row"><a class="link-btn" href="https://fred.stlouisfed.org/series/M2SL" target="_blank">Abrir serie</a></div></div>
-        <div class="series-item"><div class="series-code">WALCL</div><h4>Fed Balance Sheet</h4><div class="embed-frame"><iframe src="https://fred.stlouisfed.org/series/WALCL" height="430" title="WALCL"></iframe></div><div class="link-row"><a class="link-btn" href="https://fred.stlouisfed.org/series/WALCL" target="_blank">Abrir serie</a></div></div>
-        <div class="series-item"><div class="series-code">WTREGEN</div><h4>TGA</h4><div class="embed-frame"><iframe src="https://fred.stlouisfed.org/series/WTREGEN" height="430" title="TGA"></iframe></div><div class="link-row"><a class="link-btn" href="https://fred.stlouisfed.org/series/WTREGEN" target="_blank">Abrir serie</a></div></div>
-        <div class="series-item"><div class="series-code">RRPONTSYD</div><h4>Reverse Repo</h4><div class="embed-frame"><iframe src="https://fred.stlouisfed.org/series/RRPONTSYD" height="430" title="RRP"></iframe></div><div class="link-row"><a class="link-btn" href="https://fred.stlouisfed.org/series/RRPONTSYD" target="_blank">Abrir serie</a></div></div>
+        <div class="widget-shell">
+          <div class="series-code">M2SL</div>
+          <h4>M2 Money Supply</h4>
+          <div class="tradingview-widget-container" style="height:430px;width:100%;">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            {
+              "autosize": true,
+              "symbol": "FRED:M2SL",
+              "interval": "M",
+              "timezone": "America/Mexico_City",
+              "theme": "dark",
+              "style": "1",
+              "locale": "es",
+              "allow_symbol_change": false,
+              "calendar": false,
+              "support_host": "https://www.tradingview.com"
+            }
+            </script>
+          </div>
+        </div>
+        <div class="widget-shell">
+          <div class="series-code">WALCL</div>
+          <h4>Fed Balance Sheet</h4>
+          <div class="tradingview-widget-container" style="height:430px;width:100%;">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            {
+              "autosize": true,
+              "symbol": "FRED:WALCL",
+              "interval": "W",
+              "timezone": "America/Mexico_City",
+              "theme": "dark",
+              "style": "1",
+              "locale": "es",
+              "allow_symbol_change": false,
+              "calendar": false,
+              "support_host": "https://www.tradingview.com"
+            }
+            </script>
+          </div>
+        </div>
+        <div class="widget-shell">
+          <div class="series-code">WTREGEN</div>
+          <h4>TGA</h4>
+          <div class="tradingview-widget-container" style="height:430px;width:100%;">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            {
+              "autosize": true,
+              "symbol": "FRED:WTREGEN",
+              "interval": "D",
+              "timezone": "America/Mexico_City",
+              "theme": "dark",
+              "style": "1",
+              "locale": "es",
+              "allow_symbol_change": false,
+              "calendar": false,
+              "support_host": "https://www.tradingview.com"
+            }
+            </script>
+          </div>
+        </div>
+        <div class="widget-shell">
+          <div class="series-code">RRPONTSYD</div>
+          <h4>Reverse Repo</h4>
+          <div class="tradingview-widget-container" style="height:430px;width:100%;">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            {
+              "autosize": true,
+              "symbol": "FRED:RRPONTSYD",
+              "interval": "D",
+              "timezone": "America/Mexico_City",
+              "theme": "dark",
+              "style": "1",
+              "locale": "es",
+              "allow_symbol_change": false,
+              "calendar": false,
+              "support_host": "https://www.tradingview.com"
+            }
+            </script>
+          </div>
+        </div>
       </div>
 
       <div class="term-divider"></div>
@@ -429,9 +602,69 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
         <p>Curva de tasas y spread 10Y - 2Y.</p>
       </div>
       <div class="series-grid">
-        <div class="series-item"><div class="series-code">DGS2</div><h4>2Y Treasury Yield</h4><div class="embed-frame"><iframe src="https://fred.stlouisfed.org/series/DGS2" height="430" title="2Y Treasury"></iframe></div><div class="link-row"><a class="link-btn" href="https://fred.stlouisfed.org/series/DGS2" target="_blank">Abrir serie</a></div></div>
-        <div class="series-item"><div class="series-code">DGS10</div><h4>10Y Treasury Yield</h4><div class="embed-frame"><iframe src="https://fred.stlouisfed.org/series/DGS10" height="430" title="10Y Treasury"></iframe></div><div class="link-row"><a class="link-btn" href="https://fred.stlouisfed.org/series/DGS10" target="_blank">Abrir serie</a></div></div>
-        <div class="series-item"><div class="series-code">T10Y2Y</div><h4>10Y - 2Y Spread</h4><div class="embed-frame"><iframe src="https://fred.stlouisfed.org/series/T10Y2Y" height="430" title="10Y2Y"></iframe></div><div class="link-row"><a class="link-btn" href="https://fred.stlouisfed.org/series/T10Y2Y" target="_blank">Abrir serie</a></div></div>
+        <div class="widget-shell">
+          <div class="series-code">DGS2</div>
+          <h4>2Y Treasury Yield</h4>
+          <div class="tradingview-widget-container" style="height:430px;width:100%;">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            {
+              "autosize": true,
+              "symbol": "FRED:DGS2",
+              "interval": "D",
+              "timezone": "America/Mexico_City",
+              "theme": "dark",
+              "style": "1",
+              "locale": "es",
+              "allow_symbol_change": false,
+              "calendar": false,
+              "support_host": "https://www.tradingview.com"
+            }
+            </script>
+          </div>
+        </div>
+        <div class="widget-shell">
+          <div class="series-code">DGS10</div>
+          <h4>10Y Treasury Yield</h4>
+          <div class="tradingview-widget-container" style="height:430px;width:100%;">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            {
+              "autosize": true,
+              "symbol": "FRED:DGS10",
+              "interval": "D",
+              "timezone": "America/Mexico_City",
+              "theme": "dark",
+              "style": "1",
+              "locale": "es",
+              "allow_symbol_change": false,
+              "calendar": false,
+              "support_host": "https://www.tradingview.com"
+            }
+            </script>
+          </div>
+        </div>
+        <div class="widget-shell">
+          <div class="series-code">T10Y2Y</div>
+          <h4>10Y - 2Y Spread</h4>
+          <div class="tradingview-widget-container" style="height:430px;width:100%;">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            {
+              "autosize": true,
+              "symbol": "FRED:T10Y2Y",
+              "interval": "D",
+              "timezone": "America/Mexico_City",
+              "theme": "dark",
+              "style": "1",
+              "locale": "es",
+              "allow_symbol_change": false,
+              "calendar": false,
+              "support_host": "https://www.tradingview.com"
+            }
+            </script>
+          </div>
+        </div>
       </div>
 
       <div class="term-divider"></div>
@@ -440,12 +673,132 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
         <p>Activos clave de riesgo, refugio e inflación.</p>
       </div>
       <div class="series-grid">
-        <div class="series-item"><div class="series-code">SP500</div><h4>S&amp;P 500</h4><div class="embed-frame"><iframe src="https://www.tradingview.com/chart/?symbol=SP%3ASPX" height="430" title="SPX"></iframe></div></div>
-        <div class="series-item"><div class="series-code">CBBTCUSD</div><h4>Bitcoin</h4><div class="embed-frame"><iframe src="https://www.tradingview.com/chart/?symbol=BITSTAMP%3ABTCUSD" height="430" title="BTC"></iframe></div></div>
-        <div class="series-item"><div class="series-code">GOLD</div><h4>Oro</h4><div class="embed-frame"><iframe src="https://www.tradingview.com/chart/?symbol=OANDA%3AXAUUSD" height="430" title="Gold"></iframe></div></div>
-        <div class="series-item"><div class="series-code">SILVER</div><h4>Plata</h4><div class="embed-frame"><iframe src="https://www.tradingview.com/chart/?symbol=OANDA%3AXAGUSD" height="430" title="Silver"></iframe></div></div>
-        <div class="series-item"><div class="series-code">WTI</div><h4>Petróleo WTI</h4><div class="embed-frame"><iframe src="https://www.tradingview.com/chart/?symbol=TVC%3AUSOIL" height="430" title="WTI"></iframe></div></div>
-        <div class="series-item"><div class="series-code">DXY</div><h4>Dólar</h4><div class="embed-frame"><iframe src="https://www.tradingview.com/chart/?symbol=TVC%3ADXY" height="430" title="DXY"></iframe></div></div>
+        <div class="widget-shell">
+          <div class="series-code">SPX</div>
+          <h4>S&amp;P 500</h4>
+          <div class="tradingview-widget-container" style="height:430px;width:100%;">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            {
+              "autosize": true,
+              "symbol": "SP:SPX",
+              "interval": "D",
+              "timezone": "America/Mexico_City",
+              "theme": "dark",
+              "style": "1",
+              "locale": "es",
+              "allow_symbol_change": false,
+              "calendar": false,
+              "support_host": "https://www.tradingview.com"
+            }
+            </script>
+          </div>
+        </div>
+        <div class="widget-shell">
+          <div class="series-code">BTCUSD</div>
+          <h4>Bitcoin</h4>
+          <div class="tradingview-widget-container" style="height:430px;width:100%;">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            {
+              "autosize": true,
+              "symbol": "BITSTAMP:BTCUSD",
+              "interval": "D",
+              "timezone": "America/Mexico_City",
+              "theme": "dark",
+              "style": "1",
+              "locale": "es",
+              "allow_symbol_change": false,
+              "calendar": false,
+              "support_host": "https://www.tradingview.com"
+            }
+            </script>
+          </div>
+        </div>
+        <div class="widget-shell">
+          <div class="series-code">XAUUSD</div>
+          <h4>Oro</h4>
+          <div class="tradingview-widget-container" style="height:430px;width:100%;">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            {
+              "autosize": true,
+              "symbol": "OANDA:XAUUSD",
+              "interval": "D",
+              "timezone": "America/Mexico_City",
+              "theme": "dark",
+              "style": "1",
+              "locale": "es",
+              "allow_symbol_change": false,
+              "calendar": false,
+              "support_host": "https://www.tradingview.com"
+            }
+            </script>
+          </div>
+        </div>
+        <div class="widget-shell">
+          <div class="series-code">XAGUSD</div>
+          <h4>Plata</h4>
+          <div class="tradingview-widget-container" style="height:430px;width:100%;">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            {
+              "autosize": true,
+              "symbol": "OANDA:XAGUSD",
+              "interval": "D",
+              "timezone": "America/Mexico_City",
+              "theme": "dark",
+              "style": "1",
+              "locale": "es",
+              "allow_symbol_change": false,
+              "calendar": false,
+              "support_host": "https://www.tradingview.com"
+            }
+            </script>
+          </div>
+        </div>
+        <div class="widget-shell">
+          <div class="series-code">USOIL</div>
+          <h4>Petróleo WTI</h4>
+          <div class="tradingview-widget-container" style="height:430px;width:100%;">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            {
+              "autosize": true,
+              "symbol": "TVC:USOIL",
+              "interval": "D",
+              "timezone": "America/Mexico_City",
+              "theme": "dark",
+              "style": "1",
+              "locale": "es",
+              "allow_symbol_change": false,
+              "calendar": false,
+              "support_host": "https://www.tradingview.com"
+            }
+            </script>
+          </div>
+        </div>
+        <div class="widget-shell">
+          <div class="series-code">DXY</div>
+          <h4>Dólar</h4>
+          <div class="tradingview-widget-container" style="height:430px;width:100%;">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            {
+              "autosize": true,
+              "symbol": "TVC:DXY",
+              "interval": "D",
+              "timezone": "America/Mexico_City",
+              "theme": "dark",
+              "style": "1",
+              "locale": "es",
+              "allow_symbol_change": false,
+              "calendar": false,
+              "support_host": "https://www.tradingview.com"
+            }
+            </script>
+          </div>
+        </div>
       </div>
 
       <div class="term-divider"></div>
@@ -454,10 +807,50 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
         <p>Volatilidad y presión de riesgo.</p>
       </div>
       <div class="series-grid">
-        <div class="series-item"><div class="series-code">VIXCLS</div><h4>VIX</h4><div class="embed-frame"><iframe src="https://fred.stlouisfed.org/series/VIXCLS" height="430" title="VIX"></iframe></div><div class="link-row"><a class="link-btn" href="https://fred.stlouisfed.org/series/VIXCLS" target="_blank">Abrir serie</a></div></div>
-        <div class="series-item"><div class="series-code">DCOILWTICO</div><h4>Petróleo WTI</h4><div class="embed-frame"><iframe src="https://www.tradingview.com/chart/?symbol=TVC%3AUSOIL" height="430" title="WTI Risk"></iframe></div><div class="link-row"><a class="link-btn" href="https://fred.stlouisfed.org/series/DCOILWTICO" target="_blank">Abrir serie</a></div></div>
-      </div>
+        <div class="widget-shell">
+          <div class="series-code">VIX</div>
+          <h4>VIX</h4>
+          <div class="tradingview-widget-container" style="height:430px;width:100%;">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            {
+              "autosize": true,
+              "symbol": "TVC:VIX",
+              "interval": "D",
+              "timezone": "America/Mexico_City",
+              "theme": "dark",
+              "style": "1",
+              "locale": "es",
+              "allow_symbol_change": false,
+              "calendar": false,
+              "support_host": "https://www.tradingview.com"
+            }
+            </script>
           </div>
+        </div>
+        <div class="widget-shell">
+          <div class="series-code">USOIL</div>
+          <h4>Petróleo WTI</h4>
+          <div class="tradingview-widget-container" style="height:430px;width:100%;">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            {
+              "autosize": true,
+              "symbol": "TVC:USOIL",
+              "interval": "D",
+              "timezone": "America/Mexico_City",
+              "theme": "dark",
+              "style": "1",
+              "locale": "es",
+              "allow_symbol_change": false,
+              "calendar": false,
+              "support_host": "https://www.tradingview.com"
+            }
+            </script>
+          </div>
+        </div>
+      </div>
+      </div>
     </section>
 
     <section class="tab-panel" id="liquidityengine">
