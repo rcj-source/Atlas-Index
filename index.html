@@ -230,6 +230,92 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
           </script>
         </div>
       </div>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="stockindex">
+      <div class="gate-locked" data-gate-panel="stockindex">
+        <div class="gate-card">
+          <div class="gate-eyebrow">QRA Holder Access</div>
+          <h3 class="gate-title">Atlas Stock Index bloqueado</h3>
+          <p class="gate-copy">Esta sección premium requiere una wallet Phantom con al menos <strong>1,000,000 QRA</strong>. Conecta tu wallet en la barra lateral para verificar tu balance y desbloquear el panel.</p>
+          <div class="gate-pill">Requisito: 1,000,000 QRA</div>
+        </div>
+      </div>
+      <div class="gated-content" data-gated-content="stockindex">
+        <div class="section-header" id="stock-index-top">
+          <h2>Atlas Stock Index</h2>
+          <p>Mapa de calor del S&amp;P 500 y cotizaciones amplias de índices y futuros.</p>
+        </div>
+
+        <div class="widget-shell" style="margin-bottom:16px;height:650px;">
+          <div class="tradingview-widget-container" style="height:100%;width:100%;">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js" async>
+            {
+              "dataSource": "SPX500",
+              "blockSize": "market_cap_basic",
+              "blockColor": "change",
+              "grouping": "sector",
+              "locale": "en",
+              "symbolUrl": "",
+              "colorTheme": "dark",
+              "exchanges": [],
+              "hasTopBar": false,
+              "isDataSetEnabled": false,
+              "isZoomEnabled": true,
+              "hasSymbolTooltip": true,
+              "isMonoSize": false,
+              "width": "100%",
+              "height": "100%"
+            }
+            </script>
+          </div>
+        </div>
+
+        <div class="widget-shell" style="min-height:580px;">
+          <div class="tradingview-widget-container" style="height:100%;width:100%;">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>
+            {
+              "colorTheme": "dark",
+              "locale": "es",
+              "largeChartUrl": "",
+              "isTransparent": false,
+              "showSymbolLogo": true,
+              "backgroundColor": "#131722",
+              "support_host": "https://www.tradingview.com",
+              "width": "100%",
+              "height": 550,
+              "symbolsGroups": [
+                {
+                  "name": "Indices",
+                  "symbols": [
+                    {"name": "FOREXCOM:SPXUSD", "displayName": "S&P 500 Index"},
+                    {"name": "FOREXCOM:NSXUSD", "displayName": "US 100 Cash CFD"},
+                    {"name": "FOREXCOM:DJI", "displayName": "Dow Jones Industrial Average Index"},
+                    {"name": "INDEX:NKY", "displayName": "Japan 225"},
+                    {"name": "INDEX:DEU40", "displayName": "DAX Index"},
+                    {"name": "FOREXCOM:UKXGBP", "displayName": "FTSE 100 Index"}
+                  ]
+                },
+                {
+                  "name": "Futures",
+                  "symbols": [
+                    {"name": "BMFBOVESPA:ISP1!", "displayName": "S&P 500"},
+                    {"name": "BMFBOVESPA:EUR1!", "displayName": "Euro"},
+                    {"name": "CMCMARKETS:GOLD", "displayName": "Gold"},
+                    {"name": "PYTH:WTI3!", "displayName": "WTI Crude Oil"},
+                    {"name": "BMFBOVESPA:CCM1!", "displayName": "Corn"}
+                  ]
+                }
+              ]
+            }
+            </script>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <section class="tab-panel" id="commoditiesindex">
       <div class="gate-locked" data-gate-panel="commoditiesindex">
@@ -307,7 +393,7 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
           </div>
         </div>
       </div>
-          </div>
+      </div>
     </section>
 
     <section class="tab-panel" id="macrostats">
@@ -328,7 +414,6 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
         <div class="widget-shell">
           <div class="series-code">PCEPI</div>
           <h4>PCE</h4>
-          
           <div class="tradingview-widget-container" style="height:1200px;width:100%;">
             <div class="tradingview-widget-container__widget"></div>
             <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
@@ -350,7 +435,6 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
         <div class="widget-shell">
           <div class="series-code">PCEPILFE</div>
           <h4>Core PCE</h4>
-          
           <div class="tradingview-widget-container" style="height:1200px;width:100%;">
             <div class="tradingview-widget-container__widget"></div>
             <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
@@ -590,7 +674,6 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
         <p>Activos clave de riesgo, refugio e inflación.</p>
       </div>
       <div class="series-grid">
-        
         <div class="widget-shell">
           <div class="series-code">BTCUSD</div>
           <h4>Bitcoin</h4>
