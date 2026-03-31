@@ -28,64 +28,25 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
 .side-box{margin-top:18px;border:1px solid var(--line);background:#0b1016;padding:12px;border-radius:8px;color:var(--muted);font-size:12px;line-height:1.55}
 .wallet-gate-box{margin-top:18px;border:1px solid var(--line);background:#0b1016;padding:12px;border-radius:8px}
 .wallet-gate-box h4{margin:0 0 10px;font-size:14px;color:#fff}
-.wallet-btn{position:relative;z-index:50;pointer-events:auto;width:100%;padding:11px 12px;border-radius:8px;border:1px solid #35507a;background:#121c2a;color:#fff;font-size:14px;font-weight:700;cursor:pointer}.wallet-btn:disabled{opacity:.7;cursor:wait}
-.wallet-btn:hover{background:#172234}
-.wallet-status{margin-top:10px;font-size:12px;line-height:1.5;color:var(--muted);word-break:break-word}
-.wallet-status strong{color:#fff}
-.gate-card{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:10px;padding:22px;max-width:720px}
-.gate-eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--orange);font-weight:800;margin-bottom:8px}
-.gate-title{font-size:28px;font-weight:900;margin:0 0 8px;color:#fff}
-.gate-copy{font-size:14px;line-height:1.65;color:var(--muted);margin:0 0 16px}
-.gate-list{display:grid;gap:8px;margin:0 0 16px;padding:0;list-style:none;color:#dbe5f3;font-size:14px}
-.gate-pill{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:#101720;color:#fff;font-size:12px;font-weight:700}
+.wallet-btn{width:100%;padding:11px;border-radius:8px;border:1px solid #35507a;background:#121c2a;color:#fff;font-weight:700;cursor:pointer}
+.wallet-status{margin-top:10px;font-size:12px;color:var(--muted)}
 .gated-content{display:none}
 .gated-content.unlocked{display:block}
 .gate-locked{display:none}
 .gate-locked.visible{display:block}
-.main{padding:0 18px 18px;overflow:visible}
-.topbar{position:sticky;top:0;z-index:999;margin:0 -18px 16px;background:#000;border-bottom:1px solid #202731;box-shadow:0 8px 18px rgba(0,0,0,.18)}
-.topbar-inner{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 16px;flex-wrap:wrap}
-.terminal-tag{font-size:11px;letter-spacing:1.4px;color:var(--orange);text-transform:uppercase;font-weight:800}
-.terminal-status{font-size:12px;color:var(--muted)}
-.jump-strip{display:flex;gap:10px;flex-wrap:wrap}
-.jump-btn{font-size:11px;padding:6px 9px;border:1px solid var(--line);background:#0c1117;border-radius:4px;color:#d9e2ef;text-decoration:none;transition:.2s ease}
-.jump-btn:hover{background:#121922;border-color:#4b5d75}
-.jump-btn b{color:#fff}
-.ticker-shell{overflow:hidden;border-top:1px solid #5a0000;border-bottom:1px solid #5a0000;background:linear-gradient(180deg,#9f1111 0%, #7d0000 100%);min-height:50px;box-shadow:inset 0 1px 0 rgba(255,255,255,.08), inset 0 -1px 0 rgba(0,0,0,.35)}
-.tv-ticker-wrap{padding:2px 8px}
-.tab-panel{display:none;margin-top:0}
+.main{padding:0 18px 18px}
+.tab-panel{display:none}
 .tab-panel.active{display:block}
-.section-header{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;margin:0 0 14px;border-bottom:1px solid var(--line);padding-bottom:8px}
-.section-header h2{margin:0;font-size:28px;text-transform:uppercase;letter-spacing:.6px}
-.section-header p{margin:0;color:var(--muted);font-size:13px;line-height:1.55;max-width:820px}
-.home-top-layout{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:16px;align-items:start;margin-bottom:16px}
-.home-overview-header{grid-column:1 / -1}
-.series-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;align-items:start}
-.market-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:start}
-.widget-card,.series-item{min-width:0;background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:8px;padding:14px}
-.widget-card h3,.series-item h4{margin:8px 0;font-size:20px}
-.series-code{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--orange);font-weight:700}
-.series-note,.widget-note{color:var(--muted);line-height:1.6;font-size:13px}
-.widget-shell{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:8px;padding:6px;overflow:hidden;width:100%;min-height:504px}
-.tradingview-widget-container iframe{height:446px !important;}
-.widget-shell .tradingview-widget-copyright{display:none}
-.embed-frame{width:100%;border:1px solid var(--line);border-radius:6px;background:#0c1117;overflow:hidden}
-.embed-frame iframe{display:block;width:100%;border:0;background:#0c1117}
-.link-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-.link-btn{padding:7px 10px;font-size:12px;border:1px solid #2d3948;background:#111722;color:#d5e2f1;border-radius:4px;text-decoration:none}
-.link-btn:hover{border-color:#4b5d75}
-.term-divider{height:1px;background:var(--line);margin:10px 0 0}
-.full-span{grid-column:1 / -1}
-@media (max-width:1200px){.home-top-layout{grid-template-columns:1fr}}
-@media (max-width:1100px){.market-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:900px){.layout{grid-template-columns:1fr}.sidebar{position:relative;top:auto;height:auto;overflow:visible;border-right:none;border-bottom:1px solid var(--line)}.main{padding:0 14px 14px}.topbar{margin:0 -14px 16px}.series-grid,.market-grid{grid-template-columns:1fr}}
+.section-header h2{font-size:28px;margin:0}
 </style>
 </head>
 <body>
+
 <div class="layout">
   <aside class="sidebar">
     <div class="brand">Atlas Capital<br>Index</div>
-    <div class="subtitle">Dashboard macro y de mercados para seguir liquidez global, inflación, empleo y riesgo.</div>
+    <div class="subtitle">Dashboard macro y de mercados</div>
+
     <nav class="nav">
       <button class="tab-btn active" data-tab="home">Inicio</button>
       <button class="tab-btn" data-tab="liquidityengine">Atlas Liquidity Engine</button>
@@ -98,20 +59,78 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
 
     <div class="wallet-gate-box">
       <h4>QRA Holder Access</h4>
-      <button class="wallet-btn" id="connect-wallet-btn" type="button">Conectar Phantom</button>
-      <div class="wallet-status" id="wallet-status">Necesitas <strong>1,000,000 QRA</strong> para desbloquear Atlas Crypto Index, Atlas Stock Index, Atlas Commodities Index, Macro Stats y Atlas Liquidity Engine.</div>
+      <button class="wallet-btn" id="connect-wallet-btn">Conectar Phantom</button>
+      <div class="wallet-status">
+        Necesitas <strong>1,000,000 QRA</strong> para desbloquear Atlas Crypto Index, Atlas Stock Index, Atlas Commodities Index, Macro Stats y Atlas Liquidity Engine.
+      </div>
     </div>
-
-    <div class="side-box">Fuentes: TradingView, FRED, CoinGlass y DexScreener.</div>
   </aside>
 
   <main class="main">
-    <!-- (EL RESTO DEL CÓDIGO ES EXACTAMENTE IGUAL AL ORIGINAL, SOLO CAMBIÓ "Altas" → "Atlas") -->
+
+    <section class="tab-panel active" id="home">
+      <div class="section-header">
+        <h2>Market Overview</h2>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="altascrypto">
+      <div class="gate-locked">
+        <h3>Atlas Crypto Index bloqueado</h3>
+      </div>
+      <div class="gated-content">
+        <div class="section-header">
+          <h2>Atlas Crypto Index</h2>
+        </div>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="stockindex">
+      <div class="section-header">
+        <h2>Atlas Stock Index</h2>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="commoditiesindex">
+      <div class="section-header">
+        <h2>Atlas Commodities Index</h2>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="macrostats">
+      <div class="section-header">
+        <h2>Macro Stats</h2>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="liquidityengine">
+      <div class="section-header">
+        <h2>Atlas Liquidity Engine</h2>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="ecosystem">
+      <div class="section-header">
+        <h2>Atlas Ecosystem</h2>
+      </div>
+    </section>
+
   </main>
 </div>
 
 <script>
-/* JS EXACTAMENTE IGUAL, SIN CAMBIOS */
+const buttons = document.querySelectorAll(".tab-btn");
+const panels = document.querySelectorAll(".tab-panel");
+
+buttons.forEach(btn=>{
+  btn.onclick=()=>{
+    buttons.forEach(b=>b.classList.remove("active"));
+    panels.forEach(p=>p.classList.remove("active"));
+
+    btn.classList.add("active");
+    document.getElementById(btn.dataset.tab).classList.add("active");
+  }
+});
 </script>
 
 </body>
