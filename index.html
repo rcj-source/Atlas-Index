@@ -76,6 +76,12 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
 .link-btn:hover{border-color:#4b5d75}
 .term-divider{height:1px;background:var(--line);margin:10px 0 0}
 .full-span{grid-column:1 / -1}
+.prose-section{max-width:980px}
+.prose-block{margin-bottom:26px}
+.prose-label{font-size:11px;text-transform:uppercase;letter-spacing:1.4px;color:var(--orange);font-weight:800;margin:0 0 8px}
+.prose-title{font-size:20px;font-weight:800;color:#fff;margin:0 0 10px}
+.prose-text{font-size:15px;line-height:1.9;color:#d7e1ef;margin:0}
+.prose-cta{margin-top:18px}
 @media (max-width:1200px){.home-top-layout{grid-template-columns:1fr}}
 @media (max-width:1100px){.market-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:900px){.layout{grid-template-columns:1fr}.sidebar{position:relative;top:auto;height:auto;overflow:visible;border-right:none;border-bottom:1px solid var(--line)}.main{padding:0 14px 14px}.topbar{margin:0 -14px 16px}.series-grid,.market-grid{grid-template-columns:1fr}}
@@ -322,41 +328,38 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
         <p>Un entorno privado orientado a formación, análisis y comunidad para quienes buscan una relación más cercana con el ecosistema Atlas Capital.</p>
       </div>
 
-      <div class="series-grid" style="margin-bottom:16px;">
-        <div class="widget-card">
-          <div class="series-code">DISCORD PRIVADO</div>
-          <h3>Acceso a contenido en evolución constante</h3>
-          <p class="series-note">
-            Atlas Capital Private Group es un grupo privado en Discord donde los miembros reciben acceso a todos los cursos y clases
-            que se desarrollen con el tiempo, con enfoque en macroeconomía, criptomonedas, stocks y otros temas relevantes para inversores.
+      <div class="prose-section">
+        <div class="prose-block">
+          <p class="prose-label">Discord privado</p>
+          <h3 class="prose-title">Acceso a contenido en evolución constante</h3>
+          <p class="prose-text">
+            Atlas Capital Private Group es un grupo privado en Discord donde los miembros reciben acceso a todos los cursos y clases que se desarrollen con el tiempo, con enfoque en macroeconomía, criptomonedas, stocks y otros temas relevantes para inversores.
           </p>
         </div>
-        <div class="widget-card">
-          <div class="series-code">EXPERIENCIA PREMIUM</div>
-          <h3>Más que una comunidad, una estructura de seguimiento</h3>
-          <p class="series-note">
-            Además del componente educativo, el grupo integra un espacio de conversación privada, actualizaciones de mercado,
-            reportes constantes sobre la situación geopolítica y charlas en directo con la comunidad.
-          </p>
-        </div>
-      </div>
 
-      <div class="series-grid">
-        <div class="widget-card">
-          <div class="series-code">MODELO DE ACCESO</div>
-          <h3>Aplicación y admisión</h3>
-          <p class="series-note">
-            El acceso al grupo es de pago y funciona mediante aplicación previa. Si tu perfil es aceptado, recibirás posteriormente
-            los datos necesarios para completar el proceso de ingreso.
+        <div class="prose-block">
+          <p class="prose-label">Experiencia premium</p>
+          <h3 class="prose-title">Más que una comunidad, una estructura de seguimiento</h3>
+          <p class="prose-text">
+            Además del componente educativo, el grupo integra un espacio de conversación privada, actualizaciones de mercado, reportes constantes sobre la situación geopolítica y charlas en directo con la comunidad.
           </p>
         </div>
-        <div class="widget-card">
-          <div class="series-code">SOLICITUD</div>
-          <h3>Postula tu acceso</h3>
-          <p class="series-note">
+
+        <div class="prose-block">
+          <p class="prose-label">Modelo de acceso</p>
+          <h3 class="prose-title">Aplicación y admisión</h3>
+          <p class="prose-text">
+            El acceso al grupo es de pago y funciona mediante aplicación previa. Si tu perfil es aceptado, recibirás posteriormente los datos necesarios para completar el proceso de ingreso.
+          </p>
+        </div>
+
+        <div class="prose-block">
+          <p class="prose-label">Solicitud</p>
+          <h3 class="prose-title">Postula tu acceso</h3>
+          <p class="prose-text">
             Si deseas formar parte de Atlas Capital Private Group, puedes iniciar tu solicitud a través del formulario oficial.
           </p>
-          <div class="link-row">
+          <div class="prose-cta">
             <a class="link-btn" href="https://docs.google.com/forms/d/e/1FAIpQLScDOCKJgFZe2i5CzyAi2Pufr6UwyzlRtgHg5vRLdIMpaR530w/viewform" target="_blank" rel="noopener noreferrer">Aplicar ahora</a>
           </div>
         </div>
