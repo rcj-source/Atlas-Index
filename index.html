@@ -903,22 +903,13 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
         <div class="widget-shell">
           <h4>Dólar</h4>
           <p class="series-note">Mide la fortaleza del dólar estadounidense frente a una canasta de monedas importantes. Es clave para entender presión sobre liquidez y activos de riesgo.</p>
-          <div class="tradingview-widget-container" style="height:1200px;width:100%;">
-            <div class="tradingview-widget-container__widget"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
-            {
-              "autosize": true,
-              "symbol": "TVC:DXY",
-              "interval": "D",
-              "timezone": "America/Mexico_City",
-              "theme": "dark",
-              "style": "1",
-              "locale": "es",
-              "allow_symbol_change": false,
-              "calendar": false,
-              "support_host": "https://www.tradingview.com"
-            }
-            </script>
+          <div class="embed-frame">
+            <iframe
+              src="https://s.tradingview.com/widgetembed/?frameElementId=dxy-chart&symbol=TVC%3ADXY&interval=D&hidesidetoolbar=0&symboledit=0&saveimage=1&toolbarbg=0C1117&theme=dark&style=1&timezone=America%2FMexico_City&studies=[]&locale=es&utm_source=atlascapitalindex&utm_medium=widget&utm_campaign=chart&utm_term=TVC%3ADXY"
+              height="1200"
+              loading="lazy"
+              title="Dólar DXY">
+            </iframe>
           </div>
         </div>
       </div>
@@ -932,22 +923,13 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
         <div class="widget-shell">
           <h4>VIX</h4>
           <p class="series-note">Mide la volatilidad implícita del mercado accionario estadounidense. Se usa como termómetro del miedo o estrés financiero.</p>
-          <div class="tradingview-widget-container" style="height:1200px;width:100%;">
-            <div class="tradingview-widget-container__widget"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
-            {
-              "autosize": true,
-              "symbol": "TVC:VIX",
-              "interval": "D",
-              "timezone": "America/Mexico_City",
-              "theme": "dark",
-              "style": "1",
-              "locale": "es",
-              "allow_symbol_change": false,
-              "calendar": false,
-              "support_host": "https://www.tradingview.com"
-            }
-            </script>
+          <div class="embed-frame">
+            <iframe
+              src="https://s.tradingview.com/widgetembed/?frameElementId=vix-chart&symbol=CBOE%3AVIX&interval=D&hidesidetoolbar=0&symboledit=0&saveimage=1&toolbarbg=0C1117&theme=dark&style=1&timezone=America%2FMexico_City&studies=[]&locale=es&utm_source=atlascapitalindex&utm_medium=widget&utm_campaign=chart&utm_term=CBOE%3AVIX"
+              height="1200"
+              loading="lazy"
+              title="VIX">
+            </iframe>
           </div>
         </div>
         <div class="widget-shell">
