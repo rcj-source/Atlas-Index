@@ -62,8 +62,8 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
 .home-overview-header{grid-column:1 / -1}
 .series-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;align-items:start}
 .market-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:start}
-.widget-card,.series-item{min-width:0;background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:8px;padding:14px}
-.widget-card h3,.series-item h4{margin:8px 0;font-size:20px}
+.widget-card{min-width:0;background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:8px;padding:14px}
+.widget-card h3{margin:8px 0;font-size:20px}
 .series-code{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--orange);font-weight:700}
 .series-note,.widget-note{color:var(--muted);line-height:1.6;font-size:13px}
 .widget-shell{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:8px;padding:14px;overflow:hidden;width:100%;min-height:504px}
@@ -71,7 +71,6 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:li
 .widget-shell .tradingview-widget-copyright{display:none}
 .embed-frame{width:100%;border:1px solid var(--line);border-radius:6px;background:#0c1117;overflow:hidden}
 .embed-frame iframe{display:block;width:100%;border:0;background:#0c1117}
-.link-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .link-btn{padding:7px 10px;font-size:12px;border:1px solid #2d3948;background:#111722;color:#d5e2f1;border-radius:4px;text-decoration:none}
 .link-btn:hover{border-color:#4b5d75}
 .term-divider{height:1px;background:var(--line);margin:10px 0 0}
@@ -1075,7 +1074,6 @@ const connectWalletBtn = document.getElementById('connect-wallet-btn');
 const walletStatus = document.getElementById('wallet-status');
 
 const gatedTabs = ['altascrypto','stockindex','commoditiesindex','macrostats','liquidityengine'];
-const qraMint = 'DsMWZg6mkheTV2XTkbUtWcsXaajTzEkk1TC7o6Fmpump';
 const requiredQra = 1000000;
 
 let walletAddress = '';
@@ -1112,7 +1110,6 @@ async function fetchQraBalance(owner) {
     throw new Error(data.error);
   }
 
-  console.log('QRA_WORKER_RESPONSE', data);
   return Number((data && data.balance) || 0);
 }
 
@@ -1130,7 +1127,6 @@ async function verifyHolderAccess(publicKey) {
 async function connectWallet() {
   if (isConnecting) return;
   const provider = window.phantom?.solana || window.solana;
-  console.log('PHANTOM_PROVIDER', provider);
 
   if (!provider || !provider.isPhantom) {
     updateWalletStatus('Phantom no está disponible en esta página. Revisa la extensión o prueba en Chrome.');
@@ -1152,7 +1148,6 @@ async function connectWallet() {
     walletAddress = publicKey.toString();
     await verifyHolderAccess(publicKey);
   } catch (error) {
-    console.error('PHANTOM_CONNECT_ERROR', error);
     updateWalletStatus(`Conexión fallida: ${error?.message || 'error desconocido'}`);
   } finally {
     isConnecting = false;
@@ -1192,16 +1187,7 @@ if (connectWalletBtn) {
   connectWalletBtn.onclick = connectWallet;
 }
 
-function runSanityChecks() {
-  console.assert(tabButtons.length === 7, 'Expected 7 primary tabs');
-  console.assert(tabPanels.length === 10, 'Expected 10 panels');
-  console.assert(gatedTabs.length === 5, 'Expected 5 gated tabs');
-  console.assert(typeof qraMint === 'string' && qraMint.length > 20, 'Mint address must be defined');
-  console.assert(!!connectWalletBtn, 'Connect wallet button must exist');
-}
-
 window.addEventListener('load', async () => {
-  runSanityChecks();
   renderGateState();
   const provider = window.phantom?.solana || window.solana;
   if (provider?.isPhantom) {
