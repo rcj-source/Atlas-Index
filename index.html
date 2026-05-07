@@ -1011,6 +1011,47 @@ body{
     transition-duration: .01ms !important;
   }
 }
+
+/* ── Atlas Games ── */
+.game-card{
+  background:linear-gradient(145deg,#0f1922,#0a1117);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:12px;
+  padding:24px;
+  cursor:pointer;
+  transition:border-color .2s, transform .2s, box-shadow .2s;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.game-card:hover{
+  border-color:rgba(77,163,255,.3);
+  transform:translateY(-3px);
+  box-shadow:0 8px 28px rgba(77,163,255,.12);
+}
+.game-card-soon{
+  opacity:.5;
+  cursor:default;
+  pointer-events:none;
+}
+.game-card-icon{ font-size:36px; }
+.game-card-name{ font-size:16px;font-weight:700;color:#fff; }
+.game-card-desc{ font-size:12px;color:#4a6a8a;line-height:1.5;flex:1; }
+.game-card-tag{
+  display:inline-block;
+  background:rgba(77,163,255,.12);
+  border:1px solid rgba(77,163,255,.2);
+  color:var(--accent);
+  font-size:10px;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;
+  padding:3px 10px;border-radius:999px;
+  align-self:flex-start;margin-top:4px;
+}
+.game-card-tag-soon{
+  background:rgba(150,150,150,.08);
+  border-color:rgba(150,150,150,.15);
+  color:#4a5568;
+}
 </style>
 <script src="https://s3.tradingview.com/tv.js"></script>
 </head>
@@ -1036,6 +1077,7 @@ body{
       <div class="nav-section-label">Comunidad</div>
       <button class="tab-btn" data-tab="testimonios">Testimonios</button>
       <button class="tab-btn" data-tab="privategroup">Private Group</button>
+      <button class="tab-btn" data-tab="games">🎮 Atlas Games</button>
       <button class="tab-btn" data-tab="ecosystem">Atlas Ecosystem</button>
     </nav>
     <div class="wallet-gate-box" style="margin:0;padding:14px 16px 16px;border-top:1px solid rgba(255,255,255,.04);border-radius:0;">
@@ -2133,6 +2175,64 @@ body{
 
     </section>
 
+        <section class="tab-panel" id="games">
+      <div class="section-header">
+        <div>
+          <h2>Atlas Games</h2>
+          <p>Juegos crypto del ecosistema Atlas. Compite, aprende y diviértete.</p>
+        </div>
+      </div>
+
+      <!-- Game selector -->
+      <div id="game-selector" style="display:block;">
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin-bottom:24px;">
+
+          <!-- Flappy QRA -->
+          <div class="game-card" onclick="launchGame('flappy')">
+            <div class="game-card-icon">🪙</div>
+            <div class="game-card-name">Flappy QRA</div>
+            <div class="game-card-desc">Vuela el token QRA entre velas de Bitcoin. Esquiva el bear market.</div>
+            <div class="game-card-tag">Disponible</div>
+          </div>
+
+          <!-- Coming soon 1 -->
+          <div class="game-card game-card-soon">
+            <div class="game-card-icon">🏃</div>
+            <div class="game-card-name">Crypto Runner</div>
+            <div class="game-card-desc">Corre infinito esquivando crashes y recogiendo liquidez.</div>
+            <div class="game-card-tag game-card-tag-soon">Próximamente</div>
+          </div>
+
+          <!-- Coming soon 2 -->
+          <div class="game-card game-card-soon">
+            <div class="game-card-icon">🐋</div>
+            <div class="game-card-name">Whale Escape</div>
+            <div class="game-card-desc">Escapa de las ballenas crypto antes de que aplanen el mercado.</div>
+            <div class="game-card-tag game-card-tag-soon">Próximamente</div>
+          </div>
+
+          <!-- Coming soon 3 -->
+          <div class="game-card game-card-soon">
+            <div class="game-card-icon">📊</div>
+            <div class="game-card-name">Portfolio Wars</div>
+            <div class="game-card-desc">Construye el mejor portfolio virtual de la semana y gana el leaderboard.</div>
+            <div class="game-card-tag game-card-tag-soon">Próximamente</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Game container -->
+      <div id="game-container" style="display:none;">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+          <button onclick="closeGame()" style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:#8a9aaa;padding:7px 14px;border-radius:6px;cursor:pointer;font-size:13px;">← Volver</button>
+          <span id="game-title" style="font-size:16px;font-weight:700;color:#fff;"></span>
+        </div>
+        <div id="game-frame" style="width:100%;border-radius:12px;overflow:hidden;border:1px solid rgba(77,163,255,.1);"></div>
+      </div>
+
+    </section>
+
         <section class="tab-panel" id="ecosystem">
       <div class="section-header" id="ecosystem-top">
         <h2>Atlas Ecosystem</h2>
@@ -2146,8 +2246,12 @@ body{
         </div>
         <div class="widget-card">
           <h3>Atlas Games</h3>
-          <div class="embed-frame"><iframe srcdoc="<body style='margin:0;display:flex;align-items:center;justify-content:center;height:100%;background:#0c1117;color:white;font-family:Arial'><div><div style='font-size:24px;font-weight:700;text-align:center'>Próximamente</div><div style='font-size:14px;color:#97a3b6;text-align:center;margin-top:10px'>Los juegos crypto del ecosistema Atlas vivirán aquí.</div></div></body>" height="220" title="Atlas Games"></iframe></div>
-          <div class="widget-note">Futuros juegos crypto del ecosistema</div>
+          <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:180px;gap:16px;background:linear-gradient(145deg,#0a1117,#060d12);border-radius:8px;border:1px solid rgba(77,163,255,.08);">
+            <div style="font-size:36px;">🎮</div>
+            <div style="font-size:13px;color:#3a5570;text-align:center;">Juegos crypto del ecosistema Atlas</div>
+            <button onclick="activateTab('games')" class="pg-cta-btn" style="font-size:13px;padding:9px 24px;">Jugar →</button>
+          </div>
+          <div class="widget-note">Nuevos juegos disponibles</div>
         </div>
         <div class="widget-card">
           <h3>Atlas Capital</h3>
@@ -3177,6 +3281,257 @@ window.addEventListener('load', async () => {
   tryLoad();
 
 })();
+// ══════════════════════════════════════════════════════════════
+//  ATLAS GAMES
+// ══════════════════════════════════════════════════════════════
+
+const GAMES = {
+  flappy: {
+    title: '🪙 Flappy QRA',
+    html: `<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:#060d12;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;font-family:'Segoe UI',sans-serif;overflow:hidden;}
+  canvas{border:1px solid rgba(77,163,255,.2);border-radius:8px;display:block;}
+  #ui{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;}
+  #score-display{position:absolute;top:16px;left:50%;transform:translateX(-50%);font-size:28px;font-weight:900;color:#fff;text-shadow:0 0 16px rgba(77,163,255,.6);}
+  #overlay{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:rgba(6,13,18,.85);backdrop-filter:blur(4px);cursor:pointer;}
+  #overlay h2{font-size:32px;font-weight:900;color:#fff;}
+  #overlay .sub{font-size:14px;color:#4da3ff;}
+  #overlay .score-msg{font-size:18px;font-weight:700;color:#7fe3a1;display:none;}
+  #overlay .hint{font-size:12px;color:#3a5570;margin-top:8px;}
+  #hi-score{position:absolute;top:16px;right:16px;font-size:12px;color:#3a5570;font-weight:600;}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="score-display">0</div>
+<div id="hi-score">BEST: 0</div>
+<div id="overlay">
+  <div style="font-size:52px;">🪙</div>
+  <h2>Flappy QRA</h2>
+  <div class="sub">Esquiva las velas del mercado</div>
+  <div class="score-msg" id="last-score"></div>
+  <div class="hint">Click o Espacio para volar</div>
+</div>
+<script>
+const canvas = document.getElementById('c');
+const ctx    = canvas.getContext('2d');
+const overlay   = document.getElementById('overlay');
+const scoreDisp = document.getElementById('score-display');
+const hiScoreEl = document.getElementById('hi-score');
+const lastScore = document.getElementById('last-score');
+
+let W, H;
+function resize() {
+  W = canvas.width  = Math.min(window.innerWidth - 32, 520);
+  H = canvas.height = Math.min(window.innerHeight - 32, 600);
+}
+resize();
+window.addEventListener('resize', resize);
+
+// Game state
+let bird, pipes, score, hiScore, running, raf;
+const GRAVITY   = 0.38;
+const FLAP      = -7.5;
+const PIPE_W    = 52;
+const GAP       = 155;
+const PIPE_SPD  = 2.4;
+const PIPE_INT  = 90; // frames between pipes
+
+// Colors
+const ACCENT  = '#4da3ff';
+const GREEN   = '#39d98a';
+const RED     = '#ff4d4d';
+const GOLD    = '#f0c040';
+
+function initGame() {
+  bird  = { x: W*0.22, y: H/2, vy: 0, r: 16 };
+  pipes = [];
+  score = 0;
+  running = true;
+  scoreDisp.textContent = '0';
+  loop();
+}
+
+let frame = 0;
+function loop() {
+  if (!running) return;
+  raf = requestAnimationFrame(loop);
+  frame++;
+  update();
+  draw();
+}
+
+function update() {
+  // Bird physics
+  bird.vy += GRAVITY;
+  bird.y  += bird.vy;
+
+  // Spawn pipes
+  if (frame % PIPE_INT === 0) {
+    const top = 80 + Math.random() * (H - GAP - 140);
+    pipes.push({ x: W, top, scored: false });
+  }
+
+  // Move pipes
+  pipes.forEach(p => p.x -= PIPE_SPD);
+  pipes = pipes.filter(p => p.x > -PIPE_W);
+
+  // Score
+  pipes.forEach(p => {
+    if (!p.scored && p.x + PIPE_W < bird.x) {
+      p.scored = true;
+      score++;
+      scoreDisp.textContent = score;
+    }
+  });
+
+  // Collisions
+  if (bird.y - bird.r < 0 || bird.y + bird.r > H) { gameOver(); return; }
+  for (const p of pipes) {
+    const inX = bird.x + bird.r > p.x && bird.x - bird.r < p.x + PIPE_W;
+    const inY = bird.y - bird.r < p.top || bird.y + bird.r > p.top + GAP;
+    if (inX && inY) { gameOver(); return; }
+  }
+}
+
+function draw() {
+  // Background
+  const bg = ctx.createLinearGradient(0, 0, 0, H);
+  bg.addColorStop(0, '#060d12');
+  bg.addColorStop(1, '#0a1520');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // Grid lines
+  ctx.strokeStyle = 'rgba(77,163,255,.04)';
+  ctx.lineWidth = 1;
+  for (let x = 0; x < W; x += 40) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); }
+  for (let y = 0; y < H; y += 40) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
+
+  // Pipes (candles)
+  pipes.forEach(p => {
+    // Top candle (red = bear)
+    drawCandle(p.x, 0, PIPE_W, p.top, RED);
+    // Bottom candle (green = bull)
+    drawCandle(p.x, p.top + GAP, PIPE_W, H - (p.top + GAP), GREEN);
+  });
+
+  // Bird (QRA coin)
+  const bx = bird.x, by = bird.y, br = bird.r;
+  // Glow
+  const glow = ctx.createRadialGradient(bx, by, 0, bx, by, br * 2.5);
+  glow.addColorStop(0, 'rgba(77,163,255,.35)');
+  glow.addColorStop(1, 'rgba(77,163,255,0)');
+  ctx.fillStyle = glow;
+  ctx.beginPath(); ctx.arc(bx, by, br * 2.5, 0, Math.PI*2); ctx.fill();
+
+  // Coin body
+  const coinGrad = ctx.createRadialGradient(bx-4, by-4, 2, bx, by, br);
+  coinGrad.addColorStop(0, '#7fc8ff');
+  coinGrad.addColorStop(0.5, '#4da3ff');
+  coinGrad.addColorStop(1, '#1a5fa0');
+  ctx.fillStyle = coinGrad;
+  ctx.beginPath(); ctx.arc(bx, by, br, 0, Math.PI*2); ctx.fill();
+
+  // Coin border
+  ctx.strokeStyle = 'rgba(255,255,255,.4)';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.arc(bx, by, br, 0, Math.PI*2); ctx.stroke();
+
+  // Q letter
+  ctx.fillStyle = '#fff';
+  ctx.font = 'bold 14px Arial';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('Q', bx, by);
+
+  // Floor line
+  ctx.strokeStyle = 'rgba(77,163,255,.12)';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(0, H-1); ctx.lineTo(W, H-1); ctx.stroke();
+}
+
+function drawCandle(x, y, w, h, color) {
+  if (h <= 0) return;
+  // Body
+  const grad = ctx.createLinearGradient(x, y, x+w, y);
+  grad.addColorStop(0, color);
+  grad.addColorStop(1, color + '99');
+  ctx.fillStyle = grad;
+  ctx.fillRect(x, y, w, h);
+  // Wick
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(x + w/2, y === 0 ? h : y);
+  ctx.lineTo(x + w/2, y === 0 ? h + 12 : y - 12);
+  ctx.stroke();
+  // Shine
+  ctx.fillStyle = 'rgba(255,255,255,.08)';
+  ctx.fillRect(x+2, y, 6, h);
+}
+
+function gameOver() {
+  running = false;
+  cancelAnimationFrame(raf);
+  frame = 0;
+  if (score > hiScore) {
+    hiScore = score;
+    hiScoreEl.textContent = 'BEST: ' + hiScore;
+    lastScore.textContent = '🏆 Nuevo récord: ' + score + ' puntos';
+  } else {
+    lastScore.textContent = 'Score: ' + score + ' puntos';
+  }
+  lastScore.style.display = 'block';
+  overlay.style.display = 'flex';
+}
+
+// Controls
+hiScore = 0;
+function flap() {
+  if (!running) {
+    overlay.style.display = 'none';
+    frame = 0;
+    initGame();
+    return;
+  }
+  bird.vy = FLAP;
+}
+
+document.addEventListener('click',  flap);
+document.addEventListener('keydown', e => { if (e.code === 'Space') { e.preventDefault(); flap(); } });
+document.addEventListener('touchstart', e => { e.preventDefault(); flap(); }, { passive: false });
+<\/script>
+</body>
+</html>`
+  }
+};
+
+function launchGame(id) {
+  const game = GAMES[id];
+  if (!game) return;
+  document.getElementById('game-selector').style.display = 'none';
+  document.getElementById('game-container').style.display = 'block';
+  document.getElementById('game-title').textContent = game.title;
+  const frame = document.getElementById('game-frame');
+  frame.innerHTML = '';
+  const iframe = document.createElement('iframe');
+  iframe.style.cssText = 'width:100%;height:620px;border:none;border-radius:12px;';
+  iframe.srcdoc = game.html;
+  frame.appendChild(iframe);
+}
+
+function closeGame() {
+  document.getElementById('game-container').style.display = 'none';
+  document.getElementById('game-selector').style.display = 'block';
+  document.getElementById('game-frame').innerHTML = '';
+}
+
 </script>
 </body>
 </html>
