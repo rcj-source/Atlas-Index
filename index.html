@@ -1052,6 +1052,172 @@ body{
   border-color:rgba(150,150,150,.15);
   color:#4a5568;
 }
+
+/* ── About ── */
+.about-hero{
+  text-align:center;
+  padding:48px 20px 40px;
+  border-bottom:1px solid rgba(77,163,255,.08);
+  margin-bottom:32px;
+  background:radial-gradient(ellipse at 50% 0%, rgba(77,163,255,.05) 0%, transparent 70%);
+}
+.about-hero-badge{
+  display:inline-block;
+  background:rgba(77,163,255,.08);
+  border:1px solid rgba(77,163,255,.15);
+  color:var(--accent);
+  font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  padding:4px 14px;border-radius:999px;margin-bottom:20px;
+}
+.about-hero-title{
+  font-size:38px;font-weight:900;margin:0 0 16px;line-height:1.15;
+  color:#e6edf3;letter-spacing:-1px;
+}
+.about-hero-title span{
+  background:linear-gradient(90deg,#4da3ff,#a0d4ff);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.about-hero-sub{
+  font-size:14px;color:#4a6a8a;max-width:500px;margin:0 auto;line-height:1.7;
+}
+.about-metrics{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:1px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.04);
+  border-radius:12px;
+  overflow:hidden;
+  margin-bottom:28px;
+}
+.about-metric{
+  background:#0a1117;
+  padding:24px 16px;
+  text-align:center;
+}
+.about-metric-num{
+  font-size:32px;font-weight:900;color:#fff;letter-spacing:-1px;
+  background:linear-gradient(135deg,#fff,#8ab4d4);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.about-metric-label{
+  font-size:11px;color:#3a5570;margin-top:4px;text-transform:uppercase;letter-spacing:.8px;
+}
+.about-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:16px;
+}
+.about-card{
+  background:linear-gradient(145deg,#0f1922,#0a1117);
+  border:1px solid rgba(255,255,255,.05);
+  border-radius:12px;
+  padding:24px;
+  transition:border-color .2s,transform .2s;
+}
+.about-card:hover{border-color:rgba(77,163,255,.15);transform:translateY(-2px);}
+.about-card-icon{font-size:28px;margin-bottom:12px;}
+.about-card-label{
+  font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--accent);opacity:.7;margin-bottom:8px;
+}
+.about-card-title{font-size:15px;font-weight:700;color:#c8d8e8;margin:0 0 10px;}
+.about-card-text{font-size:13px;color:#4a6a8a;line-height:1.65;margin:0;}
+
+/* ── Roadmap timeline ── */
+.roadmap-timeline{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  gap:0;
+}
+.roadmap-item{
+  display:flex;
+  gap:20px;
+  position:relative;
+}
+.roadmap-connector{
+  position:absolute;
+  left:15px;
+  top:32px;
+  bottom:-24px;
+  width:2px;
+  background:linear-gradient(180deg,rgba(77,163,255,.3),rgba(77,163,255,.05));
+  z-index:0;
+}
+.roadmap-connector-last{ display:none; }
+.roadmap-dot{
+  width:32px;height:32px;
+  border-radius:50%;
+  border:2px solid rgba(77,163,255,.2);
+  background:#0a1117;
+  flex-shrink:0;
+  margin-top:4px;
+  position:relative;
+  z-index:1;
+  display:flex;align-items:center;justify-content:center;
+  transition:.2s;
+}
+.roadmap-done .roadmap-dot{
+  border-color:#39d98a;
+  background:rgba(57,217,138,.1);
+  box-shadow:0 0 12px rgba(57,217,138,.2);
+}
+.roadmap-done .roadmap-dot::after{
+  content:'✓';color:#39d98a;font-size:14px;font-weight:700;
+}
+.roadmap-active .roadmap-dot{
+  border-color:#4da3ff;
+  background:rgba(77,163,255,.1);
+  box-shadow:0 0 16px rgba(77,163,255,.3);
+  animation:pulse-dot 2s infinite;
+}
+.roadmap-active .roadmap-dot::after{
+  content:'';width:8px;height:8px;border-radius:50%;background:#4da3ff;
+}
+.roadmap-upcoming .roadmap-dot{
+  border-color:rgba(58,87,112,.4);
+}
+.roadmap-upcoming .roadmap-dot::after{
+  content:'';width:6px;height:6px;border-radius:50%;background:#3a5770;
+}
+@keyframes pulse-dot{
+  0%,100%{box-shadow:0 0 8px rgba(77,163,255,.3);}
+  50%{box-shadow:0 0 20px rgba(77,163,255,.6);}
+}
+.roadmap-content{
+  background:linear-gradient(145deg,#0f1922,#0a1117);
+  border:1px solid rgba(255,255,255,.05);
+  border-radius:10px;
+  padding:20px 22px;
+  margin-bottom:16px;
+  flex:1;
+  transition:border-color .2s;
+}
+.roadmap-done .roadmap-content{border-color:rgba(57,217,138,.1);}
+.roadmap-active .roadmap-content{
+  border-color:rgba(77,163,255,.2);
+  background:linear-gradient(145deg,#101f2e,#0a1520);
+}
+.roadmap-phase{
+  font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  color:#3a5570;margin-bottom:6px;
+}
+.roadmap-status{
+  display:inline-block;font-size:11px;font-weight:700;
+  padding:2px 10px;border-radius:999px;margin-bottom:10px;
+}
+.roadmap-status-done{background:rgba(57,217,138,.1);color:#39d98a;border:1px solid rgba(57,217,138,.2);}
+.roadmap-status-active{background:rgba(77,163,255,.1);color:#4da3ff;border:1px solid rgba(77,163,255,.2);}
+.roadmap-status-soon{background:rgba(58,87,112,.1);color:#3a5770;border:1px solid rgba(58,87,112,.2);}
+.roadmap-title{font-size:17px;font-weight:700;color:#c8d8e8;margin:0 0 12px;}
+.roadmap-list{
+  margin:0;padding-left:16px;
+  display:flex;flex-direction:column;gap:6px;
+}
+.roadmap-list li{font-size:13px;color:#4a6a8a;line-height:1.5;}
+.roadmap-done .roadmap-list li{color:#5a7a6a;}
+.roadmap-active .roadmap-list li{color:#5a8aaa;}
 </style>
 <script src="https://s3.tradingview.com/tv.js"></script>
 </head>
@@ -1177,101 +1343,162 @@ body{
     </section>
 
     <section class="tab-panel" id="about">
-      <div class="section-header" id="about-top">
-        <h2>¿Quiénes somos?</h2>
-        <p>Atlas Capital es una solución diseñada para quienes buscan tomar mejores decisiones de inversión a partir de una lectura más clara del entorno macroeconómico y on-chain.</p>
+
+      <!-- Hero -->
+      <div class="about-hero">
+        <div class="about-hero-badge">Ecosistema Atlas Capital</div>
+        <h1 class="about-hero-title">Una infraestructura de<br><span>conocimiento para inversores</span></h1>
+        <p class="about-hero-sub">Centralizamos datos macroeconómicos y on-chain para que tomes mejores decisiones de inversión — sin ruido, sin dispersión.</p>
       </div>
 
-      <div class="prose-section">
-        <div class="prose-block">
-          <p class="prose-label">Atlas Capital</p>
-          <h3 class="prose-title">Una infraestructura de conocimiento para inversores</h3>
-          <p class="prose-text">
-            Atlas Capital es una solución para aquellos que desean tener mayores conocimientos y mejorar sus decisiones a la hora de invertir, tomando en cuenta datos macroeconómicos y on-chain, sin tener que meterse a múltiples sitios para entender con claridad lo que sucede en el mercado.
-          </p>
+      <!-- Métricas -->
+      <div class="about-metrics">
+        <div class="about-metric">
+          <div class="about-metric-num">1,000+</div>
+          <div class="about-metric-label">Miembros activos</div>
         </div>
-
-        <div class="prose-block">
-          <p class="prose-label">Propósito</p>
-          <h3 class="prose-title">Centralizar información útil y accionable</h3>
-          <p class="prose-text">
-            Hemos creado una variedad de productos digitales con el objetivo de concentrar herramientas, información y formación en un mismo entorno. Desde Atlas Capital Index, que permite visualizar datos relevantes en un solo sitio, hasta nuestro grupo privado con cursos y clases sobre macroeconomía, criptomonedas y más.
-          </p>
+        <div class="about-metric">
+          <div class="about-metric-num">5</div>
+          <div class="about-metric-label">Productos digitales</div>
         </div>
-
-        <div class="prose-block">
-          <p class="prose-label">Visión</p>
-          <h3 class="prose-title">Ir más allá de la expectativa</h3>
-          <p class="prose-text">
-            Nos interesa construir más allá de lo inmediato. Por eso mismo estamos trabajando en el desarrollo de un ecosistema sostenible, basado en la creación de múltiples productos digitales accesibles para todo público y pensados para ampliar el alcance y la funcionalidad de Atlas Capital con el tiempo.
-          </p>
+        <div class="about-metric">
+          <div class="about-metric-num">24/7</div>
+          <div class="about-metric-label">Datos en tiempo real</div>
         </div>
-
-        <div class="prose-block">
-          <p class="prose-label">QRA</p>
-          <h3 class="prose-title">Utilidad dentro del ecosistema</h3>
-          <p class="prose-text">
-            De forma discreta pero estratégica, el token QRA forma parte de esta visión como un elemento con utilidad dentro de distintos productos digitales del ecosistema, alineado con el crecimiento y la integración progresiva de nuevas herramientas.
-          </p>
+        <div class="about-metric">
+          <div class="about-metric-num">4+</div>
+          <div class="about-metric-label">Años de comunidad</div>
         </div>
       </div>
+
+      <!-- Bloques de contenido -->
+      <div class="about-grid">
+
+        <div class="about-card">
+          <div class="about-card-icon">🎯</div>
+          <div class="about-card-label">Propósito</div>
+          <h3 class="about-card-title">Centralizar lo que importa</h3>
+          <p class="about-card-text">Hemos creado una variedad de productos digitales para concentrar herramientas, información y formación en un mismo entorno. Desde Atlas Capital Index hasta nuestro grupo privado con cursos sobre macroeconomía y criptomonedas.</p>
+        </div>
+
+        <div class="about-card">
+          <div class="about-card-icon">🔭</div>
+          <div class="about-card-label">Visión</div>
+          <h3 class="about-card-title">Ir más allá de la expectativa</h3>
+          <p class="about-card-text">Estamos construyendo un ecosistema sostenible de productos digitales accesibles para todo público, pensados para ampliar el alcance y la funcionalidad de Atlas Capital con el tiempo.</p>
+        </div>
+
+        <div class="about-card">
+          <div class="about-card-icon">⛓️</div>
+          <div class="about-card-label">Token QRA</div>
+          <h3 class="about-card-title">Utilidad dentro del ecosistema</h3>
+          <p class="about-card-text">El token QRA forma parte estratégica de esta visión con utilidad real dentro de distintos productos — desde acceso a contenido premium hasta participación en juegos y herramientas on-chain.</p>
+        </div>
+
+        <div class="about-card">
+          <div class="about-card-icon">📊</div>
+          <div class="about-card-label">Atlas Capital Index</div>
+          <h3 class="about-card-title">Tu terminal macro en un solo lugar</h3>
+          <p class="about-card-text">Datos macroeconómicos, índices de liquidez, inflación, empleo, mercados de crypto y commodities — todo en tiempo real, sin tener que saltar entre múltiples sitios.</p>
+        </div>
+
+      </div>
+
     </section>
 
     <section class="tab-panel" id="roadmap">
+
       <div class="section-header" id="roadmap-top">
-        <h2>Roadmap</h2>
-        <p>Desarrollo por fases del ecosistema Atlas Capital. Las fases y entregables pueden ajustarse según la viabilidad de cada proyecto.</p>
-      </div>
-
-      <div class="prose-section">
-        <div class="prose-block">
-          <p class="prose-label">Fase 1</p>
-          <h3 class="prose-title">Fundación del ecosistema</h3>
-          <p class="prose-text">
-            Creación del grupo privado Atlas Capital. Lanzamiento del curso Introducción a la macroeconomía para inversores. Lanzamiento del curso Stocks y el mercado de valores. Lanzamiento de nuestro index: Atlas Capital Index.
-          </p>
+        <div>
+          <h2>Roadmap</h2>
+          <p>Desarrollo por fases del ecosistema Atlas Capital. Las fases pueden ajustarse según la viabilidad de cada proyecto.</p>
         </div>
-
-        <div class="prose-block">
-          <p class="prose-label">Fase 2</p>
-          <h3 class="prose-title">Expansión de productos digitales</h3>
-          <p class="prose-text">
-            Lanzamiento de nuestra app en Telegram. Lanzamiento de minijuegos con atributos on-chain. Lanzamiento de nuestro primer juego educativo en Roblox.
-          </p>
-        </div>
-
-        <div class="prose-block">
-          <p class="prose-label">Fase 3</p>
-          <h3 class="prose-title">Inteligencia y activos digitales</h3>
-          <p class="prose-text">
-            Lanzamiento de Atlas Agents NFT. Lanzamiento de asistente inteligente Atlas AI.
-          </p>
-        </div>
-
-        <div class="prose-block">
-          <p class="prose-label">Fase 4</p>
-          <h3 class="prose-title">Infraestructura avanzada</h3>
-          <p class="prose-text">
-            Lanzamiento de Atlas Terminal.
-          </p>
-        </div>
-
-        <div class="prose-block">
-          <p class="prose-label">Fase 5</p>
-          <h3 class="prose-title">Identidad y reputación on-chain</h3>
-          <p class="prose-text">
-            Atlas Identity: sistema de reputación on-chain para wallets.
-          </p>
-        </div>
-
-        <div class="prose-block">
-          <p class="prose-label">Nota</p>
-          <h3 class="prose-title">Fases sujetas a evolución</h3>
-          <p class="prose-text">
-            Las fases están sujetas a cambios según la viabilidad de los proyectos, el desarrollo técnico de cada producto y la evolución general del ecosistema Atlas Capital.
-          </p>
+        <div style="display:flex;gap:16px;font-size:11px;align-items:center;flex-wrap:wrap;">
+          <span><span style="color:#39d98a;">●</span> Completado</span>
+          <span><span style="color:#4da3ff;">●</span> En progreso</span>
+          <span><span style="color:#3a5570;">●</span> Próximamente</span>
         </div>
       </div>
+
+      <div class="roadmap-timeline">
+
+        <div class="roadmap-item roadmap-done">
+          <div class="roadmap-connector"></div>
+          <div class="roadmap-dot"></div>
+          <div class="roadmap-content">
+            <div class="roadmap-phase">Fase 1</div>
+            <div class="roadmap-status roadmap-status-done">✓ Completado</div>
+            <h3 class="roadmap-title">Fundación del ecosistema</h3>
+            <ul class="roadmap-list">
+              <li>Creación del grupo privado Atlas Capital</li>
+              <li>Curso: Introducción a la macroeconomía para inversores</li>
+              <li>Curso: Stocks y el mercado de valores</li>
+              <li>Lanzamiento de Atlas Capital Index</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="roadmap-item roadmap-active">
+          <div class="roadmap-connector"></div>
+          <div class="roadmap-dot"></div>
+          <div class="roadmap-content">
+            <div class="roadmap-phase">Fase 2</div>
+            <div class="roadmap-status roadmap-status-active">⚡ En progreso</div>
+            <h3 class="roadmap-title">Expansión de productos digitales</h3>
+            <ul class="roadmap-list">
+              <li>App en Telegram</li>
+              <li>Minijuegos con atributos on-chain</li>
+              <li>Primer juego educativo en Roblox</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="roadmap-item roadmap-upcoming">
+          <div class="roadmap-connector"></div>
+          <div class="roadmap-dot"></div>
+          <div class="roadmap-content">
+            <div class="roadmap-phase">Fase 3</div>
+            <div class="roadmap-status roadmap-status-soon">Próximamente</div>
+            <h3 class="roadmap-title">Inteligencia y activos digitales</h3>
+            <ul class="roadmap-list">
+              <li>Atlas Agents NFT</li>
+              <li>Asistente inteligente Atlas AI</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="roadmap-item roadmap-upcoming">
+          <div class="roadmap-connector"></div>
+          <div class="roadmap-dot"></div>
+          <div class="roadmap-content">
+            <div class="roadmap-phase">Fase 4</div>
+            <div class="roadmap-status roadmap-status-soon">Próximamente</div>
+            <h3 class="roadmap-title">Infraestructura avanzada</h3>
+            <ul class="roadmap-list">
+              <li>Lanzamiento de Atlas Terminal</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="roadmap-item roadmap-upcoming">
+          <div class="roadmap-connector-last"></div>
+          <div class="roadmap-dot"></div>
+          <div class="roadmap-content">
+            <div class="roadmap-phase">Fase 5</div>
+            <div class="roadmap-status roadmap-status-soon">Próximamente</div>
+            <h3 class="roadmap-title">Identidad y reputación on-chain</h3>
+            <ul class="roadmap-list">
+              <li>Atlas Identity: sistema de reputación on-chain para wallets</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="margin-top:24px;padding:14px 18px;background:rgba(77,163,255,.04);border:1px solid rgba(77,163,255,.08);border-radius:8px;font-size:12px;color:#3a5570;">
+        ⚠️ Las fases están sujetas a cambios según la viabilidad de los proyectos y la evolución general del ecosistema Atlas Capital.
+      </div>
+
     </section>
 
     <section class="tab-panel" id="privategroup">
