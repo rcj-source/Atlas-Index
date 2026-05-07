@@ -181,5 +181,30 @@ if ($requestMethod === 'GET' && $action === 'fred-data') {
     exit;
 }
 
+// ── POST /proxy.php?action=build-burn ────────────────────────
+if ($requestMethod === 'POST' && $action === 'build-burn') {
+    $raw  = file_get_contents('php://input');
+    $body = json_decode($raw, true);
+    if (!$body || !isset($body['wallet'], $body['amount'])) bail(400, 'Faltan campos');
+    $wallet = trim($body['wallet']);
+    if (!preg_match('/^[1-9A-HJ-NP-Za-km-z]{32,44}$/', $wallet)) bail(400, 'Wallet inválida');
+    if ((int)$body['amount'] !== 10) bail(400, 'Amount inválido');
+    $response = callWorker('/build-burn', 'POST', ['wallet' => $wallet, 'amount' => 10]);
+    echo json_encode($response);
+    exit;
+}
+
+// ── POST /proxy.php?action=send-burn ─────────────────────────
+if ($requestMethod === 'POST' && $action === 'send-burn') {
+    $raw  = file_get_contents('php://input');
+    $body = json_decode($raw, true);
+    if (!$body || !isset($body['transaction'])) bail(400, 'Falta la transacción');
+    $tx = trim($body['transaction']);
+    if (strlen($tx) > 5000) bail(400, 'Transacción demasiado larga');
+    $response = callWorker('/send-burn', 'POST', ['transaction' => $tx]);
+    echo json_encode($response);
+    exit;
+}
+
 // Ruta no encontrada
 bail(404, 'Acción no reconocida');

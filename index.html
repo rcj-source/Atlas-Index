@@ -2187,11 +2187,15 @@ body{
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin-bottom:24px;">
 
           <!-- Flappy QRA -->
-          <div class="game-card" onclick="launchGame('flappy')">
+          <div class="game-card" onclick="launchGame('flappy')" id="card-flappy">
             <div class="game-card-icon">🪙</div>
             <div class="game-card-name">Flappy QRA</div>
             <div class="game-card-desc">Vuela el token QRA entre velas de Bitcoin. Esquiva el bear market.</div>
-            <div class="game-card-tag">Disponible</div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px;">
+              <div class="game-card-tag">Disponible</div>
+              <div style="font-size:11px;color:#f0c040;font-weight:700;">🔥 10 QRA / partida</div>
+            </div>
+            <div id="burn-status" style="display:none;font-size:12px;margin-top:8px;"></div>
           </div>
 
           <!-- Coming soon 1 -->
@@ -2218,6 +2222,22 @@ body{
             <div class="game-card-tag game-card-tag-soon">Próximamente</div>
           </div>
 
+        </div>
+      </div>
+
+      <!-- Burn confirmation modal -->
+      <div id="burn-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);align-items:center;justify-content:center;">
+        <div style="background:linear-gradient(145deg,#0f1922,#0a1117);border:1px solid rgba(77,163,255,.2);border-radius:16px;padding:32px;max-width:380px;width:90%;text-align:center;">
+          <div style="font-size:48px;margin-bottom:16px;">🔥</div>
+          <h3 style="font-size:20px;font-weight:800;color:#fff;margin:0 0 10px;">Quemar 10 QRA</h3>
+          <p style="font-size:13px;color:#4a6a8a;line-height:1.6;margin:0 0 24px;">
+            Para jugar se quemarán <strong style="color:#f0c040;">10 QRA</strong> de tu wallet de forma permanente.<br>
+            Esta transacción no puede revertirse.
+          </p>
+          <div style="display:flex;gap:12px;justify-content:center;">
+            <button id="burn-cancel" style="flex:1;padding:11px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#8a9aaa;font-size:13px;font-weight:600;cursor:pointer;">Cancelar</button>
+            <button id="burn-confirm" style="flex:1;padding:11px;border-radius:8px;border:none;background:linear-gradient(135deg,#ff6b35,#ff4d4d);color:#fff;font-size:13px;font-weight:700;cursor:pointer;">🔥 Quemar y jugar</button>
+          </div>
         </div>
       </div>
 
@@ -3519,9 +3539,119 @@ document.addEventListener('touchstart', e => { e.preventDefault(); flap(); }, { 
   }
 };
 
-function launchGame(id) {
+// ── Burn 10 QRA to play ──────────────────────────────────────
+const QRA_MINT_GAME   = 'DsMWZg6mkheTV2XTkbUtWcsXaajTzEkk1TC7o6Fmpump';
+const BURN_AUTHORITY  = '1nc1nerator11111111111111111111111111111111';
+const BURN_AMOUNT     = 10; // QRA per game
+
+async function burnQraAndPlay(id) {
   const game = GAMES[id];
   if (!game) return;
+
+  const provider = window.phantom?.solana || window.solana;
+  if (!provider?.isPhantom || !provider.publicKey) {
+    showBurnError('Conecta tu wallet primero.');
+    return;
+  }
+
+  // Show burn confirmation modal
+  const confirmed = await showBurnConfirm();
+  if (!confirmed) return;
+
+  const card = document.getElementById('card-' + id);
+  const statusEl = document.getElementById('burn-status');
+  if (statusEl) { statusEl.style.display = 'block'; statusEl.style.color = '#f0c040'; statusEl.textContent = '⏳ Preparando transacción...'; }
+
+  try {
+    const wallet = provider.publicKey.toString();
+
+    // 1. Get burn params from our backend
+    const res  = await fetch('proxy.php?action=build-burn', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ wallet, amount: BURN_AMOUNT })
+    });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+
+    if (statusEl) statusEl.textContent = '✍️ Aprueba en Phantom...';
+
+    // 2. Build transaction using @solana/web3.js via CDN
+    const web3 = await import('https://esm.sh/@solana/web3.js@1.87.6');
+    const splToken = await import('https://esm.sh/@solana/spl-token@0.3.8');
+
+    const connection    = new web3.Connection(data.rpcUrl, 'confirmed');
+    const ownerPubkey   = new web3.PublicKey(data.owner);
+    const mintPubkey    = new web3.PublicKey(data.mint);
+    const tokenAccPubkey= new web3.PublicKey(data.tokenAccount);
+
+    // Build burnChecked instruction
+    const burnIx = splToken.createBurnCheckedInstruction(
+      tokenAccPubkey,
+      mintPubkey,
+      ownerPubkey,
+      BigInt(data.amount),
+      data.decimals
+    );
+
+    const tx = new web3.Transaction();
+    tx.add(burnIx);
+    tx.recentBlockhash = data.blockhash;
+    tx.feePayer        = ownerPubkey;
+
+    // 3. Sign with Phantom
+    const signed = await provider.signTransaction(tx);
+
+    if (statusEl) statusEl.textContent = '📡 Enviando a la blockchain...';
+
+    // 4. Send signed tx
+    const sendRes  = await fetch('proxy.php?action=send-burn', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ transaction: btoa(String.fromCharCode(...signed.serialize())) })
+    });
+    const sendData = await sendRes.json();
+    if (sendData.error) throw new Error(sendData.error);
+
+    // 5. Success
+    showBurnSuccess(sendData.signature);
+    setTimeout(() => startGame(id), 1500);
+
+  } catch(e) {
+    if (e?.message?.includes('User rejected') || e?.code === 4001) {
+      showBurnError('Transacción cancelada.');
+    } else {
+      showBurnError('Error: ' + (e?.message || 'Inténtalo de nuevo'));
+    }
+  }
+}
+
+function showBurnConfirm() {
+  return new Promise(resolve => {
+    const modal = document.getElementById('burn-modal');
+    modal.style.display = 'flex';
+    document.getElementById('burn-confirm').onclick = () => { modal.style.display = 'none'; resolve(true); };
+    document.getElementById('burn-cancel').onclick  = () => { modal.style.display = 'none'; resolve(false); };
+  });
+}
+
+function showBurnError(msg) {
+  const el = document.getElementById('burn-status');
+  el.textContent = '❌ ' + msg;
+  el.style.color = '#ff4d4d';
+  el.style.display = 'block';
+  setTimeout(() => el.style.display = 'none', 4000);
+}
+
+function showBurnSuccess(sig) {
+  const el = document.getElementById('burn-status');
+  el.innerHTML = '🔥 10 QRA quemados · <a href="https://solscan.io/tx/' + sig + '" target="_blank" style="color:var(--accent)">Ver tx</a>';
+  el.style.color = '#39d98a';
+  el.style.display = 'block';
+}
+
+function startGame(id) {
+  const game = GAMES[id];
   document.getElementById('game-selector').style.display = 'none';
   document.getElementById('game-container').style.display = 'block';
   document.getElementById('game-title').textContent = game.title;
@@ -3531,6 +3661,10 @@ function launchGame(id) {
   iframe.style.cssText = 'width:100%;height:620px;border:none;border-radius:12px;';
   iframe.srcdoc = game.html;
   frame.appendChild(iframe);
+}
+
+function launchGame(id) {
+  burnQraAndPlay(id);
 }
 
 function closeGame() {
