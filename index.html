@@ -3429,25 +3429,30 @@ function draw() {
   ctx.fillStyle = glow;
   ctx.beginPath(); ctx.arc(bx, by, br * 2.5, 0, Math.PI*2); ctx.fill();
 
-  // Coin body
-  const coinGrad = ctx.createRadialGradient(bx-4, by-4, 2, bx, by, br);
-  coinGrad.addColorStop(0, '#7fc8ff');
-  coinGrad.addColorStop(0.5, '#4da3ff');
-  coinGrad.addColorStop(1, '#1a5fa0');
-  ctx.fillStyle = coinGrad;
-  ctx.beginPath(); ctx.arc(bx, by, br, 0, Math.PI*2); ctx.fill();
+  // Clip to circle then draw QRA logo
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(bx, by, br, 0, Math.PI*2);
+  ctx.closePath();
+  ctx.clip();
+  if (window._qraImg && window._qraImg.complete) {
+    ctx.drawImage(window._qraImg, bx - br, by - br, br*2, br*2);
+  } else {
+    // Fallback while image loads
+    ctx.fillStyle = '#4da3ff';
+    ctx.fill();
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 14px Arial';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('Q', bx, by);
+  }
+  ctx.restore();
 
-  // Coin border
-  ctx.strokeStyle = 'rgba(255,255,255,.4)';
-  ctx.lineWidth = 1.5;
+  // Glow ring
+  ctx.strokeStyle = 'rgba(77,163,255,.6)';
+  ctx.lineWidth = 2;
   ctx.beginPath(); ctx.arc(bx, by, br, 0, Math.PI*2); ctx.stroke();
-
-  // Q letter
-  ctx.fillStyle = '#fff';
-  ctx.font = 'bold 14px Arial';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.fillText('Q', bx, by);
 
   // Floor line
   ctx.strokeStyle = 'rgba(77,163,255,.12)';
@@ -3492,6 +3497,9 @@ function gameOver() {
 
 // Controls
 hiScore = 0;
+// Preload QRA logo
+window._qraImg = new Image();
+window._qraImg.src = 'data:image/png;base64,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';
 function flap() {
   if (!running) {
     overlay.style.display = 'none';
