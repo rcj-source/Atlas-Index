@@ -23,6 +23,7 @@
 
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
+html,body{overflow-x:hidden;max-width:100vw;}
 
 body{
   margin:0;
@@ -38,54 +39,129 @@ body{
 }
 
 .sidebar{
-  background:#0c1218;
-  border-right:1px solid var(--line);
-  padding:20px 16px;
+  background:linear-gradient(180deg,#070d12 0%,#0a1018 100%);
+  border-right:1px solid rgba(77,163,255,.1);
+  padding:0;
   position:sticky;
   top:0;
   height:100vh;
   overflow:auto;
+  display:flex;
+  flex-direction:column;
 }
 
+/* Logo area */
+.brand-wrap{
+  padding:24px 18px 20px;
+  border-bottom:1px solid rgba(255,255,255,.04);
+  position:relative;
+}
+.brand-logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:6px;
+}
+.brand-icon{
+  width:32px;height:32px;
+  background:linear-gradient(135deg,#4da3ff,#1a6fd4);
+  border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;font-weight:900;color:#fff;
+  flex-shrink:0;
+  box-shadow:0 0 12px rgba(77,163,255,.3);
+}
 .brand{
-  font-size:26px;
-  font-weight:900;
-  margin-bottom:10px;
-  line-height:1;
+  font-size:15px;
+  font-weight:800;
+  line-height:1.2;
+  color:#e6edf3;
+  letter-spacing:-.2px;
 }
-
+.brand span{
+  display:block;
+  font-size:10px;
+  font-weight:500;
+  color:var(--accent);
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  margin-top:1px;
+}
 .subtitle{
-  font-size:12px;
-  color:var(--muted);
-  margin-bottom:20px;
-  line-height:1.55;
+  font-size:11px;
+  color:#4a5a6a;
+  line-height:1.5;
+  margin:0;
 }
 
+/* Nav */
 .nav{
-  display:grid;
-  gap:8px;
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  padding:12px 10px;
+  flex:1;
+}
+
+.nav-section-label{
+  font-size:9px;
+  font-weight:700;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:#3a4a5a;
+  padding:10px 8px 4px;
 }
 
 .tab-btn{
-  background:#111821;
-  border:1px solid var(--line);
-  color:var(--text);
-  border-radius:6px;
-  padding:12px;
+  background:transparent;
+  border:none;
+  color:#7a8a9a;
+  border-radius:7px;
+  padding:9px 12px;
   cursor:pointer;
-  font-size:13px;
+  font-size:12.5px;
+  font-weight:500;
   text-align:left;
-  transition:.2s;
+  transition:.15s;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  position:relative;
 }
-
+.tab-btn::before{
+  content:'';
+  width:4px;height:4px;
+  border-radius:50%;
+  background:var(--muted);
+  opacity:.3;
+  flex-shrink:0;
+  transition:.15s;
+}
 .tab-btn:hover{
-  border-color:var(--accent);
+  background:rgba(77,163,255,.06);
+  color:#c8d8e8;
 }
-
+.tab-btn:hover::before{
+  opacity:.6;
+  background:var(--accent);
+}
 .tab-btn.active{
-  background:#16202b;
-  border-color:var(--accent);
-  box-shadow:inset 0 0 0 1px rgba(77,163,255,.12);
+  background:rgba(77,163,255,.1);
+  color:#fff;
+  font-weight:600;
+}
+.tab-btn.active::before{
+  background:var(--accent);
+  opacity:1;
+  box-shadow:0 0 6px var(--accent);
+}
+.tab-btn.active::after{
+  content:'';
+  position:absolute;
+  left:0;top:20%;bottom:20%;
+  width:2px;
+  background:var(--accent);
+  border-radius:0 2px 2px 0;
 }
 
 .side-box{
@@ -100,17 +176,19 @@ body{
 }
 
 .wallet-gate-box{
-  margin-top:18px;
-  padding:12px;
-  border:1px solid var(--line);
-  border-radius:6px;
-  background:#0f151c;
+  margin-top:0;
+  padding:14px 16px 16px;
+  border-top:1px solid rgba(255,255,255,.04);
+  background:transparent;
 }
 
 .wallet-gate-box h4{
   margin:0 0 10px;
-  font-size:14px;
-  color:#fff;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:#3a4a5a;
 }
 
 .wallet-btn{
@@ -118,23 +196,26 @@ body{
   z-index:50;
   pointer-events:auto;
   width:100%;
-  padding:10px;
-  border-radius:6px;
-  border:1px solid var(--accent);
-  background:#16202b;
-  color:white;
+  padding:9px;
+  border-radius:7px;
+  border:1px solid rgba(77,163,255,.3);
+  background:linear-gradient(135deg,rgba(77,163,255,.1),rgba(77,163,255,.05));
+  color:#a0c8f0;
   font-weight:700;
   cursor:pointer;
-  font-size:14px;
+  font-size:13px;
+  transition:.15s;
 }
 
 .wallet-btn:disabled{
-  opacity:.7;
+  opacity:.5;
   cursor:wait;
 }
 
 .wallet-btn:hover{
-  background:#1a2633;
+  background:linear-gradient(135deg,rgba(77,163,255,.18),rgba(77,163,255,.1));
+  border-color:rgba(77,163,255,.5);
+  color:#c8dff0;
 }
 
 .wallet-status{
@@ -209,19 +290,50 @@ body{
 .gate-locked{display:none}
 .gate-locked.visible{display:block}
 
+/* ── Calendario económico — cards por día ── */
+#cal-cards{scrollbar-width:thin;scrollbar-color:var(--line) transparent;}
+#cal-cards::-webkit-scrollbar{height:4px;}
+#cal-cards::-webkit-scrollbar-track{background:transparent;}
+#cal-cards::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px;}
+.cal-day-card{
+  flex:1 1 160px;
+  min-width:150px;
+  max-width:220px;
+  background:#0d141b;
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:14px;
+  transition:border-color .2s;
+}
+.cal-day-card:hover{border-color:var(--accent);}
+.cal-day-card.is-today{border-color:var(--accent);box-shadow:0 0 0 1px rgba(77,163,255,.2);}
+.cal-day-num{font-size:28px;font-weight:900;color:#fff;line-height:1;}
+.cal-day-label{font-size:11px;color:var(--muted);margin-bottom:12px;margin-top:2px;text-transform:uppercase;letter-spacing:.5px;}
+.cal-day-today-badge{display:inline-block;background:var(--accent);color:#000;font-size:9px;font-weight:800;letter-spacing:1px;padding:2px 5px;border-radius:3px;margin-left:6px;vertical-align:middle;}
+.cal-event-item{display:flex;align-items:flex-start;gap:6px;margin-bottom:8px;font-size:12px;line-height:1.35;}
+.cal-dot{flex-shrink:0;width:7px;height:7px;border-radius:50%;margin-top:3px;}
+.cal-dot.high{background:#ff4d4d;}
+.cal-dot.medium{background:#f0c040;}
+.cal-dot.low{background:var(--muted);}
+.cal-event-name{color:var(--text);font-weight:500;}
+.cal-event-meta{color:var(--muted);font-size:11px;margin-top:2px;}
+.cal-empty{color:var(--muted);font-size:12px;font-style:italic;}
+
 .main{
   padding:20px;
-  overflow:visible;
+  overflow:hidden;
 }
 
 .topbar{
   position:sticky;
   top:0;
   z-index:999;
-  background:#0c1218;
-  border-bottom:1px solid var(--line);
+  background:rgba(7,13,18,.95);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(77,163,255,.08);
   margin:-20px -20px 20px;
-  box-shadow:0 8px 18px rgba(0,0,0,.18);
+  box-shadow:0 1px 0 rgba(77,163,255,.05), 0 8px 24px rgba(0,0,0,.3);
 }
 
 .topbar-inner{
@@ -229,43 +341,48 @@ body{
   justify-content:space-between;
   align-items:center;
   gap:12px;
-  padding:12px 20px;
+  padding:10px 20px;
   flex-wrap:wrap;
 }
 
 .terminal-tag{
-  font-size:11px;
-  letter-spacing:1.4px;
-  color:var(--accent);
+  font-size:12px;
+  letter-spacing:1px;
+  color:#fff;
   text-transform:uppercase;
   font-weight:800;
 }
 
 .terminal-status{
-  font-size:12px;
-  color:var(--muted);
+  font-size:11px;
+  color:#3a5a7a;
+  margin-top:1px;
 }
 
 .jump-strip{
   display:flex;
-  gap:10px;
+  gap:8px;
   flex-wrap:wrap;
+  align-items:center;
 }
 
 .jump-btn{
   font-size:11px;
-  padding:6px 9px;
-  border:1px solid var(--line);
-  background:#111821;
-  border-radius:4px;
-  color:#d9e2ef;
+  font-weight:600;
+  padding:6px 12px;
+  border:1px solid rgba(77,163,255,.15);
+  background:rgba(77,163,255,.05);
+  border-radius:5px;
+  color:#8ab4d4;
   text-decoration:none;
-  transition:.2s ease;
+  transition:.15s;
+  letter-spacing:.3px;
 }
 
 .jump-btn:hover{
-  background:#16202b;
-  border-color:var(--accent);
+  background:rgba(77,163,255,.12);
+  border-color:rgba(77,163,255,.35);
+  color:#c8dff0;
 }
 
 .jump-btn b{
@@ -300,23 +417,27 @@ body{
   align-items:end;
   gap:12px;
   flex-wrap:wrap;
-  margin:0 0 16px;
-  border-bottom:1px solid var(--line);
-  padding-bottom:8px;
+  margin:0 0 20px;
+  border-bottom:1px solid rgba(77,163,255,.08);
+  padding-bottom:12px;
 }
 
 .section-header h2{
   margin:0;
-  font-size:22px;
+  font-size:20px;
   font-weight:800;
   text-transform:uppercase;
-  letter-spacing:.4px;
+  letter-spacing:.5px;
+  background:linear-gradient(90deg,#e6edf3 60%,#5a8ab0);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
 }
 
 .section-header p{
   margin:4px 0 0;
-  font-size:13px;
-  color:var(--muted);
+  font-size:12px;
+  color:#3a5570;
   line-height:1.55;
   max-width:820px;
 }
@@ -350,11 +471,15 @@ body{
 .widget-card,
 .widget-shell{
   min-width:0;
-  background:linear-gradient(180deg,var(--panel),var(--panel2));
-  border:1px solid var(--line);
-  border-radius:6px;
-  padding:14px;
-  box-shadow:var(--shadow);
+  background:linear-gradient(145deg,#0f1922 0%,#0a1117 100%);
+  border:1px solid rgba(255,255,255,.05);
+  border-radius:10px;
+  padding:16px;
+  box-shadow:0 4px 20px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.03);
+  transition:border-color .2s;
+}
+.widget-card:hover{
+  border-color:rgba(77,163,255,.1);
 }
 
 .widget-card h3{
@@ -371,11 +496,12 @@ body{
 }
 
 .series-code{
-  font-size:11px;
+  font-size:10px;
   text-transform:uppercase;
   color:var(--accent);
-  letter-spacing:1.2px;
-  font-weight:800;
+  letter-spacing:1.8px;
+  font-weight:700;
+  opacity:.8;
 }
 
 .series-note,
@@ -482,43 +608,458 @@ body{
   .topbar{margin:-14px -14px 16px}
   .series-grid,.market-grid{grid-template-columns:1fr}
 }
+
+/* Corrección exacta SOLO para Inicio:
+   el borde de las dos cards termina donde termina el widget visible */
+#home .widget-shell{
+  min-height:0 !important;
+  height:446px !important;
+  max-height:446px !important;
+  padding:0 !important;
+  overflow:hidden !important;
+}
+
+#home .widget-shell .tradingview-widget-container{
+  height:446px !important;
+  max-height:446px !important;
+  overflow:hidden !important;
+}
+
+#home .widget-shell .tradingview-widget-container__widget{
+  height:446px !important;
+  max-height:446px !important;
+  overflow:hidden !important;
+}
+
+#home .widget-shell iframe{
+  height:446px !important;
+  max-height:446px !important;
+  display:block !important;
+}
+
+
+/* VIX fix: iframe limpio con TVC:VIX y card sin espacio extra */
+#risk-section + .series-grid .widget-shell:first-child{
+  min-height:0 !important;
+  height:auto !important;
+}
+
+#risk-section + .series-grid .widget-shell:first-child .embed-frame{
+  height:446px !important;
+  max-height:446px !important;
+  overflow:hidden !important;
+}
+
+#risk-section + .series-grid .widget-shell:first-child iframe{
+  height:446px !important;
+  max-height:446px !important;
+  display:block !important;
+}
+
+
+/* Primer widget: heatmap */
+#stockindex [data-gated-content="stockindex"] > .widget-shell:nth-of-type(1){
+  height:auto !important;
+  max-height:none !important;
+  padding-bottom:14px !important;
+}
+
+#stockindex [data-gated-content="stockindex"] > .widget-shell:nth-of-type(1) .tradingview-widget-container{
+  height:650px !important;
+  max-height:650px !important;
+  overflow:hidden !important;
+}
+
+#stockindex [data-gated-content="stockindex"] > .widget-shell:nth-of-type(1) iframe{
+  height:650px !important;
+  max-height:650px !important;
+  display:block !important;
+}
+
+/* Segundo widget: market quotes */
+#stockindex [data-gated-content="stockindex"] > .widget-shell:nth-of-type(2){
+  min-height:0 !important;
+  height:auto !important;
+  max-height:none !important;
+  padding-bottom:14px !important;
+}
+
+#stockindex [data-gated-content="stockindex"] > .widget-shell:nth-of-type(2) .tradingview-widget-container{
+  height:550px !important;
+  max-height:550px !important;
+  overflow:hidden !important;
+}
+
+#stockindex [data-gated-content="stockindex"] > .widget-shell:nth-of-type(2) iframe{
+  height:550px !important;
+  max-height:550px !important;
+  display:block !important;
+}
+
+
+
+
+/* Ajuste real SOLO al widget de índices/futuros en Atlas Stock Index.
+   No toca el heatmap superior. */
+#stockindex .stock-quotes-shell{
+  min-height:0 !important;
+  height:auto !important;
+  max-height:none !important;
+  padding:14px !important;
+  padding-bottom:14px !important;
+  overflow:hidden !important;
+}
+
+#stockindex .stock-quotes-container{
+  height:420px !important;
+  max-height:420px !important;
+  overflow:hidden !important;
+}
+
+#stockindex .stock-quotes-shell iframe{
+  height:420px !important;
+  max-height:420px !important;
+  display:block !important;
+}
+
+
+/* ── Testimonios ── */
+.testimonio-card{
+  background:linear-gradient(145deg,#0f1922,#0a1117);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:12px;
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  transition:border-color .2s, transform .2s;
+  box-shadow:0 4px 20px rgba(0,0,0,.25);
+}
+.testimonio-card:hover{
+  border-color:rgba(77,163,255,.2);
+  transform:translateY(-2px);
+}
+.testimonio-featured{
+  border-color:rgba(77,163,255,.15);
+  background:linear-gradient(145deg,#101e2a,#0a1420);
+}
+.t-header{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.t-avatar{
+  width:40px;height:40px;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;font-weight:800;color:#fff;
+  flex-shrink:0;
+}
+.t-name{
+  font-size:13px;
+  font-weight:700;
+  color:var(--accent);
+}
+.t-date{
+  font-size:11px;
+  color:#3a5570;
+  margin-top:2px;
+}
+.t-hearts{
+  margin-left:auto;
+  font-size:12px;
+  color:#c0392b;
+  white-space:nowrap;
+}
+.t-text{
+  font-size:13px;
+  line-height:1.65;
+  color:#8a9aaa;
+  margin:0;
+  flex:1;
+}
+
+/* ── Private Group ── */
+.pg-hero{
+  text-align:center;
+  padding:48px 20px 40px;
+  border-bottom:1px solid rgba(77,163,255,.08);
+  margin-bottom:32px;
+  background:radial-gradient(ellipse at 50% 0%, rgba(77,163,255,.06) 0%, transparent 70%);
+}
+.pg-hero-badge{
+  display:inline-block;
+  background:rgba(77,163,255,.1);
+  border:1px solid rgba(77,163,255,.2);
+  color:var(--accent);
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  padding:4px 14px;
+  border-radius:999px;
+  margin-bottom:20px;
+}
+.pg-hero-title{
+  font-size:42px;
+  font-weight:900;
+  margin:0 0 16px;
+  line-height:1.1;
+  color:#e6edf3;
+  letter-spacing:-1px;
+}
+.pg-hero-title span{
+  background:linear-gradient(90deg,#4da3ff,#a0d4ff);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.pg-hero-sub{
+  font-size:15px;
+  color:#4a6a8a;
+  max-width:520px;
+  margin:0 auto 28px;
+  line-height:1.65;
+}
+.pg-cta-btn{
+  display:inline-block;
+  background:linear-gradient(135deg,#4da3ff,#1a6fd4);
+  color:#fff;
+  font-size:14px;
+  font-weight:700;
+  padding:12px 28px;
+  border-radius:8px;
+  text-decoration:none;
+  transition:.2s;
+  box-shadow:0 4px 16px rgba(77,163,255,.3);
+  letter-spacing:.2px;
+}
+.pg-cta-btn:hover{
+  background:linear-gradient(135deg,#60b0ff,#2a7fe4);
+  box-shadow:0 6px 24px rgba(77,163,255,.45);
+  transform:translateY(-1px);
+}
+.pg-features{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:16px;
+  margin-bottom:32px;
+}
+.pg-feature-card{
+  background:linear-gradient(145deg,#0f1922,#0a1117);
+  border:1px solid rgba(255,255,255,.05);
+  border-radius:12px;
+  padding:24px;
+  transition:border-color .2s, transform .2s;
+}
+.pg-feature-card:hover{
+  border-color:rgba(77,163,255,.15);
+  transform:translateY(-2px);
+}
+.pg-feature-icon{
+  font-size:28px;
+  margin-bottom:12px;
+}
+.pg-feature-label{
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:8px;
+  opacity:.7;
+}
+.pg-feature-title{
+  font-size:15px;
+  font-weight:700;
+  color:#c8d8e8;
+  margin:0 0 10px;
+}
+.pg-feature-text{
+  font-size:13px;
+  color:#4a6a8a;
+  line-height:1.65;
+  margin:0;
+}
+.pg-cta-section{
+  background:linear-gradient(135deg,rgba(77,163,255,.06),rgba(26,111,212,.04));
+  border:1px solid rgba(77,163,255,.1);
+  border-radius:12px;
+  padding:28px 32px;
+}
+.pg-cta-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  flex-wrap:wrap;
+}
+
+/* ══════════════════════════════════════════════════════
+   ANIMACIONES DE ENTRADA
+   ══════════════════════════════════════════════════════ */
+
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(18px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity:0; }
+  to   { opacity:1; }
+}
+
+@keyframes scaleIn {
+  from { opacity:0; transform:scale(.96); }
+  to   { opacity:1; transform:scale(1); }
+}
+
+@keyframes slideInLeft {
+  from { opacity:0; transform:translateX(-16px); }
+  to   { opacity:1; transform:translateX(0); }
+}
+
+@keyframes countUp {
+  from { opacity:0; transform:translateY(10px) scale(.9); }
+  to   { opacity:1; transform:translateY(0) scale(1); }
+}
+
+/* Tab panel — fade+slide al cambiar de pestaña */
+.tab-panel.active {
+  animation: fadeUp .35s cubic-bezier(.22,.68,0,1.1) both;
+}
+
+/* Section header */
+.tab-panel.active .section-header {
+  animation: fadeUp .4s .05s cubic-bezier(.22,.68,0,1.1) both;
+}
+
+/* Widget cards — cascade con delay */
+.tab-panel.active .widget-card:nth-child(1),
+.tab-panel.active .widget-shell:nth-child(1) { animation: fadeUp .4s .08s cubic-bezier(.22,.68,0,1.1) both; }
+.tab-panel.active .widget-card:nth-child(2),
+.tab-panel.active .widget-shell:nth-child(2) { animation: fadeUp .4s .14s cubic-bezier(.22,.68,0,1.1) both; }
+.tab-panel.active .widget-card:nth-child(3),
+.tab-panel.active .widget-shell:nth-child(3) { animation: fadeUp .4s .20s cubic-bezier(.22,.68,0,1.1) both; }
+.tab-panel.active .widget-card:nth-child(4),
+.tab-panel.active .widget-shell:nth-child(4) { animation: fadeUp .4s .26s cubic-bezier(.22,.68,0,1.1) both; }
+.tab-panel.active .widget-card:nth-child(5),
+.tab-panel.active .widget-shell:nth-child(5) { animation: fadeUp .4s .30s cubic-bezier(.22,.68,0,1.1) both; }
+.tab-panel.active .widget-card:nth-child(n+6),
+.tab-panel.active .widget-shell:nth-child(n+6){ animation: fadeUp .4s .34s cubic-bezier(.22,.68,0,1.1) both; }
+
+/* Prose blocks (About, Private Group) */
+.tab-panel.active .prose-block:nth-child(1) { animation: fadeUp .4s .08s cubic-bezier(.22,.68,0,1.1) both; }
+.tab-panel.active .prose-block:nth-child(2) { animation: fadeUp .4s .16s cubic-bezier(.22,.68,0,1.1) both; }
+.tab-panel.active .prose-block:nth-child(3) { animation: fadeUp .4s .24s cubic-bezier(.22,.68,0,1.1) both; }
+.tab-panel.active .prose-block:nth-child(4) { animation: fadeUp .4s .30s cubic-bezier(.22,.68,0,1.1) both; }
+
+/* Testimonios */
+.tab-panel.active .testimonio-card:nth-child(1) { animation: fadeUp .4s .06s cubic-bezier(.22,.68,0,1.1) both; }
+.tab-panel.active .testimonio-card:nth-child(2) { animation: fadeUp .4s .12s cubic-bezier(.22,.68,0,1.1) both; }
+.tab-panel.active .testimonio-card:nth-child(3) { animation: fadeUp .4s .18s cubic-bezier(.22,.68,0,1.1) both; }
+.tab-panel.active .testimonio-card:nth-child(4) { animation: fadeUp .4s .24s cubic-bezier(.22,.68,0,1.1) both; }
+.tab-panel.active .testimonio-card:nth-child(5) { animation: fadeUp .4s .28s cubic-bezier(.22,.68,0,1.1) both; }
+.tab-panel.active .testimonio-card:nth-child(6) { animation: fadeUp .4s .32s cubic-bezier(.22,.68,0,1.1) both; }
+.tab-panel.active .testimonio-card:nth-child(n+7){ animation: fadeUp .4s .36s cubic-bezier(.22,.68,0,1.1) both; }
+
+/* Private Group hero */
+.tab-panel.active .pg-hero        { animation: fadeIn  .5s .05s ease both; }
+.tab-panel.active .pg-hero-badge  { animation: scaleIn .4s .10s cubic-bezier(.22,.68,0,1.2) both; }
+.tab-panel.active .pg-hero-title  { animation: fadeUp  .5s .15s cubic-bezier(.22,.68,0,1.1) both; }
+.tab-panel.active .pg-hero-sub    { animation: fadeUp  .4s .22s cubic-bezier(.22,.68,0,1.1) both; }
+.tab-panel.active .pg-cta-btn     { animation: scaleIn .4s .28s cubic-bezier(.22,.68,0,1.2) both; }
+.tab-panel.active .pg-feature-card:nth-child(1) { animation: fadeUp .4s .18s cubic-bezier(.22,.68,0,1.1) both; }
+.tab-panel.active .pg-feature-card:nth-child(2) { animation: fadeUp .4s .24s cubic-bezier(.22,.68,0,1.1) both; }
+.tab-panel.active .pg-feature-card:nth-child(3) { animation: fadeUp .4s .30s cubic-bezier(.22,.68,0,1.1) both; }
+.tab-panel.active .pg-feature-card:nth-child(4) { animation: fadeUp .4s .36s cubic-bezier(.22,.68,0,1.1) both; }
+.tab-panel.active .pg-cta-section { animation: fadeUp  .4s .42s cubic-bezier(.22,.68,0,1.1) both; }
+
+/* Sidebar nav buttons */
+.tab-btn { animation: slideInLeft .3s cubic-bezier(.22,.68,0,1.1) both; }
+.tab-btn:nth-child(1)  { animation-delay:.05s; }
+.tab-btn:nth-child(2)  { animation-delay:.08s; }
+.tab-btn:nth-child(3)  { animation-delay:.11s; }
+.tab-btn:nth-child(4)  { animation-delay:.14s; }
+.tab-btn:nth-child(5)  { animation-delay:.17s; }
+.tab-btn:nth-child(6)  { animation-delay:.20s; }
+.tab-btn:nth-child(7)  { animation-delay:.23s; }
+.tab-btn:nth-child(8)  { animation-delay:.26s; }
+
+/* Sidebar brand */
+.brand-wrap { animation: fadeIn .5s .02s ease both; }
+
+/* ALI Score number — pop */
+#ali-value { animation: countUp .5s .3s cubic-bezier(.22,.68,0,1.3) both; }
+
+/* Ticker / topbar */
+.topbar { animation: fadeIn .4s ease both; }
+
+/* Calendar cards */
+.tab-panel.active .cal-day-card:nth-child(1) { animation: fadeUp .35s .06s cubic-bezier(.22,.68,0,1.1) both; }
+.tab-panel.active .cal-day-card:nth-child(2) { animation: fadeUp .35s .11s cubic-bezier(.22,.68,0,1.1) both; }
+.tab-panel.active .cal-day-card:nth-child(3) { animation: fadeUp .35s .16s cubic-bezier(.22,.68,0,1.1) both; }
+.tab-panel.active .cal-day-card:nth-child(4) { animation: fadeUp .35s .21s cubic-bezier(.22,.68,0,1.1) both; }
+.tab-panel.active .cal-day-card:nth-child(5) { animation: fadeUp .35s .25s cubic-bezier(.22,.68,0,1.1) both; }
+.tab-panel.active .cal-day-card:nth-child(n+6){ animation: fadeUp .35s .29s cubic-bezier(.22,.68,0,1.1) both; }
+
+/* Respeta preferencia de reducción de movimiento */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-delay: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
 </style>
+<script src="https://s3.tradingview.com/tv.js"></script>
 </head>
 <body>
 <div class="layout">
   <aside class="sidebar">
-    <div class="brand">Atlas Capital<br>Index</div>
-    <div class="subtitle">Dashboard macro y de mercados para seguir liquidez global, inflación, empleo y riesgo.</div>
+    <div class="brand-wrap">
+      <div class="brand-logo">
+        <div class="brand-icon">A</div>
+        <div class="brand">Atlas Capital<span>Index · Terminal</span></div>
+      </div>
+      <div class="subtitle">Market terminal · Live prices · Macro indicators</div>
+    </div>
     <nav class="nav">
+      <div class="nav-section-label">General</div>
       <button class="tab-btn active" data-tab="home">Inicio</button>
+      <div class="nav-section-label">Premium</div>
       <button class="tab-btn" data-tab="liquidityengine">Atlas Liquidity Engine</button>
       <button class="tab-btn" data-tab="macrostats">Macro Stats</button>
       <button class="tab-btn" data-tab="altascrypto">Atlas Crypto Index</button>
       <button class="tab-btn" data-tab="stockindex">Atlas Stock Index</button>
       <button class="tab-btn" data-tab="commoditiesindex">Atlas Commodities Index</button>
+      <div class="nav-section-label">Comunidad</div>
+      <button class="tab-btn" data-tab="testimonios">Testimonios</button>
+      <button class="tab-btn" data-tab="privategroup">Private Group</button>
       <button class="tab-btn" data-tab="ecosystem">Atlas Ecosystem</button>
     </nav>
-    <div class="wallet-gate-box">
-      <h4>QRA Holder Access</h4>
+    <div class="wallet-gate-box" style="margin:0;padding:14px 16px 16px;border-top:1px solid rgba(255,255,255,.04);border-radius:0;">
+      <div style="font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#3a4a5a;margin-bottom:8px;">QRA Holder Access</div>
       <button class="wallet-btn" id="connect-wallet-btn" type="button">Conectar Phantom</button>
       <div class="wallet-status" id="wallet-status">Necesitas <strong>1,000,000 QRA</strong> para desbloquear Atlas Crypto Index, Atlas Stock Index, Atlas Commodities Index, Macro Stats y Atlas Liquidity Engine.</div>
+      <div style="margin-top:10px;padding:8px 10px;border-radius:5px;background:rgba(77,163,255,.07);border:1px solid rgba(77,163,255,.15);font-size:11px;color:#8b98a7;line-height:1.55;">🔒 <strong style="color:#a0b4c8;">Solo verificamos tu identidad.</strong> Phantom te pedirá firmar un mensaje de texto — esto únicamente confirma que eres el dueño de la wallet. No autoriza transacciones ni mueve ningún fondo.</div>
     </div>
     
-    <div class="side-box">Fuentes: TradingView, FRED, CoinGlass y DexScreener. Se eliminaron los widgets JS directos que estaban causando errores de configuración.</div>
-  </aside>
+    <div class="side-box">  </aside>
 
   <main class="main">
     <div class="topbar">
       <div class="topbar-inner">
-        <div>
-          <div class="terminal-tag">Atlas Capital Index</div>
-          <div class="terminal-status">Market Terminal · Live Prices · Macro Indicators</div>
-          <div style="font-size:10px;color:#ffb3b3;letter-spacing:.8px;text-transform:uppercase;">Live market tape</div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:6px;height:6px;border-radius:50%;background:#2ecc71;box-shadow:0 0 8px #2ecc71;flex-shrink:0;"></div>
+          <div>
+            <div class="terminal-tag">Atlas Capital Index</div>
+            <div class="terminal-status">Live Prices · Macro Indicators · Market Terminal</div>
+          </div>
         </div>
         <div class="jump-strip">
-          <a class="jump-btn" href="#about-top"><b>¿QUIÉNES SOMOS?</b></a>
-          <a class="jump-btn" href="#roadmap-top"><b>ROADMAP</b></a>
-          <a class="jump-btn" href="#private-group-top"><b>ATLAS CAPITAL PRIVATE GROUP</b></a>
+          <a class="jump-btn" href="#about-top">¿Quiénes somos?</a>
+          <a class="jump-btn" href="#roadmap-top">Roadmap</a>
         </div>
       </div>
       <div class="ticker-shell">
@@ -693,47 +1234,59 @@ body{
     </section>
 
     <section class="tab-panel" id="privategroup">
-      <div class="section-header" id="private-group-top">
-        <h2>Atlas Capital Private Group</h2>
-        <p>Un entorno privado orientado a formación, análisis y comunidad para quienes buscan una relación más cercana con el ecosistema Atlas Capital.</p>
+
+      <!-- Hero -->
+      <div class="pg-hero">
+        <div class="pg-hero-badge">Acceso exclusivo</div>
+        <h1 class="pg-hero-title">Atlas Capital<br><span>Private Group</span></h1>
+        <p class="pg-hero-sub">Un entorno privado de formación, análisis y comunidad para inversores serios. Acceso mediante aplicación previa.</p>
+        <a class="pg-cta-btn" href="https://docs.google.com/forms/d/e/1FAIpQLScDOCKJgFZe2i5CzyAi2Pufr6UwyzlRtgHg5vRLdIMpaR530w/viewform" target="_blank" rel="noopener noreferrer">Aplicar ahora →</a>
       </div>
 
-      <div class="prose-section">
-        <div class="prose-block">
-          <p class="prose-label">Discord privado</p>
-          <h3 class="prose-title">Acceso a contenido en evolución constante</h3>
-          <p class="prose-text">
-            Atlas Capital Private Group es un grupo privado en Discord donde los miembros reciben acceso a todos los cursos y clases que se desarrollen con el tiempo, con enfoque en macroeconomía, criptomonedas, stocks y otros temas relevantes para inversores.
-          </p>
+      <!-- Feature cards -->
+      <div class="pg-features">
+
+        <div class="pg-feature-card">
+          <div class="pg-feature-icon">💬</div>
+          <div class="pg-feature-label">Discord Privado</div>
+          <h3 class="pg-feature-title">Contenido en evolución constante</h3>
+          <p class="pg-feature-text">Acceso a todos los cursos y clases que se desarrollen con el tiempo — macroeconomía, criptomonedas, stocks y más. El grupo crece contigo.</p>
         </div>
 
-        <div class="prose-block">
-          <p class="prose-label">Experiencia premium</p>
-          <h3 class="prose-title">Más que una comunidad, una estructura de seguimiento</h3>
-          <p class="prose-text">
-            Además del componente educativo, el grupo integra un espacio de conversación privada, actualizaciones de mercado, reportes constantes sobre la situación geopolítica y charlas en directo con la comunidad.
-          </p>
+        <div class="pg-feature-card">
+          <div class="pg-feature-icon">📊</div>
+          <div class="pg-feature-label">Análisis en tiempo real</div>
+          <h3 class="pg-feature-title">Más que una comunidad</h3>
+          <p class="pg-feature-text">Actualizaciones de mercado, reportes constantes sobre la situación geopolítica, charlas en directo y conversación privada con otros miembros.</p>
         </div>
 
-        <div class="prose-block">
-          <p class="prose-label">Modelo de acceso</p>
-          <h3 class="prose-title">Aplicación y admisión</h3>
-          <p class="prose-text">
-            El acceso al grupo es de pago y funciona mediante aplicación previa. Si tu perfil es aceptado, recibirás posteriormente los datos necesarios para completar el proceso de ingreso.
-          </p>
+        <div class="pg-feature-card">
+          <div class="pg-feature-icon">🎓</div>
+          <div class="pg-feature-label">Formación</div>
+          <h3 class="pg-feature-title">Aprende desde cero o profundiza</h3>
+          <p class="pg-feature-text">Desde conceptos básicos hasta estrategias avanzadas. El grupo está diseñado para inversores en cualquier nivel que quieran crecer de forma estructurada.</p>
         </div>
 
-        <div class="prose-block">
-          <p class="prose-label">Solicitud</p>
-          <h3 class="prose-title">Postula tu acceso</h3>
-          <p class="prose-text">
-            Si deseas formar parte de Atlas Capital Private Group, puedes iniciar tu solicitud a través del formulario oficial.
-          </p>
-          <div class="prose-cta">
-            <a class="link-btn" href="https://docs.google.com/forms/d/e/1FAIpQLScDOCKJgFZe2i5CzyAi2Pufr6UwyzlRtgHg5vRLdIMpaR530w/viewform" target="_blank" rel="noopener noreferrer">Aplicar ahora</a>
+        <div class="pg-feature-card">
+          <div class="pg-feature-icon">🔒</div>
+          <div class="pg-feature-label">Modelo de acceso</div>
+          <h3 class="pg-feature-title">Aplicación y admisión selectiva</h3>
+          <p class="pg-feature-text">El acceso es de pago y funciona mediante aplicación previa. Si tu perfil es aceptado, recibirás los datos para completar el proceso de ingreso.</p>
+        </div>
+
+      </div>
+
+      <!-- CTA final -->
+      <div class="pg-cta-section">
+        <div class="pg-cta-inner">
+          <div>
+            <h3 style="margin:0 0 6px;font-size:20px;font-weight:800;color:#fff;">¿Listo para dar el siguiente paso?</h3>
+            <p style="margin:0;font-size:13px;color:#3a5570;">Las plazas son limitadas. Postula y te contactaremos si tu perfil aplica.</p>
           </div>
+          <a class="pg-cta-btn" href="https://docs.google.com/forms/d/e/1FAIpQLScDOCKJgFZe2i5CzyAi2Pufr6UwyzlRtgHg5vRLdIMpaR530w/viewform" target="_blank" rel="noopener noreferrer">Aplicar ahora →</a>
         </div>
       </div>
+
     </section>
 
     <section class="tab-panel" id="altascrypto">
@@ -753,7 +1306,7 @@ body{
       <div class="widget-shell full-span">
         <div class="tradingview-widget-container" style="height:900px;width:100%;">
           <div class="tradingview-widget-container__widget"></div>
-          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+          <script type="text/lazy-tv" data-src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js">
           {
             "autosize": true,
             "symbol": "BITSTAMP:BTCUSD",
@@ -790,7 +1343,7 @@ body{
         <div class="widget-shell" style="margin-bottom:16px;height:650px;">
           <div class="tradingview-widget-container" style="height:100%;width:100%;">
             <div class="tradingview-widget-container__widget"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js" async>
+            <script type="text/lazy-tv" data-src="https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js">
             {
               "dataSource": "SPX500",
               "blockSize": "market_cap_basic",
@@ -812,10 +1365,10 @@ body{
           </div>
         </div>
 
-        <div class="widget-shell" style="min-height:580px;">
-          <div class="tradingview-widget-container" style="height:100%;width:100%;">
+        <div class="widget-shell stock-quotes-shell" style="min-height:0;height:auto;padding:14px;">
+          <div class="tradingview-widget-container stock-quotes-container" style="height:420px;width:100%;overflow:hidden;">
             <div class="tradingview-widget-container__widget"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>
+            <script type="text/lazy-tv" data-src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js">
             {
               "colorTheme": "dark",
               "locale": "es",
@@ -825,7 +1378,7 @@ body{
               "backgroundColor": "#131722",
               "support_host": "https://www.tradingview.com",
               "width": "100%",
-              "height": 550,
+              "height": 420,
               "symbolsGroups": [
                 {
                   "name": "Indices",
@@ -874,7 +1427,7 @@ body{
         <div class="widget-shell">
           <div class="tradingview-widget-container">
             <div class="tradingview-widget-container__widget"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-financials.js" async>
+            <script type="text/lazy-tv" data-src="https://s3.tradingview.com/external-embedding/embed-widget-financials.js">
             {
               "symbol": "PEPPERSTONE:XAUUSD",
               "colorTheme": "dark",
@@ -890,7 +1443,7 @@ body{
         <div class="widget-shell">
           <div class="tradingview-widget-container">
             <div class="tradingview-widget-container__widget"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-info.js" async>
+            <script type="text/lazy-tv" data-src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-info.js">
             {
               "symbol": "PEPPERSTONE:XAUUSD",
               "colorTheme": "dark",
@@ -904,7 +1457,7 @@ body{
         <div class="widget-shell">
           <div class="tradingview-widget-container">
             <div class="tradingview-widget-container__widget"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-financials.js" async>
+            <script type="text/lazy-tv" data-src="https://s3.tradingview.com/external-embedding/embed-widget-financials.js">
             {
               "symbol": "TVC:SILVER",
               "colorTheme": "dark",
@@ -920,7 +1473,7 @@ body{
         <div class="widget-shell">
           <div class="tradingview-widget-container">
             <div class="tradingview-widget-container__widget"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-info.js" async>
+            <script type="text/lazy-tv" data-src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-info.js">
             {
               "symbol": "TVC:SILVER",
               "colorTheme": "dark",
@@ -955,7 +1508,7 @@ body{
           <p class="series-note">Mide la inflación del consumo personal en Estados Unidos. Es uno de los indicadores que la Fed sigue para evaluar la presión inflacionaria.</p>
           <div class="tradingview-widget-container" style="height:960px;width:100%;">
             <div class="tradingview-widget-container__widget"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            <script type="text/lazy-tv" data-src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js">
             {
               "autosize": true,
               "symbol": "FRED:PCEPI",
@@ -976,7 +1529,7 @@ body{
           <p class="series-note">Mide la inflación subyacente del consumo personal, excluyendo alimentos y energía. Ayuda a ver la tendencia inflacionaria más estable.</p>
           <div class="tradingview-widget-container" style="height:960px;width:100%;">
             <div class="tradingview-widget-container__widget"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            <script type="text/lazy-tv" data-src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js">
             {
               "autosize": true,
               "symbol": "FRED:PCEPILFE",
@@ -1005,7 +1558,7 @@ body{
           <p class="series-note">Mide el número total de empleos no agrícolas en Estados Unidos. Sirve para evaluar la fortaleza del mercado laboral.</p>
           <div class="tradingview-widget-container" style="height:960px;width:100%;">
             <div class="tradingview-widget-container__widget"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            <script type="text/lazy-tv" data-src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js">
             {
               "autosize": true,
               "symbol": "FRED:PAYEMS",
@@ -1026,7 +1579,7 @@ body{
           <p class="series-note">Mide la tasa de desempleo en Estados Unidos. Refleja qué porcentaje de la fuerza laboral está sin trabajo y buscando empleo.</p>
           <div class="tradingview-widget-container" style="height:960px;width:100%;">
             <div class="tradingview-widget-container__widget"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            <script type="text/lazy-tv" data-src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js">
             {
               "autosize": true,
               "symbol": "FRED:UNRATE",
@@ -1055,7 +1608,7 @@ body{
           <p class="series-note">Mide la oferta monetaria amplia en dólares, incluyendo efectivo, depósitos y dinero fácilmente convertible. Ayuda a seguir la liquidez del sistema.</p>
           <div class="tradingview-widget-container" style="height:960px;width:100%;">
             <div class="tradingview-widget-container__widget"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            <script type="text/lazy-tv" data-src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js">
             {
               "autosize": true,
               "symbol": "FRED:M2SL",
@@ -1076,7 +1629,7 @@ body{
           <p class="series-note">Mide el tamaño del balance de la Reserva Federal. Permite ver cuándo la Fed está expandiendo o drenando liquidez.</p>
           <div class="tradingview-widget-container" style="height:960px;width:100%;">
             <div class="tradingview-widget-container__widget"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            <script type="text/lazy-tv" data-src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js">
             {
               "autosize": true,
               "symbol": "FRED:WALCL",
@@ -1097,7 +1650,7 @@ body{
           <p class="series-note">Mide el saldo de la cuenta general del Tesoro de Estados Unidos en la Fed. Sus cambios pueden absorber o inyectar liquidez al mercado.</p>
           <div class="tradingview-widget-container" style="height:960px;width:100%;">
             <div class="tradingview-widget-container__widget"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            <script type="text/lazy-tv" data-src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js">
             {
               "autosize": true,
               "symbol": "FRED:WTREGEN",
@@ -1118,7 +1671,7 @@ body{
           <p class="series-note">Mide el uso de la facilidad reverse repo de la Fed. Sirve para seguir exceso de liquidez estacionado fuera del mercado.</p>
           <div class="tradingview-widget-container" style="height:960px;width:100%;">
             <div class="tradingview-widget-container__widget"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            <script type="text/lazy-tv" data-src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js">
             {
               "autosize": true,
               "symbol": "FRED:RRPONTSYD",
@@ -1147,7 +1700,7 @@ body{
           <p class="series-note">Mide el rendimiento del bono del Tesoro de Estados Unidos a 2 años. Suele reflejar expectativas de tasas de interés de corto plazo.</p>
           <div class="tradingview-widget-container" style="height:960px;width:100%;">
             <div class="tradingview-widget-container__widget"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            <script type="text/lazy-tv" data-src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js">
             {
               "autosize": true,
               "symbol": "FRED:DGS2",
@@ -1168,7 +1721,7 @@ body{
           <p class="series-note">Mide el rendimiento del bono del Tesoro a 10 años. Es una referencia clave para crecimiento, inflación y condiciones financieras.</p>
           <div class="tradingview-widget-container" style="height:960px;width:100%;">
             <div class="tradingview-widget-container__widget"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            <script type="text/lazy-tv" data-src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js">
             {
               "autosize": true,
               "symbol": "FRED:DGS10",
@@ -1189,7 +1742,7 @@ body{
           <p class="series-note">Mide la diferencia entre el rendimiento del bono a 10 años y el de 2 años. Ayuda a evaluar la forma de la curva y señales de desaceleración o recesión.</p>
           <div class="tradingview-widget-container" style="height:960px;width:100%;">
             <div class="tradingview-widget-container__widget"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            <script type="text/lazy-tv" data-src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js">
             {
               "autosize": true,
               "symbol": "FRED:T10Y2Y",
@@ -1218,7 +1771,7 @@ body{
           <p class="series-note">Mide el precio de Bitcoin en dólares. Sirve para seguir el comportamiento del principal activo digital frente a la liquidez global.</p>
           <div class="tradingview-widget-container" style="height:960px;width:100%;">
             <div class="tradingview-widget-container__widget"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            <script type="text/lazy-tv" data-src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js">
             {
               "autosize": true,
               "symbol": "BITSTAMP:BTCUSD",
@@ -1239,7 +1792,7 @@ body{
           <p class="series-note">Mide el precio del oro en dólares. Es un activo refugio usado para seguir expectativas de inflación, riesgo y fortaleza del dólar.</p>
           <div class="tradingview-widget-container" style="height:960px;width:100%;">
             <div class="tradingview-widget-container__widget"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            <script type="text/lazy-tv" data-src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js">
             {
               "autosize": true,
               "symbol": "OANDA:XAUUSD",
@@ -1260,7 +1813,7 @@ body{
           <p class="series-note">Mide el precio de la plata en dólares. Combina características de activo refugio e insumo industrial.</p>
           <div class="tradingview-widget-container" style="height:960px;width:100%;">
             <div class="tradingview-widget-container__widget"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            <script type="text/lazy-tv" data-src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js">
             {
               "autosize": true,
               "symbol": "OANDA:XAGUSD",
@@ -1281,7 +1834,7 @@ body{
           <p class="series-note">Mide el precio del petróleo WTI en dólares. Es clave para seguir inflación energética, crecimiento y tensiones geopolíticas.</p>
           <div class="tradingview-widget-container" style="height:960px;width:100%;">
             <div class="tradingview-widget-container__widget"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            <script type="text/lazy-tv" data-src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js">
             {
               "autosize": true,
               "symbol": "TVC:USOIL",
@@ -1297,61 +1850,9 @@ body{
             </script>
           </div>
         </div>
-        <div class="widget-shell">
-          <h4>Dólar</h4>
-          <p class="series-note">Mide la fortaleza del dólar estadounidense frente a una canasta de monedas importantes. Es clave para entender presión sobre liquidez y activos de riesgo.</p>
-          <div class="embed-frame">
-            <iframe
-              src="https://s.tradingview.com/widgetembed/?frameElementId=dxy-chart&symbol=TVC%3ADXY&interval=D&hidesidetoolbar=0&symboledit=0&saveimage=1&toolbarbg=0C1117&theme=dark&style=1&timezone=America%2FMexico_City&studies=[]&locale=es&utm_source=atlascapitalindex&utm_medium=widget&utm_campaign=chart&utm_term=TVC%3ADXY"
-              height="960"
-              loading="lazy"
-              title="Dólar DXY">
-            </iframe>
-          </div>
-        </div>
+        
       </div>
-
-      <div class="term-divider"></div>
-      <div class="section-header" id="risk-section">
-        <h2>Risk</h2>
-        <p>Volatilidad y presión de riesgo.</p>
-      </div>
-      <div class="series-grid">
-        <div class="widget-shell">
-          <h4>VIX</h4>
-          <p class="series-note">Mide la volatilidad implícita del mercado accionario estadounidense. Se usa como termómetro del miedo o estrés financiero.</p>
-          <div class="embed-frame">
-            <iframe
-              src="https://s.tradingview.com/widgetembed/?frameElementId=vix-chart&symbol=CBOE%3AVIX&interval=D&hidesidetoolbar=0&symboledit=0&saveimage=1&toolbarbg=0C1117&theme=dark&style=1&timezone=America%2FMexico_City&studies=[]&locale=es&utm_source=atlascapitalindex&utm_medium=widget&utm_campaign=chart&utm_term=CBOE%3AVIX"
-              height="960"
-              loading="lazy"
-              title="VIX">
-            </iframe>
-          </div>
-        </div>
-        <div class="widget-shell">
-          <h4>Petróleo WTI</h4>
-          <p class="series-note">Mide el precio del petróleo WTI en dólares. En esta sección ayuda a vigilar si la energía está elevando presión inflacionaria y riesgo macro.</p>
-          <div class="tradingview-widget-container" style="height:960px;width:100%;">
-            <div class="tradingview-widget-container__widget"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
-            {
-              "autosize": true,
-              "symbol": "TVC:USOIL",
-              "interval": "D",
-              "timezone": "America/Mexico_City",
-              "theme": "dark",
-              "style": "1",
-              "locale": "es",
-              "allow_symbol_change": false,
-              "calendar": false,
-              "support_host": "https://www.tradingview.com"
-            }
-            </script>
-          </div>
-        </div>
-      </div>
-      </div>
+</div>
     </section>
 
     <section class="tab-panel" id="liquidityengine">
@@ -1375,45 +1876,88 @@ body{
           <p>Motor premium del ecosistema Atlas para resumir liquidez global, presión del dólar, régimen de riesgo y lectura de Bitcoin.</p>
         </div>
 
-        <div class="series-grid" style="margin-bottom:16px;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;">
-          <div class="widget-card">
+        <div class="series-grid" style="margin-bottom:16px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;">
+          <div class="widget-card" id="ali-card">
             <div class="series-code">ALI SCORE</div>
             <h3>Atlas Liquidity Score</h3>
-            <div class="embed-frame" style="height:170px;display:flex;align-items:center;justify-content:center;">
-              <iframe srcdoc="<body style='margin:0;background:#0c1117;color:white;font-family:Arial,Helvetica,sans-serif;display:flex;align-items:center;justify-content:center;height:100%'><div style='text-align:center'><div style='font-size:32px;font-weight:800;color:#39d98a'>72</div><div style='font-size:16px;margin-top:10px'>LIQUIDITY EXPANSION</div><div style='font-size:13px;color:#97a3b6;margin-top:10px'>Estado premium del motor Atlas</div></div></body>" title="Atlas Liquidity Score"></iframe>
+            <div style="height:170px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;">
+              <div id="ali-value" style="font-size:48px;font-weight:900;color:#39d98a;line-height:1;">—</div>
+              <div id="ali-label" style="font-size:14px;margin-top:8px;color:#97a3b6;">Cargando...</div>
+              <div id="ali-sub" style="font-size:12px;color:#97a3b6;margin-top:6px;"></div>
             </div>
             <div class="widget-note">Lectura compuesta del motor Atlas.</div>
           </div>
 
-          <div class="widget-card">
+          <div class="widget-card" id="dxy-card">
             <div class="series-code">USD PRESSURE</div>
             <h3>Dollar Pressure</h3>
-            <div class="embed-frame" style="height:170px;display:flex;align-items:center;justify-content:center;">
-              <iframe srcdoc="<body style='margin:0;background:#0c1117;color:white;font-family:Arial,Helvetica,sans-serif;display:flex;align-items:center;justify-content:center;height:100%'><div style='text-align:center'><div style='font-size:32px;font-weight:800;color:#ffb84d'>WEAKENING</div><div style='font-size:13px;color:#97a3b6;margin-top:12px'>Menor presión del dólar suele favorecer riesgo</div></div></body>" title="Dollar Pressure"></iframe>
+            <div style="height:170px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;">
+              <div id="dxy-value" style="font-size:32px;font-weight:900;color:#ffb84d;line-height:1;">—</div>
+              <div id="dxy-sub" style="font-size:12px;color:#97a3b6;margin-top:10px;padding:0 8px;"></div>
             </div>
             <div class="widget-note">Lectura cualitativa del dólar.</div>
           </div>
 
-          <div class="widget-card">
+          <div class="widget-card" id="risk-card">
             <div class="series-code">RISK REGIME</div>
             <h3>Risk Assets State</h3>
-            <div class="embed-frame" style="height:170px;display:flex;align-items:center;justify-content:center;">
-              <iframe srcdoc="<body style='margin:0;background:#0c1117;color:white;font-family:Arial,Helvetica,sans-serif;display:flex;align-items:center;justify-content:center;height:100%'><div style='text-align:center'><div style='font-size:32px;font-weight:800;color:#39d98a'>FAVORABLE</div><div style='font-size:13px;color:#97a3b6;margin-top:12px'>Contexto premium para acciones y crypto</div></div></body>" title="Risk Regime"></iframe>
+            <div style="height:170px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;">
+              <div id="risk-value" style="font-size:28px;font-weight:900;color:#39d98a;line-height:1;">—</div>
+              <div id="risk-sub" style="font-size:12px;color:#97a3b6;margin-top:10px;padding:0 8px;"></div>
             </div>
             <div class="widget-note">Estado agregado del entorno de riesgo.</div>
           </div>
 
-          <div class="widget-card">
+          <div class="widget-card" id="btc-card">
             <div class="series-code">BTC LIQUIDITY</div>
             <h3>Bitcoin Liquidity State</h3>
-            <div class="embed-frame" style="height:170px;display:flex;align-items:center;justify-content:center;">
-              <iframe srcdoc="<body style='margin:0;background:#0c1117;color:white;font-family:Arial,Helvetica,sans-serif;display:flex;align-items:center;justify-content:center;height:100%'><div style='text-align:center'><div style='font-size:32px;font-weight:800;color:#39d98a'>RISING</div><div style='font-size:13px;color:#97a3b6;margin-top:12px'>Mayor soporte relativo para BTC</div></div></body>" title="Bitcoin Liquidity State"></iframe>
+            <div style="height:170px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;">
+              <div id="btc-value" style="font-size:32px;font-weight:900;color:#39d98a;line-height:1;">—</div>
+              <div id="btc-sub" style="font-size:12px;color:#97a3b6;margin-top:10px;padding:0 8px;"></div>
             </div>
             <div class="widget-note">Lectura premium del estado de Bitcoin.</div>
           </div>
         </div>
 
-        <div class="widget-card full-span">
+        <!-- ── CALENDARIO ECONÓMICO — CARDS ── -->
+        <div class="widget-card full-span" id="atlas-calendar-card" style="margin-top:16px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:16px;">
+            <div>
+              <div class="series-code">ECONOMIC CALENDAR</div>
+              <h3 style="margin:4px 0 0;">Próximos eventos macroeconómicos <span id="cal-range" style="font-size:12px;font-weight:400;color:var(--muted);margin-left:6px;"></span></h3>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;font-size:12px;color:var(--muted);">
+              <span><span style="color:#ff4d4d;">●</span> Alto impacto</span>
+              <span><span style="color:#f0c040;">●</span> Medio</span>
+              <span><span style="color:#4a5568;">●</span> Bajo</span>
+            </div>
+          </div>
+          <div id="cal-cards" style="display:flex;flex-wrap:wrap;gap:12px;"></div>
+          <div class="widget-note" style="margin-top:12px;">Eventos clave de EE.UU., Europa y mercados globales · Se actualiza semanalmente</div>
+        </div>
+
+        <!-- ── CALENDARIO ECONÓMICO — TRADINGVIEW ── -->
+        <div class="widget-card full-span" style="margin-top:16px;">
+          <div class="series-code">ECONOMIC CALENDAR · LIVE</div>
+          <h3 style="margin:4px 0 16px;">Calendario en tiempo real</h3>
+          <div class="tradingview-widget-container" style="width:100%;">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/lazy-tv" data-src="https://s3.tradingview.com/external-embedding/embed-widget-events.js">
+            {
+              "colorTheme": "dark",
+              "isTransparent": true,
+              "width": "100%",
+              "height": 500,
+              "locale": "es",
+              "importanceFilter": "-1,0,1",
+              "countryFilter": "us,eu,gb,jp,ca,au,cn,mx,ch"
+            }
+            </script>
+          </div>
+        </div>
+
+        <!-- ── ENGINE FRAMEWORK ── -->
+        <div class="widget-card full-span" style="margin-top:16px;">
           <div class="series-code">ENGINE FRAMEWORK</div>
           <h3>Cómo interpreta el mercado</h3>
           <div class="series-grid">
@@ -1435,10 +1979,161 @@ body{
             </div>
           </div>
         </div>
+
       </div>
     </section>
 
-    <section class="tab-panel" id="ecosystem">
+    <section class="tab-panel" id="testimonios">
+      <div class="section-header" id="testimonios-top">
+        <div>
+          <h2>Testimonios</h2>
+          <p>Lo que dice nuestra comunidad sobre Atlas Capital y el ecosistema RCJ.</p>
+        </div>
+      </div>
+
+      <div id="testimonios-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;margin-bottom:32px;">
+
+        <!-- GONZZDY -->
+        <div class="testimonio-card">
+          <div class="t-header">
+            <div class="t-avatar" style="background:linear-gradient(135deg,#c0392b,#8e1a10);">G</div>
+            <div>
+              <div class="t-name">GONZZDY</div>
+              <div class="t-date">19 mar 2026</div>
+            </div>
+            <div class="t-hearts">❤️ 1</div>
+          </div>
+          <p class="t-text">Yo empecé con RCJ es el hogar donde siempre volveré no importa si visito otros lugares, recordare el principio de mi principio. Amen.</p>
+        </div>
+
+        <!-- alex117 -->
+        <div class="testimonio-card">
+          <div class="t-header">
+            <div class="t-avatar" style="background:linear-gradient(135deg,#5865f2,#3a47c9);">a</div>
+            <div>
+              <div class="t-name">alex117</div>
+              <div class="t-date">19 mar 2026</div>
+            </div>
+            <div class="t-hearts">❤️ 1</div>
+          </div>
+          <p class="t-text">Estaba perdido, probando de todos lados sin llegar a nada. Llegué a RCJ por cripto, pero siguiendo el camino, me mostró una vista diferente y de crecimiento en los aspectos de la vida. Puro RCJ.</p>
+        </div>
+
+        <!-- O edomex -->
+        <div class="testimonio-card testimonio-featured">
+          <div class="t-header">
+            <div class="t-avatar" style="background:linear-gradient(135deg,#27ae60,#1a7a42);">O</div>
+            <div>
+              <div class="t-name">O edomex</div>
+              <div class="t-date">20 mar 2026</div>
+            </div>
+            <div class="t-hearts">❤️ 1</div>
+          </div>
+          <p class="t-text">Soy de la CDMX, encontré un video de @RCJ y me metí a su canal. Fui estudiando la lista de reproducción que tenía y a prueba y error fui aprendiendo. Gracias a él y sin todavía estar en el grupo logré juntar una lana y empecé a comprarle cosas a la gefa. También empecé a tener más claridad en muchas cosas. No hay palabras para agradecerle a @RCJ por todo. Puro RCJ, no nos bajamos de este barco aunque lo tumben.</p>
+        </div>
+
+        <!-- monsrz -->
+        <div class="testimonio-card">
+          <div class="t-header">
+            <div class="t-avatar" style="background:linear-gradient(135deg,#2c2c2c,#111);">▲</div>
+            <div>
+              <div class="t-name">monsrz</div>
+              <div class="t-date">20 mar 2026</div>
+            </div>
+            <div class="t-hearts">❤️ 1</div>
+          </div>
+          <p class="t-text">En mis inicios en el mundo Crypto, Ricky ha sido la guía constante. Ciertamente he visitado otros sitios y por tanto he podido comparar — hoy puedo decir que Ricky ha tenido más claridad en este mercado que otros.</p>
+        </div>
+
+        <!-- VictorMc -->
+        <div class="testimonio-card">
+          <div class="t-header">
+            <div class="t-avatar" style="background:linear-gradient(135deg,#e67e22,#a85a0e);">V</div>
+            <div>
+              <div class="t-name">VictorMc</div>
+              <div class="t-date">21 mar 2026</div>
+            </div>
+            <div class="t-hearts">❤️ 1</div>
+          </div>
+          <p class="t-text">Mis inicios en crypto y todo lo que he aprendido gracias a Ricky. En su canal de YouTube tiene buena información. Por Ricky también conocí mucho de su amigo Rodrigo y he aprendido mucho sobre todos los temas. Gracias.</p>
+        </div>
+
+        <!-- azaelflores952 -->
+        <div class="testimonio-card">
+          <div class="t-header">
+            <div class="t-avatar" style="background:linear-gradient(135deg,#1a1a3e,#0d0d2b);">🚀</div>
+            <div>
+              <div class="t-name">azaelflores952</div>
+              <div class="t-date">22 mar 2026</div>
+            </div>
+            <div class="t-hearts">❤️ 3</div>
+          </div>
+          <p class="t-text">Yo conocí a Ricky un año después de que comencé en el ecosistema crypto. Gracias a Dios ha ido todo bien desde ese momento. Muchas gracias por existir, Ricky.</p>
+        </div>
+
+        <!-- David Armas -->
+        <div class="testimonio-card">
+          <div class="t-header">
+            <div class="t-avatar" style="background:linear-gradient(135deg,#2980b9,#1a5276);">D</div>
+            <div>
+              <div class="t-name">David Armas</div>
+              <div class="t-date">25 mar 2026</div>
+            </div>
+            <div class="t-hearts">❤️ 1</div>
+          </div>
+          <p class="t-text">Conocí a Ricky en los años de pandemia cuando hablaba de grass por TikTok. Ahora estoy estudiando de lleno en esto de cripto y de más. Ricky sabe lo que hace y voy a aprender del mejor. 😤</p>
+        </div>
+
+        <!-- Rodrigo -->
+        <div class="testimonio-card testimonio-featured">
+          <div class="t-header">
+            <div class="t-avatar" style="background:linear-gradient(135deg,#8e44ad,#6c2d8a);">R</div>
+            <div>
+              <div class="t-name">Rodrigo</div>
+              <div class="t-date">1 may 2026</div>
+            </div>
+            <div class="t-hearts">❤️ 17</div>
+          </div>
+          <p class="t-text">Cuando inicié en Crypto a finales del 2022, tomé un curso de crypto que Ricky tenía en su grupo de Telegram. Literalmente con solo ese curso aprendí más que con meses de seguir a otros creadores. Después se convirtió en un amigo/mentor y he aprendido muchísimo de él. Ese curso de 15 USD me cambió la vida — hoy me dedico tiempo completo a las inversiones y definitivamente no estaría donde estoy sin el conocimiento que Ricky regala. Un gran humano y gran maestro, 100% recomendado para todos.</p>
+        </div>
+
+        <!-- Rodrigo M -->
+        <div class="testimonio-card">
+          <div class="t-header">
+            <div class="t-avatar" style="background:linear-gradient(135deg,#d4a017,#a07810);">R</div>
+            <div>
+              <div class="t-name">Rodrigo M</div>
+              <div class="t-date">1 may 2026</div>
+            </div>
+            <div class="t-hearts">❤️ 3</div>
+          </div>
+          <p class="t-text">Mis inicios en crypto y todo lo que he aprendido gracias a Ricky. En su canal de YouTube tiene buena información. Por Ricky también conocí mucho de su amigo Rodrigo y he aprendido mucho sobre todos los temas. Gracias. 🫱</p>
+        </div>
+
+        <!-- MAR -->
+        <div class="testimonio-card testimonio-featured">
+          <div class="t-header">
+            <div class="t-avatar" style="background:linear-gradient(135deg,#16a085,#0e6b59);">M</div>
+            <div>
+              <div class="t-name">MAR</div>
+              <div class="t-date">2 may 2026</div>
+            </div>
+            <div class="t-hearts">❤️ 5</div>
+          </div>
+          <p class="t-text">Mi inicio en cripto fue caótico — invertí en un mercado del cual ni sabía de qué iba. Me tocó un bear market donde vi mis activos bajar un 60% de valor. Un buen día me topé con un live de Ricky en YT. Me suscribí y no me perdía sus lives. Gracias a ello profundicé mi conocimiento y supe desde ahí el camino a seguir para que este mercado realmente fuera a mi favor. Siempre agradecida de encontrar a Ricky.</p>
+        </div>
+
+      </div>
+
+      <!-- CTA al final -->
+      <div style="text-align:center;padding:32px 20px;border-top:1px solid rgba(77,163,255,.08);">
+        <p style="color:var(--muted);font-size:14px;margin:0 0 16px;">¿Quieres ser parte de esta comunidad?</p>
+        <a class="link-btn" href="https://docs.google.com/forms/d/e/1FAIpQLScDOCKJgFZe2i5CzyAi2Pufr6UwyzlRtgHg5vRLdIMpaR530w/viewform" target="_blank" rel="noopener noreferrer" style="font-size:15px;padding:12px 32px;">Aplicar ahora</a>
+      </div>
+
+    </section>
+
+        <section class="tab-panel" id="ecosystem">
       <div class="section-header" id="ecosystem-top">
         <h2>Atlas Ecosystem</h2>
         <p>Proyectos del ecosistema Atlas: token, juegos y herramientas del proyecto.</p>
@@ -1456,110 +2151,265 @@ body{
         </div>
         <div class="widget-card">
           <h3>Atlas Capital</h3>
-          <div class="embed-frame"><iframe srcdoc="<body style='margin:0;display:flex;align-items:center;justify-content:center;height:100%;background:#0c1117;color:white;font-family:Arial'><div><div style='font-size:24px;font-weight:700;text-align:center'>Macro + Markets</div><div style='font-size:14px;color:#97a3b6;text-align:center;margin-top:10px'>Research macro y lectura de mercados para la comunidad Atlas Capital.</div></div></body>" height="220" title="Atlas Capital"></iframe></div>
-          <div class="widget-note">Panel macro y contexto de mercado</div>
+          <img src="atlas-logo.png" style="width:100%;height:220px;object-fit:contain;background:#000;border:1px solid var(--line);border-radius:4px;margin-bottom:10px;">
+          <a class="link-btn" href="https://docs.google.com/forms/d/e/1FAIpQLScDOCKJgFZe2i5CzyAi2Pufr6UwyzlRtgHg5vRLdIMpaR530w/viewform" target="_blank" rel="noopener noreferrer">Aplicar ahora</a>
         </div>
       </div>
     </section>
   </main>
 </div>
-
 <script>
-const tabButtons = Array.from(document.querySelectorAll('.tab-btn'));
-const tabPanels = Array.from(document.querySelectorAll('.tab-panel'));
-const jumpButtons = Array.from(document.querySelectorAll('.jump-btn'));
+// ============================================================
+//  ATLAS CAPITAL — Sistema de acceso seguro (v2.0)
+//  Gate con verificación criptográfica de firma + JWT
+// ============================================================
+
+const tabButtons     = Array.from(document.querySelectorAll('.tab-btn'));
+const tabPanels      = Array.from(document.querySelectorAll('.tab-panel'));
+const jumpButtons    = Array.from(document.querySelectorAll('.jump-btn'));
 const connectWalletBtn = document.getElementById('connect-wallet-btn');
-const walletStatus = document.getElementById('wallet-status');
+const walletStatus   = document.getElementById('wallet-status');
 
-const gatedTabs = ['altascrypto','stockindex','commoditiesindex','macrostats','liquidityengine'];
-const qraMint = 'DsMWZg6mkheTV2XTkbUtWcsXaajTzEkk1TC7o6Fmpump';
-const requiredQra = 1000000;
+const gatedTabs   = ['altascrypto','stockindex','commoditiesindex','macrostats','liquidityengine'];
+const REQUIRED    = 1_000_000;
+const TOKEN_KEY   = 'atlas_access_token';
 
-let walletAddress = '';
-let hasGateAccess = false;
-let isConnecting = false;
+let walletAddress  = '';
+let hasGateAccess  = false;
+let isConnecting   = false;
 
-function updateWalletStatus(message, ok = false) {
+// ── Helpers seguros ──────────────────────────────────────────
+
+// Escapa texto para insertar en HTML sin riesgo de XSS
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;');
+}
+
+function setWalletStatus(message, ok = false) {
   if (!walletStatus) return;
-  walletStatus.innerHTML = message;
+  // Usamos textContent base + innerHTML sólo para nodos seguros que construimos nosotros
+  walletStatus.innerHTML = '';
+  const div = document.createElement('div');
+  div.innerHTML = message; // message lo construimos nosotros, nunca del usuario sin escaping
+  walletStatus.appendChild(div);
   walletStatus.style.color = ok ? '#7fe3a1' : 'var(--muted)';
 }
 
+// ── Persistencia de token (sessionStorage: vive solo en la pestaña) ──
+function saveToken(token) {
+  try { sessionStorage.setItem(TOKEN_KEY, token); } catch {}
+}
+function loadToken() {
+  try { return sessionStorage.getItem(TOKEN_KEY) || ''; } catch { return ''; }
+}
+function clearToken() {
+  try { sessionStorage.removeItem(TOKEN_KEY); } catch {}
+}
+
+// ── Render del estado del gate ───────────────────────────────
 function renderGateState() {
   gatedTabs.forEach((tabId) => {
-    const locked = document.querySelector(`[data-gate-panel="${tabId}"]`);
+    const locked  = document.querySelector(`[data-gate-panel="${tabId}"]`);
     const content = document.querySelector(`[data-gated-content="${tabId}"]`);
-    if (locked) locked.classList.toggle('visible', !hasGateAccess);
-    if (content) content.classList.toggle('unlocked', hasGateAccess);
+    if (locked)  locked.classList.toggle('visible',  !hasGateAccess);
+    if (content) content.classList.toggle('unlocked',  hasGateAccess);
+  });
+}
+
+
+// ══════════════════════════════════════════════════════════════
+//  LAZY LOADING — Widgets de TradingView
+//  Se cargan solo cuando el usuario abre cada pestaña
+// ══════════════════════════════════════════════════════════════
+const loadedTabs = new Set(['home']); // home ya cargó
+
+function loadTabWidgets(tabId) {
+  if (loadedTabs.has(tabId)) return;
+  loadedTabs.add(tabId);
+
+  const panel = document.getElementById(tabId);
+  if (!panel) return;
+
+  // Buscar todos los scripts lazy en esta pestaña
+  const lazyScripts = panel.querySelectorAll('script[type="text/lazy-tv"]');
+  lazyScripts.forEach(lazy => {
+    const src    = lazy.getAttribute('data-src');
+    const config = lazy.textContent.trim();
+
+    // Crear el contenedor widget si no existe
+    const container = lazy.closest('.tradingview-widget-container');
+    if (container) {
+      // Asegurarse de que el div widget existe
+      let widgetDiv = container.querySelector('.tradingview-widget-container__widget');
+      if (!widgetDiv) {
+        widgetDiv = document.createElement('div');
+        widgetDiv.className = 'tradingview-widget-container__widget';
+        container.insertBefore(widgetDiv, lazy);
+      }
+    }
+
+    // Crear el script real y ejecutarlo
+    const script = document.createElement('script');
+    script.type  = 'text/javascript';
+    script.src   = src;
+    script.async = true;
+    script.innerHTML = config;
+    lazy.parentNode.replaceChild(script, lazy);
   });
 }
 
 function activateTab(tabId) {
   tabButtons.forEach((btn) => btn.classList.toggle('active', btn.dataset.tab === tabId));
-  tabPanels.forEach((panel) => panel.classList.toggle('active', panel.id === tabId));
+  tabPanels.forEach((panel) => {
+    if (panel.id === tabId) {
+      // Restart animation by removing and re-adding the class
+      panel.classList.remove('active');
+      void panel.offsetWidth; // force reflow
+      panel.classList.add('active');
+    } else {
+      panel.classList.remove('active');
+    }
+  });
   renderGateState();
+  loadTabWidgets(tabId);
 }
 
-async function fetchQraBalance(owner) {
-  const workerUrl = 'https://yellow-tooth-e55d.ramirezricardocontacto.workers.dev/?wallet=' + encodeURIComponent(owner);
-  const response = await fetch(workerUrl);
-  const data = await response.json();
-
-  if (data && data.error) {
-    throw new Error(data.error);
+// ── Verificar token existente con el servidor ────────────────
+async function checkExistingToken(token) {
+  try {
+    const res  = await fetch(`proxy.php?action=check-token&token=${encodeURIComponent(token)}`, {
+      cache: 'no-store'
+    });
+    const data = await res.json();
+    return data?.valid === true ? data : null;
+  } catch {
+    return null;
   }
-
-  console.log('QRA_WORKER_RESPONSE', data);
-  return Number((data && data.balance) || 0);
 }
 
-async function verifyHolderAccess(publicKey) {
-  const qraBalance = await fetchQraBalance(publicKey.toString());
-  hasGateAccess = qraBalance >= requiredQra;
-  const formatted = qraBalance.toLocaleString('en-US', { maximumFractionDigits: 2 });
-  updateWalletStatus(
-    `Wallet: <strong>${walletAddress.slice(0,4)}...${walletAddress.slice(-4)}</strong><br>Balance QRA: <strong>${formatted}</strong><br>${hasGateAccess ? '✅ Acceso desbloqueado' : '🔒 No alcanzas 1,000,000 QRA'}`,
-    hasGateAccess
-  );
-  renderGateState();
-}
-
+// ── Flujo de conexión segura ─────────────────────────────────
 async function connectWallet() {
   if (isConnecting) return;
-  const provider = window.phantom?.solana || window.solana;
-  console.log('PHANTOM_PROVIDER', provider);
 
-  if (!provider || !provider.isPhantom) {
-    updateWalletStatus('Phantom no está disponible en esta página. Revisa la extensión o prueba en Chrome.');
+  const provider = window.phantom?.solana || window.solana;
+  if (!provider?.isPhantom) {
+    setWalletStatus('Phantom no está disponible. Instala la extensión o abre en Chrome.');
     return;
   }
 
   try {
     isConnecting = true;
-    if (connectWalletBtn) {
-      connectWalletBtn.disabled = true;
-      connectWalletBtn.textContent = 'Abriendo Phantom...';
-    }
-    updateWalletStatus('Esperando aprobación en Phantom...');
+    connectWalletBtn.disabled = true;
+    connectWalletBtn.textContent = 'Abriendo Phantom...';
+    setWalletStatus('Esperando aprobación en Phantom...');
 
+    // 1. Conectar wallet (solo obtiene la dirección pública — no firma nada)
     const resp = await provider.connect();
     const publicKey = resp?.publicKey || provider.publicKey;
-    if (!publicKey) throw new Error('Phantom no devolvió publicKey');
+    if (!publicKey) throw new Error('Phantom no devolvió la dirección pública');
 
     walletAddress = publicKey.toString();
-    await verifyHolderAccess(publicKey);
+    connectWalletBtn.textContent = 'Verificando...';
+    setWalletStatus('Wallet conectada. Verificando balance en blockchain...');
+
+    // 2. Verificar si ya tenemos un token válido para esta wallet
+    const existingToken = loadToken();
+    if (existingToken) {
+      const check = await checkExistingToken(existingToken);
+      if (check?.valid && check.wallet === walletAddress) {
+        // Token válido — no necesita firmar de nuevo
+        hasGateAccess = true;
+        const expDate = new Date(check.exp * 1000).toLocaleTimeString('es-MX');
+        setWalletStatus(
+          `Wallet: <strong>${escapeHtml(walletAddress.slice(0,4))}...${escapeHtml(walletAddress.slice(-4))}</strong><br>` +
+          `✅ Acceso activo hasta las ${escapeHtml(expDate)}`,
+          true
+        );
+        renderGateState();
+        return;
+      }
+      clearToken();
+    }
+
+    // 3. Pedir al usuario que firme un mensaje (PRUEBA DE IDENTIDAD)
+    //    Esto NO mueve fondos. Solo demuestra que controlas la wallet.
+    setWalletStatus('Por favor firma el mensaje en Phantom para verificar tu identidad...');
+    connectWalletBtn.textContent = 'Firma requerida...';
+
+    const timestamp = Date.now();
+    const message   = `Atlas Capital verificación de acceso\nWallet: ${walletAddress}\nTimestamp: ${timestamp}\n\nEsta firma no autoriza ninguna transacción.`;
+    const encoded   = new TextEncoder().encode(message);
+    const signResult = await provider.signMessage(encoded, 'utf8');
+
+    // 4. Convertir la firma a base64 para enviarla al servidor
+    const sigBase64 = btoa(String.fromCharCode(...signResult.signature));
+
+    // 5. Enviar wallet + mensaje + firma al backend para que él verifique
+    setWalletStatus('Consultando blockchain...');
+    const res = await fetch('proxy.php?action=verify', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      cache:   'no-store',
+      body:    JSON.stringify({
+        wallet:    walletAddress,
+        message:   message,
+        signature: sigBase64,
+      })
+    });
+
+    const data = await res.json();
+
+    if (data?.error) throw new Error(data.error);
+
+    const balance   = data.balance || 0;
+    const formatted = balance.toLocaleString('en-US', { maximumFractionDigits: 2 });
+
+    if (data.ok && data.token) {
+      // 6. Guardar el JWT — el acceso es válido
+      saveToken(data.token);
+      hasGateAccess = true;
+      setWalletStatus(
+        `Wallet: <strong>${escapeHtml(walletAddress.slice(0,4))}...${escapeHtml(walletAddress.slice(-4))}</strong><br>` +
+        `Balance QRA: <strong>${escapeHtml(formatted)}</strong><br>` +
+        `✅ Acceso desbloqueado`,
+        true
+      );
+    } else {
+      hasGateAccess = false;
+      clearToken();
+      setWalletStatus(
+        `Wallet: <strong>${escapeHtml(walletAddress.slice(0,4))}...${escapeHtml(walletAddress.slice(-4))}</strong><br>` +
+        `Balance QRA: <strong>${escapeHtml(formatted)}</strong><br>` +
+        `🔒 No alcanzas ${REQUIRED.toLocaleString()} QRA`,
+        false
+      );
+    }
+
+    renderGateState();
+
   } catch (error) {
-    console.error('PHANTOM_CONNECT_ERROR', error);
-    updateWalletStatus(`Conexión fallida: ${error?.message || 'error desconocido'}`);
+    // El usuario canceló la firma → no mostrar error alarmante
+    if (error?.message?.includes('User rejected') || error?.code === 4001) {
+      setWalletStatus('Firma cancelada. Necesitas firmar para verificar tu acceso.');
+    } else {
+      setWalletStatus(`Error: ${escapeHtml(error?.message || 'Error desconocido')}`);
+    }
+    hasGateAccess = false;
+    clearToken();
+    renderGateState();
   } finally {
     isConnecting = false;
-    if (connectWalletBtn) {
-      connectWalletBtn.disabled = false;
-      connectWalletBtn.textContent = 'Conectar Phantom';
-    }
+    connectWalletBtn.disabled  = false;
+    connectWalletBtn.textContent = 'Conectar Phantom';
   }
 }
 
+// ── Navegación entre tabs ────────────────────────────────────
 tabButtons.forEach((btn) => {
   btn.addEventListener('click', () => {
     activateTab(btn.dataset.tab);
@@ -1571,14 +2421,10 @@ jumpButtons.forEach((link) => {
   link.addEventListener('click', (event) => {
     event.preventDefault();
     const href = link.getAttribute('href');
-    const targetTab = href === '#about-top'
-      ? 'about'
-      : href === '#roadmap-top'
-      ? 'roadmap'
-      : href === '#private-group-top'
-      ? 'privategroup'
+    const targetTab = href === '#about-top'   ? 'about'
+      : href === '#roadmap-top'               ? 'roadmap'
+      : href === '#private-group-top'         ? 'privategroup'
       : 'home';
-
     activateTab(targetTab);
     const target = document.querySelector(href);
     if (target) requestAnimationFrame(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }));
@@ -1589,31 +2435,748 @@ if (connectWalletBtn) {
   connectWalletBtn.onclick = connectWallet;
 }
 
-function runSanityChecks() {
-  console.assert(tabButtons.length === 7, 'Expected 7 primary tabs');
-  console.assert(tabPanels.length === 10, 'Expected 10 panels');
-  console.assert(gatedTabs.length === 5, 'Expected 5 gated tabs');
-  console.assert(typeof qraMint === 'string' && qraMint.length > 20, 'Mint address must be defined');
-  console.assert(!!connectWalletBtn, 'Connect wallet button must exist');
-}
-
+// ── Al cargar la página: restaurar sesión si hay token guardado ──
 window.addEventListener('load', async () => {
-  runSanityChecks();
   renderGateState();
+
   const provider = window.phantom?.solana || window.solana;
-  if (provider?.isPhantom) {
-    try {
-      const resp = await provider.connect({ onlyIfTrusted: true });
-      const publicKey = resp?.publicKey || provider.publicKey;
-      if (publicKey) {
-        walletAddress = publicKey.toString();
-        await verifyHolderAccess(publicKey);
-      }
-    } catch (error) {
-      // trusted connection not available yet
+  if (!provider?.isPhantom) return;
+
+  try {
+    // Intentar reconexión silenciosa (solo si ya aprobó antes)
+    const resp = await provider.connect({ onlyIfTrusted: true });
+    const publicKey = resp?.publicKey || provider.publicKey;
+    if (!publicKey) return;
+
+    walletAddress = publicKey.toString();
+
+    // Revisar token guardado
+    const token = loadToken();
+    if (!token) return;
+
+    const check = await checkExistingToken(token);
+    if (check?.valid && check.wallet === walletAddress) {
+      hasGateAccess = true;
+      const expDate = new Date(check.exp * 1000).toLocaleTimeString('es-MX');
+      setWalletStatus(
+        `Wallet: <strong>${escapeHtml(walletAddress.slice(0,4))}...${escapeHtml(walletAddress.slice(-4))}</strong><br>` +
+        `✅ Sesión activa hasta las ${escapeHtml(expDate)}`,
+        true
+      );
+      renderGateState();
+    } else {
+      clearToken();
     }
+  } catch {
+    // Reconexión silenciosa no disponible — normal, no hacer nada
   }
 });
+
+// ══════════════════════════════════════════════════════════════
+//  ATLAS CAPITAL — Calendario Económico (cards por día)
+// ══════════════════════════════════════════════════════════════
+
+(function() {
+
+  // ── Eventos macro clave de los próximos 15 días ──────────────
+  // Generados dinámicamente según la fecha actual
+  function getEvents() {
+    const now = new Date();
+    const y   = now.getFullYear();
+    const m   = now.getMonth(); // 0-indexed
+
+    // Calendario fijo de eventos macro recurrentes de alto/medio impacto
+    // Se filtran solo los que caen en los próximos 15 días
+    const RECURRING = [
+      // EE.UU. — Alto impacto
+      { name: 'NFP / Nóminas',          impact: 'high',   flag: '🇺🇸', dayOfWeek: 5, weekOfMonth: 1,  note: 'Primer viernes del mes' },
+      { name: 'CPI EE.UU.',             impact: 'high',   flag: '🇺🇸', fixed: true },
+      { name: 'PPI EE.UU.',             impact: 'medium', flag: '🇺🇸', fixed: true },
+      { name: 'Fed Interest Rate',       impact: 'high',   flag: '🇺🇸', fixed: true },
+      { name: 'Initial Jobless Claims',  impact: 'medium', flag: '🇺🇸', dayOfWeek: 4, every: 'week' },
+      { name: 'Retail Sales',            impact: 'high',   flag: '🇺🇸', fixed: true },
+      { name: 'GDP EE.UU.',             impact: 'high',   flag: '🇺🇸', fixed: true },
+      { name: 'PCE Price Index',         impact: 'high',   flag: '🇺🇸', fixed: true },
+      { name: 'ISM Manufacturing PMI',   impact: 'medium', flag: '🇺🇸', fixed: true },
+      { name: 'ISM Services PMI',        impact: 'medium', flag: '🇺🇸', fixed: true },
+      // Europa
+      { name: 'ECB Interest Rate',       impact: 'high',   flag: '🇪🇺', fixed: true },
+      { name: 'CPI Eurozona',            impact: 'high',   flag: '🇪🇺', fixed: true },
+      { name: 'PMI Manufacturero EU',    impact: 'medium', flag: '🇪🇺', fixed: true },
+      // UK
+      { name: 'BoE Interest Rate',       impact: 'high',   flag: '🇬🇧', fixed: true },
+      { name: 'CPI Reino Unido',         impact: 'high',   flag: '🇬🇧', fixed: true },
+      // Japón
+      { name: 'BoJ Interest Rate',       impact: 'high',   flag: '🇯🇵', fixed: true },
+      // China
+      { name: 'CPI China',               impact: 'medium', flag: '🇨🇳', fixed: true },
+      { name: 'PMI Caixin China',        impact: 'medium', flag: '🇨🇳', fixed: true },
+      // México
+      { name: 'Banxico Interest Rate',   impact: 'high',   flag: '🇲🇽', fixed: true },
+      { name: 'CPI México',              impact: 'medium', flag: '🇲🇽', fixed: true },
+    ];
+
+    // Eventos con fechas reales — Mayo/Junio 2026
+    const FIXED_EVENTS = [
+      // Mayo 2026
+      { date: new Date(2026,4,7),  name: 'Initial Jobless Claims',  impact: 'medium', flag: '🇺🇸' },
+      { date: new Date(2026,4,7),  name: 'PIB Real EE.UU.',         impact: 'high',   flag: '🇺🇸' },
+      { date: new Date(2026,4,8),  name: 'NFP / Nóminas',           impact: 'high',   flag: '🇺🇸', note: 'Empleo no agrícola' },
+      { date: new Date(2026,4,8),  name: 'Tasa de Desempleo',       impact: 'high',   flag: '🇺🇸' },
+      { date: new Date(2026,4,8),  name: 'BoE Interest Rate',       impact: 'high',   flag: '🇬🇧' },
+      { date: new Date(2026,4,12), name: 'CPI EE.UU.',              impact: 'high',   flag: '🇺🇸', note: 'Inflación abr' },
+      { date: new Date(2026,4,13), name: 'PPI EE.UU.',              impact: 'medium', flag: '🇺🇸' },
+      { date: new Date(2026,4,14), name: 'Initial Jobless Claims',  impact: 'medium', flag: '🇺🇸' },
+      { date: new Date(2026,4,14), name: 'Retail Sales',            impact: 'high',   flag: '🇺🇸' },
+      { date: new Date(2026,4,15), name: 'Michigan Sentiment',      impact: 'medium', flag: '🇺🇸' },
+      { date: new Date(2026,4,15), name: 'Industrial Production',   impact: 'medium', flag: '🇺🇸' },
+      { date: new Date(2026,4,19), name: 'CPI México',              impact: 'medium', flag: '🇲🇽' },
+      { date: new Date(2026,4,20), name: 'Existing Home Sales',     impact: 'medium', flag: '🇺🇸' },
+      { date: new Date(2026,4,21), name: 'Initial Jobless Claims',  impact: 'medium', flag: '🇺🇸' },
+      { date: new Date(2026,4,21), name: 'PMI Manufacturero Flash', impact: 'high',   flag: '🇺🇸' },
+      { date: new Date(2026,4,21), name: 'PMI Servicios Flash',     impact: 'high',   flag: '🇺🇸' },
+      { date: new Date(2026,4,22), name: 'Fed Minutes',             impact: 'high',   flag: '🇺🇸' },
+      { date: new Date(2026,4,27), name: 'GDP EE.UU. (2ª est.)',    impact: 'high',   flag: '🇺🇸' },
+      { date: new Date(2026,4,28), name: 'Initial Jobless Claims',  impact: 'medium', flag: '🇺🇸' },
+      { date: new Date(2026,4,29), name: 'PCE Price Index',         impact: 'high',   flag: '🇺🇸' },
+      { date: new Date(2026,4,29), name: 'Core PCE',                impact: 'high',   flag: '🇺🇸' },
+      // Junio 2026
+      { date: new Date(2026,5,3),  name: 'ISM Manufacturing PMI',   impact: 'medium', flag: '🇺🇸' },
+      { date: new Date(2026,5,4),  name: 'Initial Jobless Claims',  impact: 'medium', flag: '🇺🇸' },
+      { date: new Date(2026,5,5),  name: 'NFP / Nóminas',           impact: 'high',   flag: '🇺🇸' },
+      { date: new Date(2026,5,5),  name: 'ISM Services PMI',        impact: 'medium', flag: '🇺🇸' },
+      { date: new Date(2026,5,10), name: 'CPI EE.UU.',              impact: 'high',   flag: '🇺🇸' },
+      { date: new Date(2026,5,11), name: 'ECB Interest Rate',       impact: 'high',   flag: '🇪🇺' },
+      { date: new Date(2026,5,11), name: 'Initial Jobless Claims',  impact: 'medium', flag: '🇺🇸' },
+      { date: new Date(2026,5,16), name: 'Retail Sales',            impact: 'high',   flag: '🇺🇸' },
+      { date: new Date(2026,5,17), name: 'Fed Interest Rate',       impact: 'high',   flag: '🇺🇸', note: 'FOMC' },
+      { date: new Date(2026,5,17), name: 'Fed Dot Plot',            impact: 'high',   flag: '🇺🇸' },
+      { date: new Date(2026,5,18), name: 'Initial Jobless Claims',  impact: 'medium', flag: '🇺🇸' },
+      { date: new Date(2026,5,26), name: 'GDP EE.UU.',              impact: 'high',   flag: '🇺🇸' },
+    ];
+
+    // Filtrar solo los próximos 15 días
+    const start = new Date(now); start.setHours(0,0,0,0);
+    const end   = new Date(start); end.setDate(end.getDate() + 15);
+
+    return FIXED_EVENTS.filter(e => e.date >= start && e.date < end);
+  }
+
+  // ── Agrupar por día ───────────────────────────────────────────
+  function groupByDay(events) {
+    const map = {};
+    events.forEach(e => {
+      const key = e.date.toISOString().slice(0,10);
+      if (!map[key]) map[key] = { date: e.date, events: [] };
+      map[key].events.push(e);
+    });
+    // Ordenar por impacto dentro de cada día: high → medium → low
+    const order = { high:0, medium:1, low:2 };
+    Object.values(map).forEach(d => d.events.sort((a,b) => (order[a.impact]||2)-(order[b.impact]||2)));
+    return Object.values(map).sort((a,b) => a.date - b.date);
+  }
+
+  // ── Construir las cards ───────────────────────────────────────
+  function buildCalendar() {
+    const container = document.getElementById('cal-cards');
+    const calRange  = document.getElementById('cal-range');
+    if (!container) return;
+
+    const now   = new Date();
+    const end   = new Date(now); end.setDate(end.getDate() + 15);
+    const fmt   = d => d.toLocaleDateString('es-MX', { day:'2-digit', month:'short' });
+    if (calRange) calRange.textContent = `${fmt(now)} – ${fmt(end)}`;
+
+    const events = getEvents();
+    const days   = groupByDay(events);
+
+    // Generar también los días vacíos con eventos dentro del rango
+    // para mostrar un scroll continuo de 15 días
+    container.innerHTML = '';
+
+    if (days.length === 0) {
+      container.innerHTML = '<div style="color:var(--muted);padding:20px;font-size:13px;">No hay eventos registrados para los próximos 15 días.</div>';
+      return;
+    }
+
+    const todayStr = now.toISOString().slice(0,10);
+    const DAYS_ES  = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+    const MONTHS_ES= ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+
+    days.forEach(({ date, events }) => {
+      const dateStr  = date.toISOString().slice(0,10);
+      const isToday  = dateStr === todayStr;
+      const dayName  = DAYS_ES[date.getDay()];
+      const monthName= MONTHS_ES[date.getMonth()];
+      const dayNum   = date.getDate();
+
+      const card = document.createElement('div');
+      card.className = 'cal-day-card' + (isToday ? ' is-today' : '');
+
+      const todayBadge = isToday ? '<span class="cal-day-today-badge">HOY</span>' : '';
+      const eventsHTML = events.map(ev => `
+        <div class="cal-event-item">
+          <div class="cal-dot ${ev.impact}"></div>
+          <div>
+            <div class="cal-event-name">${escapeHtml(ev.flag)} ${escapeHtml(ev.name)}</div>
+            ${ev.note ? `<div class="cal-event-meta">${escapeHtml(ev.note)}</div>` : ''}
+          </div>
+        </div>
+      `).join('');
+
+      card.innerHTML = `
+        <div class="cal-day-num">${dayNum}${todayBadge}</div>
+        <div class="cal-day-label">${dayName} ${monthName}</div>
+        ${eventsHTML || '<div class="cal-empty">Sin eventos</div>'}
+      `;
+
+      container.appendChild(card);
+    });
+  }
+
+  function escapeHtml(str) {
+    return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  // Iniciar cuando el contenido premium se desbloquee
+  const gatedEl = document.querySelector('[data-gated-content="liquidityengine"]');
+  if (!gatedEl) return;
+
+  let built = false;
+  const observer = new MutationObserver(() => {
+    if (gatedEl.classList.contains('unlocked') && !built) {
+      built = true;
+      buildCalendar();
+    }
+  });
+  observer.observe(gatedEl, { attributes: true, attributeFilter: ['class'] });
+  if (gatedEl.classList.contains('unlocked')) { built = true; buildCalendar(); }
+
+})();
+// ══════════════════════════════════════════════════════════════
+//  ATLAS CAPITAL — Calendario Económico (cards por día)
+//  Eventos calculados dinámicamente según fecha actual
+// ══════════════════════════════════════════════════════════════
+(function() {
+
+  // Eventos macro recurrentes con lógica de fecha dinámica
+  // Se generan para los próximos 15 días desde hoy, siempre actualizados
+  function generateEvents() {
+    const now   = new Date();
+    now.setHours(0,0,0,0);
+    const limit = new Date(now);
+    limit.setDate(limit.getDate() + 15);
+
+    const events = [];
+
+    // Helper: primer día de semana específico del mes
+    function nthWeekday(year, month, weekday, n) {
+      const d = new Date(year, month, 1);
+      let count = 0;
+      while (d.getMonth() === month) {
+        if (d.getDay() === weekday) { count++; if (count === n) return new Date(d); }
+        d.setDate(d.getDate() + 1);
+      }
+      return null;
+    }
+
+    // Helper: último día de semana del mes
+    function lastWeekday(year, month, weekday) {
+      const d = new Date(year, month + 1, 0);
+      while (d.getDay() !== weekday) d.setDate(d.getDate() - 1);
+      return new Date(d);
+    }
+
+    // Helper: siguiente día de semana desde una fecha
+    function nextWeekdayFrom(date, weekday) {
+      const d = new Date(date);
+      while (d.getDay() !== weekday) d.setDate(d.getDate() + 1);
+      return d;
+    }
+
+    // Generar todos los jueves (Initial Jobless Claims) en el rango
+    let thursday = new Date(now);
+    while (thursday.getDay() !== 4) thursday.setDate(thursday.getDate() + 1);
+    while (thursday < limit) {
+      events.push({ date: new Date(thursday), name: 'Initial Jobless Claims', impact: 'medium', flag: '🇺🇸' });
+      thursday = new Date(thursday); thursday.setDate(thursday.getDate() + 7);
+    }
+
+    // Eventos fijos conocidos — próximos 3 meses (mayo, junio, julio 2026)
+    const FIXED = [
+      // Mayo 2026
+      { date: new Date(2026,4,7),  name: 'PIB Real EE.UU.',          impact: 'high',   flag: '🇺🇸' },
+      { date: new Date(2026,4,8),  name: 'NFP / Nóminas',            impact: 'high',   flag: '🇺🇸', note: 'Empleo no agrícola' },
+      { date: new Date(2026,4,8),  name: 'Tasa de Desempleo',        impact: 'high',   flag: '🇺🇸' },
+      { date: new Date(2026,4,8),  name: 'BoE Interest Rate',        impact: 'high',   flag: '🇬🇧' },
+      { date: new Date(2026,4,12), name: 'CPI EE.UU.',               impact: 'high',   flag: '🇺🇸', note: 'Inflación abr' },
+      { date: new Date(2026,4,13), name: 'PPI EE.UU.',               impact: 'medium', flag: '🇺🇸' },
+      { date: new Date(2026,4,14), name: 'Retail Sales EE.UU.',      impact: 'high',   flag: '🇺🇸' },
+      { date: new Date(2026,4,15), name: 'Michigan Sentiment',       impact: 'medium', flag: '🇺🇸' },
+      { date: new Date(2026,4,15), name: 'Industrial Production',    impact: 'medium', flag: '🇺🇸' },
+      { date: new Date(2026,4,19), name: 'CPI México (1ª quincena)', impact: 'medium', flag: '🇲🇽' },
+      { date: new Date(2026,4,20), name: 'Existing Home Sales',      impact: 'medium', flag: '🇺🇸' },
+      { date: new Date(2026,4,21), name: 'PMI Manufacturero Flash',  impact: 'high',   flag: '🇺🇸' },
+      { date: new Date(2026,4,21), name: 'PMI Servicios Flash',      impact: 'high',   flag: '🇺🇸' },
+      { date: new Date(2026,4,21), name: 'PMI Flash Eurozona',       impact: 'high',   flag: '🇪🇺' },
+      { date: new Date(2026,4,22), name: 'Fed Minutes',              impact: 'high',   flag: '🇺🇸' },
+      { date: new Date(2026,4,27), name: 'GDP EE.UU. (2ª est.)',     impact: 'high',   flag: '🇺🇸' },
+      { date: new Date(2026,4,28), name: 'CPI México',               impact: 'medium', flag: '🇲🇽' },
+      { date: new Date(2026,4,29), name: 'PCE Price Index',          impact: 'high',   flag: '🇺🇸' },
+      { date: new Date(2026,4,29), name: 'Core PCE',                 impact: 'high',   flag: '🇺🇸' },
+      // Junio 2026
+      { date: new Date(2026,5,1),  name: 'ISM Manufacturing PMI',    impact: 'medium', flag: '🇺🇸' },
+      { date: new Date(2026,5,3),  name: 'ISM Services PMI',         impact: 'medium', flag: '🇺🇸' },
+      { date: new Date(2026,5,5),  name: 'NFP / Nóminas',            impact: 'high',   flag: '🇺🇸' },
+      { date: new Date(2026,5,5),  name: 'Tasa de Desempleo',        impact: 'high',   flag: '🇺🇸' },
+      { date: new Date(2026,5,10), name: 'CPI EE.UU.',               impact: 'high',   flag: '🇺🇸' },
+      { date: new Date(2026,5,11), name: 'PPI EE.UU.',               impact: 'medium', flag: '🇺🇸' },
+      { date: new Date(2026,5,11), name: 'ECB Interest Rate',        impact: 'high',   flag: '🇪🇺' },
+      { date: new Date(2026,5,16), name: 'Retail Sales EE.UU.',      impact: 'high',   flag: '🇺🇸' },
+      { date: new Date(2026,5,17), name: 'Fed Interest Rate',        impact: 'high',   flag: '🇺🇸', note: 'FOMC' },
+      { date: new Date(2026,5,17), name: 'Fed Dot Plot',             impact: 'high',   flag: '🇺🇸' },
+      { date: new Date(2026,5,19), name: 'CPI México (1ª quincena)', impact: 'medium', flag: '🇲🇽' },
+      { date: new Date(2026,5,23), name: 'PMI Manufacturero Flash',  impact: 'high',   flag: '🇺🇸' },
+      { date: new Date(2026,5,26), name: 'GDP EE.UU.',               impact: 'high',   flag: '🇺🇸' },
+      { date: new Date(2026,5,26), name: 'PCE Price Index',          impact: 'high',   flag: '🇺🇸' },
+      // Julio 2026
+      { date: new Date(2026,6,1),  name: 'ISM Manufacturing PMI',    impact: 'medium', flag: '🇺🇸' },
+      { date: new Date(2026,6,3),  name: 'NFP / Nóminas',            impact: 'high',   flag: '🇺🇸' },
+      { date: new Date(2026,6,3),  name: 'Tasa de Desempleo',        impact: 'high',   flag: '🇺🇸' },
+      { date: new Date(2026,6,9),  name: 'CPI EE.UU.',               impact: 'high',   flag: '🇺🇸' },
+      { date: new Date(2026,6,10), name: 'PPI EE.UU.',               impact: 'medium', flag: '🇺🇸' },
+      { date: new Date(2026,6,15), name: 'Retail Sales EE.UU.',      impact: 'high',   flag: '🇺🇸' },
+      { date: new Date(2026,6,17), name: 'Michigan Sentiment',       impact: 'medium', flag: '🇺🇸' },
+      { date: new Date(2026,6,29), name: 'Fed Interest Rate',        impact: 'high',   flag: '🇺🇸', note: 'FOMC' },
+      { date: new Date(2026,6,30), name: 'GDP EE.UU.',               impact: 'high',   flag: '🇺🇸' },
+      { date: new Date(2026,6,31), name: 'PCE Price Index',          impact: 'high',   flag: '🇺🇸' },
+    ];
+
+    // Filtrar solo los que caen en los próximos 15 días
+    FIXED.forEach(e => {
+      if (e.date >= now && e.date < limit) events.push(e);
+    });
+
+    // Ordenar por fecha
+    events.sort((a, b) => a.date - b.date);
+    return events;
+  }
+
+  function groupByDay(events) {
+    const map = {};
+    events.forEach(e => {
+      const key = e.date.toISOString().slice(0,10);
+      if (!map[key]) map[key] = { date: e.date, events: [] };
+      map[key].events.push(e);
+    });
+    const order = { high:0, medium:1, low:2 };
+    Object.values(map).forEach(d =>
+      d.events.sort((a,b) => (order[a.impact]||2) - (order[b.impact]||2))
+    );
+    return Object.values(map).sort((a,b) => a.date - b.date);
+  }
+
+  function escapeHtml(s) {
+    return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function buildCalendar() {
+    const container = document.getElementById('cal-cards');
+    const calRange  = document.getElementById('cal-range');
+    if (!container) return;
+
+    const now = new Date(); now.setHours(0,0,0,0);
+    const end = new Date(now); end.setDate(end.getDate() + 15);
+    const fmt = d => d.toLocaleDateString('es-MX', { day:'2-digit', month:'short' });
+    if (calRange) calRange.textContent = `${fmt(now)} – ${fmt(end)}`;
+
+    const events = generateEvents();
+    const days   = groupByDay(events);
+
+    container.innerHTML = '';
+
+    if (days.length === 0) {
+      container.innerHTML = '<div style="color:var(--muted);padding:16px;font-size:13px;">No hay eventos registrados para los próximos 15 días.</div>';
+      return;
+    }
+
+    const todayStr  = now.toISOString().slice(0,10);
+    const DAYS_ES   = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+    const MONTHS_ES = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+
+    days.forEach(({ date, events }) => {
+      const dateStr  = date.toISOString().slice(0,10);
+      const isToday  = dateStr === todayStr;
+      const card     = document.createElement('div');
+      card.className = 'cal-day-card' + (isToday ? ' is-today' : '');
+
+      const todayBadge  = isToday ? '<span class="cal-today-badge">HOY</span>' : '';
+      const eventsHTML  = events.map(ev => `
+        <div class="cal-event-item">
+          <div class="cal-dot ${ev.impact}"></div>
+          <div>
+            <div class="cal-event-name">${ev.flag} ${escapeHtml(ev.name)}</div>
+            ${ev.note ? `<div class="cal-event-meta">${escapeHtml(ev.note)}</div>` : ''}
+          </div>
+        </div>`).join('');
+
+      card.innerHTML = `
+        <div class="cal-day-num">${date.getDate()} ${todayBadge}</div>
+        <div class="cal-day-label">${DAYS_ES[date.getDay()]} ${MONTHS_ES[date.getMonth()]}</div>
+        ${eventsHTML}`;
+
+      container.appendChild(card);
+    });
+  }
+
+  // Activar cuando se desbloquee el contenido premium
+  const gatedEl = document.querySelector('[data-gated-content="liquidityengine"]');
+  if (!gatedEl) return;
+  let built = false;
+  function tryBuild() {
+    if (built || !gatedEl.classList.contains('unlocked')) return;
+    built = true;
+    buildCalendar();
+  }
+  new MutationObserver(tryBuild).observe(gatedEl, { attributes: true, attributeFilter: ['class'] });
+  tryBuild();
+
+})();
+// ══════════════════════════════════════════════════════════════
+//  ATLAS LIQUIDITY ENGINE — Datos reales desde FRED
+// ══════════════════════════════════════════════════════════════
+(function() {
+
+  // ── Calcular ALI Score (0-100) ────────────────────────────
+  // Basado en dirección de M2, Fed Balance, TGA y RRP
+  function calcAliScore(data) {
+    let score = 50; // base neutral
+    let signals = 0; // count valid signals
+
+    // M2: si subió → +15 pts, si bajó → -15
+    if (data.m2?.value != null && data.m2?.prev != null && data.m2.prev !== 0) {
+      const m2Change = ((data.m2.value - data.m2.prev) / Math.abs(data.m2.prev)) * 100;
+      if      (m2Change >  0.5) { score += 15; signals++; }
+      else if (m2Change >  0.1) { score += 8;  signals++; }
+      else if (m2Change < -0.5) { score -= 15; signals++; }
+      else if (m2Change < -0.1) { score -= 8;  signals++; }
+      // near-zero change = neutral, no adjustment
+    }
+
+    // Fed Balance Sheet
+    if (data.fedBalance?.value != null && data.fedBalance?.prev != null && data.fedBalance.prev !== 0) {
+      const fedChange = ((data.fedBalance.value - data.fedBalance.prev) / Math.abs(data.fedBalance.prev)) * 100;
+      if      (fedChange >  0.3) { score += 15; signals++; }
+      else if (fedChange >  0.05){ score += 7;  signals++; }
+      else if (fedChange < -0.3) { score -= 15; signals++; }
+      else if (fedChange < -0.05){ score -= 7;  signals++; }
+    }
+
+    // TGA: si baja → más liquidez → positivo
+    if (data.tga?.value != null && data.tga?.prev != null) {
+      const tgaChange = data.tga.value - data.tga.prev;
+      if      (tgaChange < -30)  { score += 10; signals++; }
+      else if (tgaChange < -5)   { score += 5;  signals++; }
+      else if (tgaChange >  30)  { score -= 10; signals++; }
+      else if (tgaChange >  5)   { score -= 5;  signals++; }
+    }
+
+    // Reverse Repo: si baja → liquidez al mercado → positivo
+    if (data.rrp?.value != null && data.rrp?.prev != null) {
+      const rrpChange = data.rrp.value - data.rrp.prev;
+      if      (rrpChange < -30)  { score += 8;  signals++; }
+      else if (rrpChange < -5)   { score += 3;  signals++; }
+      else if (rrpChange >  30)  { score -= 8;  signals++; }
+      else if (rrpChange >  5)   { score -= 3;  signals++; }
+    }
+
+    // If no valid signals, return neutral
+    if (signals === 0) return 50;
+    return Math.min(100, Math.max(0, Math.round(score)));
+  }
+
+  function aliLabel(score) {
+    if (score >= 75) return { label: 'LIQUIDITY EXPANSION', color: '#39d98a' };
+    if (score >= 55) return { label: 'MILD EXPANSION',      color: '#7fe3a1' };
+    if (score >= 45) return { label: 'NEUTRAL',             color: '#97a3b6' };
+    if (score >= 25) return { label: 'MILD CONTRACTION',    color: '#ffb84d' };
+    return                  { label: 'CONTRACTION',         color: '#ff4d4d' };
+  }
+
+  // ── Dollar Pressure (basado en DXY) ───────────────────────
+  function calcDxy(data) {
+    if (!data.dxy?.value || !data.dxy?.prev) return null;
+    const change = ((data.dxy.value - data.dxy.prev) / data.dxy.prev) * 100;
+    if (change < -1.5)       return { label: 'WEAKENING',      color: '#39d98a',  sub: 'Menor presión del dólar favorece activos de riesgo' };
+    if (change < -0.3)       return { label: 'SOFTENING',      color: '#7fe3a1',  sub: 'Dólar cediendo terreno levemente' };
+    if (change < 0.3)        return { label: 'NEUTRAL',        color: '#97a3b6',  sub: 'Dólar sin tendencia clara definida' };
+    if (change < 1.5)        return { label: 'FIRMING',        color: '#ffb84d',  sub: 'Dólar ganando terreno, presión sobre riesgo' };
+    return                          { label: 'STRENGTHENING',  color: '#ff4d4d',  sub: 'Dólar fuerte, contexto más difícil para riesgo' };
+  }
+
+  // ── Risk Regime (ALI Score + Yield Curve) ─────────────────
+  function calcRisk(aliScore, data) {
+    const t10y2y = data.t10y2y?.value ?? 0;
+    // Curva positiva = normal, curva negativa = señal de recesión
+    const curveOk = t10y2y > 0;
+
+    if (aliScore >= 60 && curveOk)  return { label: 'FAVORABLE',  color: '#39d98a', sub: 'Liquidez expansiva y curva sana favorecen el riesgo' };
+    if (aliScore >= 60 && !curveOk) return { label: 'CAUTIOUS',   color: '#ffb84d', sub: 'Liquidez positiva pero curva invertida, precaución' };
+    if (aliScore >= 45 && curveOk)  return { label: 'NEUTRAL',    color: '#97a3b6', sub: 'Contexto equilibrado sin señales extremas' };
+    if (aliScore >= 45 && !curveOk) return { label: 'DEFENSIVE',  color: '#ffb84d', sub: 'Curva invertida sugiere mayor cautela' };
+    return                                 { label: 'RISK-OFF',   color: '#ff4d4d', sub: 'Liquidez contractiva, contexto adverso para riesgo' };
+  }
+
+  // ── Bitcoin Liquidity State (M2 + Fed Balance) ────────────
+  function calcBtc(data) {
+    let score = 0;
+    if (data.m2?.value && data.m2?.prev) {
+      score += (data.m2.value > data.m2.prev) ? 1 : -1;
+    }
+    if (data.fedBalance?.value && data.fedBalance?.prev) {
+      score += (data.fedBalance.value > data.fedBalance.prev) ? 1 : -1;
+    }
+    if (data.rrp?.value && data.rrp?.prev) {
+      score += (data.rrp.value < data.rrp.prev) ? 1 : -1; // RRP bajando = positivo
+    }
+
+    if (score >= 2)  return { label: 'RISING',   color: '#39d98a', sub: 'Mayor soporte de liquidez global para BTC' };
+    if (score === 1) return { label: 'IMPROVING', color: '#7fe3a1', sub: 'Condiciones de liquidez mejorando para BTC' };
+    if (score === 0) return { label: 'NEUTRAL',   color: '#97a3b6', sub: 'Señales mixtas de liquidez para BTC' };
+    if (score === -1)return { label: 'SOFTENING', color: '#ffb84d', sub: 'Liquidez global cediendo presión sobre BTC' };
+    return                  { label: 'FALLING',   color: '#ff4d4d', sub: 'Contracción de liquidez presiona a BTC' };
+  }
+
+  // ── Render de cada card ───────────────────────────────────
+  function renderCards(data) {
+    // ALI Score
+    const aliScore = calcAliScore(data);
+    const aliInfo  = aliLabel(aliScore);
+    const aliEl    = document.getElementById('ali-value');
+    const aliLbl   = document.getElementById('ali-label');
+    const aliSub   = document.getElementById('ali-sub');
+    if (aliEl) { aliEl.textContent = aliScore; aliEl.style.color = aliInfo.color; }
+    if (aliLbl) { aliLbl.textContent = aliInfo.label; aliLbl.style.color = aliInfo.color; }
+    if (aliSub) aliSub.textContent = 'Actualizado con datos FRED';
+
+    // Dollar Pressure
+    const dxy    = calcDxy(data);
+    const dxyEl  = document.getElementById('dxy-value');
+    const dxySub = document.getElementById('dxy-sub');
+    if (dxy) {
+      if (dxyEl)  { dxyEl.textContent = dxy.label;  dxyEl.style.color  = dxy.color; }
+      if (dxySub)   dxySub.textContent = dxy.sub;
+    }
+
+    // Risk Regime
+    const risk    = calcRisk(aliScore, data);
+    const riskEl  = document.getElementById('risk-value');
+    const riskSub = document.getElementById('risk-sub');
+    if (riskEl)  { riskEl.textContent = risk.label;  riskEl.style.color  = risk.color; }
+    if (riskSub)   riskSub.textContent = risk.sub;
+
+    // BTC Liquidity
+    const btc    = calcBtc(data);
+    const btcEl  = document.getElementById('btc-value');
+    const btcSub = document.getElementById('btc-sub');
+    if (btcEl)  { btcEl.textContent = btc.label;  btcEl.style.color  = btc.color; }
+    if (btcSub)   btcSub.textContent = btc.sub;
+  }
+
+  function setLoading(msg) {
+    ['ali-label','dxy-value','risk-value','btc-value'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) { el.textContent = msg; el.style.color = '#97a3b6'; }
+    });
+  }
+
+  async function loadFredData() {
+    const token = (function(){ try { return sessionStorage.getItem('atlas_access_token') || ''; } catch { return ''; }})();
+    if (!token) return;
+
+    setLoading('Cargando...');
+
+    try {
+      const res  = await fetch(`proxy.php?action=fred-data&token=${encodeURIComponent(token)}`, { cache: 'no-store' });
+      const json = await res.json();
+      if (!json?.ok || !json?.data) throw new Error('Sin datos');
+      renderCards(json.data);
+    } catch(e) {
+      setLoading('Error al cargar');
+      console.warn('FRED data error:', e);
+    }
+  }
+
+  // Arrancar cuando el contenido premium se desbloquee
+  const gatedEl = document.querySelector('[data-gated-content="liquidityengine"]');
+  if (!gatedEl) return;
+  let loaded = false;
+  function tryLoad() {
+    if (loaded || !gatedEl.classList.contains('unlocked')) return;
+    loaded = true;
+    loadFredData();
+  }
+  new MutationObserver(tryLoad).observe(gatedEl, { attributes: true, attributeFilter: ['class'] });
+  tryLoad();
+
+})();
+// ══════════════════════════════════════════════════════════════
+//  ATLAS LIQUIDITY ENGINE — Datos reales via FRED
+// ══════════════════════════════════════════════════════════════
+(function() {
+
+  function setCard(id, value, label, color) {
+    const el = document.getElementById(id + '-value');
+    const sub = document.getElementById(id + '-sub') || document.getElementById(id + '-label');
+    if (el) { el.textContent = value; el.style.color = color; }
+    if (sub) sub.textContent = label;
+  }
+
+  function setLoading() {
+    ['ali','dxy','risk','btc'].forEach(id => {
+      const el = document.getElementById(id + '-value');
+      const sub = document.getElementById(id + '-sub') || document.getElementById(id + '-label');
+      if (el) { el.textContent = '—'; el.style.color = '#4a5568'; }
+      if (sub) sub.textContent = 'Cargando...';
+    });
+    const aliLabel = document.getElementById('ali-label');
+    if (aliLabel) aliLabel.textContent = 'Cargando...';
+  }
+
+  function pctChange(current, previous) {
+    if (!previous || previous === 0) return 0;
+    return ((current - previous) / Math.abs(previous)) * 100;
+  }
+
+  function computeEngine(data) {
+    // ── 1. ALI SCORE (0-100) ──────────────────────────────────
+    // Basado en cambio porcentual de M2 + Fed Balance - TGA - RRP
+    // Liquidez neta = M2 + FedBalance - TGA - RRP
+    // Si la liquidez neta sube → score alto; si baja → score bajo
+
+    const m2Change  = data.m2  ? pctChange(data.m2.value,  data.m2.prev)  : 0;
+    const fedChange = data.fed ? pctChange(data.fed.value,  data.fed.prev) : 0;
+    const tgaChange = data.tga ? pctChange(data.tga.value,  data.tga.prev) : 0;
+    const rrpChange = data.rrp ? pctChange(data.rrp.value,  data.rrp.prev) : 0;
+
+    // Liquidez neta: M2 y Fed suman, TGA y RRP restan (cuando suben drenan liquidez)
+    const netLiquidity = (m2Change * 0.35) + (fedChange * 0.35) - (tgaChange * 0.15) - (rrpChange * 0.15);
+
+    // Normalizar a 0-100 (rango típico de netLiquidity: -3% a +3%)
+    const aliScore = Math.min(100, Math.max(0, Math.round(50 + (netLiquidity * 15))));
+
+    let aliLabel, aliColor;
+    if (aliScore >= 65)      { aliLabel = 'LIQUIDITY EXPANSION'; aliColor = '#39d98a'; }
+    else if (aliScore >= 45) { aliLabel = 'LIQUIDITY NEUTRAL';   aliColor = '#f0c040'; }
+    else                     { aliLabel = 'LIQUIDITY CONTRACTION'; aliColor = '#ff4d4d'; }
+
+    // ── 2. DOLLAR PRESSURE ────────────────────────────────────
+    const dxyChange = data.dxy ? pctChange(data.dxy.value, data.dxy.prev) : 0;
+    let dxyLabel, dxyText, dxyColor;
+    if (dxyChange < -0.8) {
+      dxyLabel = 'WEAKENING'; dxyColor = '#f0c040';
+      dxyText  = 'Menor presión del dólar suele favorecer activos de riesgo';
+    } else if (dxyChange > 0.8) {
+      dxyLabel = 'STRENGTHENING'; dxyColor = '#ff4d4d';
+      dxyText  = 'Dólar fuerte puede presionar commodities y mercados emergentes';
+    } else {
+      dxyLabel = 'NEUTRAL'; dxyColor = '#97a3b6';
+      dxyText  = 'Dólar sin tendencia clara en el período reciente';
+    }
+
+    // ── 3. RISK REGIME ────────────────────────────────────────
+    const yieldSpread = data.t10y2y ? data.t10y2y.value : null;
+    let riskLabel, riskText, riskColor;
+
+    if (aliScore >= 60 && (yieldSpread === null || yieldSpread > -0.2)) {
+      riskLabel = 'FAVORABLE'; riskColor = '#39d98a';
+      riskText  = 'Contexto de liquidez positivo para acciones y crypto';
+    } else if (aliScore <= 40 || (yieldSpread !== null && yieldSpread < -0.5)) {
+      riskLabel = 'DEFENSIVE'; riskColor = '#ff4d4d';
+      riskText  = 'Contexto de riesgo elevado — cautela recomendada';
+    } else {
+      riskLabel = 'NEUTRAL'; riskColor = '#f0c040';
+      riskText  = 'Señales mixtas — seguimiento activo recomendado';
+    }
+
+    // ── 4. BITCOIN LIQUIDITY STATE ────────────────────────────
+    let btcLabel, btcText, btcColor;
+    const btcSignal = (m2Change + fedChange) / 2;
+
+    if (btcSignal > 0.3) {
+      btcLabel = 'RISING'; btcColor = '#39d98a';
+      btcText  = 'Mayor soporte de liquidez global para Bitcoin';
+    } else if (btcSignal < -0.3) {
+      btcLabel = 'FALLING'; btcColor = '#ff4d4d';
+      btcText  = 'Reducción de liquidez puede presionar a Bitcoin';
+    } else {
+      btcLabel = 'MIXED'; btcColor = '#f0c040';
+      btcText  = 'Señales de liquidez mixtas para Bitcoin';
+    }
+
+    // ── Render ────────────────────────────────────────────────
+    // ALI Score
+    const aliEl  = document.getElementById('ali-value');
+    const aliLbl = document.getElementById('ali-label');
+    const aliSub = document.getElementById('ali-sub');
+    if (aliEl)  { aliEl.textContent = aliScore; aliEl.style.color = aliColor; }
+    if (aliLbl) aliLbl.textContent = aliLabel;
+    if (aliSub) aliSub.textContent = data.m2?.date ? `Datos al ${data.m2.date}` : '';
+
+    setCard('dxy',  dxyLabel,   dxyText,  dxyColor);
+    setCard('risk', riskLabel,  riskText, riskColor);
+    setCard('btc',  btcLabel,   btcText,  btcColor);
+
+    // Añadir nota de fecha actualización
+    const cards = ['dxy','risk','btc'];
+    cards.forEach(id => {
+      const note = document.querySelector(`#${id}-card .widget-note`);
+      if (note && data.dxy?.date) note.textContent += ` · ${data.dxy.date}`;
+    });
+  }
+
+  async function loadFredData(token) {
+    try {
+      setLoading();
+      const res  = await fetch(`proxy.php?action=fred-data&token=${encodeURIComponent(token)}`, { cache: 'no-store' });
+      const json = await res.json();
+      if (!json?.ok || !json?.data) throw new Error('Sin datos');
+
+      const d = json.data;
+      computeEngine({
+        m2:     d.m2,
+        fed:    d.fedBalance,
+        tga:    d.tga,
+        rrp:    d.rrp,
+        dxy:    d.dxy,
+        t10y2y: d.t10y2y,
+      });
+    } catch(e) {
+      ['ali','dxy','risk','btc'].forEach(id => {
+        const el = document.getElementById(id + '-value');
+        if (el) { el.textContent = 'N/A'; el.style.color = '#4a5568'; }
+        const sub = document.getElementById(id + '-sub') || document.getElementById(id + '-label');
+        if (sub) sub.textContent = 'No se pudieron cargar los datos';
+      });
+    }
+  }
+
+  // Activar cuando el contenido premium se desbloquee
+  const gatedEl = document.querySelector('[data-gated-content="liquidityengine"]');
+  if (!gatedEl) return;
+
+  let loaded = false;
+  function tryLoad() {
+    if (loaded || !gatedEl.classList.contains('unlocked')) return;
+    loaded = true;
+    const token = (function() { try { return sessionStorage.getItem('atlas_access_token') || ''; } catch { return ''; } })();
+    if (token) loadFredData(token);
+  }
+
+  new MutationObserver(tryLoad).observe(gatedEl, { attributes: true, attributeFilter: ['class'] });
+  tryLoad();
+
+})();
 </script>
 </body>
 </html>
